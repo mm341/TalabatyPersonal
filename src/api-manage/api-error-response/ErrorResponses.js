@@ -4,7 +4,7 @@ import Router from "next/router";
 
 const handleTokenExpire = (item, status) => {
   if (status === 401) {
-    if (window.localStorage.getItem("token")) {
+    if (window?.localStorage.getItem("token")) {
       toast.error(t("Your token has been expired.please sign in again"));
       window?.localStorage.removeItem("token");
       Router.push("/auth/sign-in", undefined, { shallow: true });

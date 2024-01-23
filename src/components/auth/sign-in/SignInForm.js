@@ -24,7 +24,7 @@ const SignInForm = ({
         lanDirection={lanDirection}
         height="45px"
       />
-      <CustomTextFieldWithFormik
+      {/* <CustomTextFieldWithFormik
         required="true"
         type="password"
         label={t("Password")}
@@ -33,7 +33,7 @@ const SignInForm = ({
         fieldProps={loginFormik.getFieldProps("password")}
         onChangeHandler={passwordHandler}
         value={loginFormik.values.password}
-      />
+      /> */}
     </CustomStackFullWidth>
   );
 };

@@ -51,15 +51,15 @@ import SignUpValidation from "./SignInValidation";
 import SocialLogins from "./social-login/SocialLogins";
 import useGetAllCartList from "../../../api-manage/hooks/react-query/add-cart/useGetAllCartList";
 import { setCartList } from "../../../redux/slices/cart";
-import {getGuestId} from "../../../helper-functions/getToken";
-import {handleProductValueWithOutDiscount} from "../../../utils/CustomFunctions";
-import {getModule} from "../../../helper-functions/getLanguage";
-import {getSelectedVariations} from "../../header/second-navbar/SecondNavbar";
+import { getGuestId } from "../../../helper-functions/getToken";
+import { handleProductValueWithOutDiscount } from "../../../utils/CustomFunctions";
+import { getModule } from "../../../helper-functions/getLanguage";
+import { getSelectedVariations } from "../../header/second-navbar/SecondNavbar";
 
 const SignIn = ({ configData }) => {
   const router = useRouter();
   const previousRouteName = router.query.from;
-  const guestId=getGuestId()
+  const guestId = getGuestId();
   const dispatch = useDispatch();
   const [openModuleSelection, setOpenModuleSelection] = useState(false);
   const [openOtpModal, setOpenOtpModal] = useState(false);
@@ -81,13 +81,16 @@ const SignIn = ({ configData }) => {
       const tempCartLists = res?.map((item) => ({
         ...item?.item,
         cartItemId: item?.id,
-        totalPrice: handleProductValueWithOutDiscount(item?.item)*item?.quantity,
+        totalPrice:
+          handleProductValueWithOutDiscount(item?.item) * item?.quantity,
         selectedAddons: item?.item?.addons,
         quantity: item?.quantity,
         food_variations: item?.item?.food_variations,
         itemBasePrice: item?.item?.price,
         selectedOption:
-            getModule()?.module_type !== "food" ? item?.variation :getSelectedVariations(item?.item?.food_variations),
+          getModule()?.module_type !== "food"
+            ? item?.variation
+            : getSelectedVariations(item?.item?.food_variations),
       }));
       dispatch(setCartList(tempCartLists));
     }
@@ -105,8 +108,8 @@ const SignIn = ({ configData }) => {
 
   const loginFormik = useFormik({
     initialValues: {
-      phone: userDatafor ? userDatafor.phone : "",
-      password: userDatafor ? userDatafor.password : "",
+      phone:  "",
+      // password: userDatafor ? userDatafor.password : "",
       tandc: false,
     },
     validationSchema: SignUpValidation(),
@@ -117,7 +120,7 @@ const SignIn = ({ configData }) => {
         }
         formSubmitHandler(values);
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     },
   });
@@ -133,11 +136,11 @@ const SignIn = ({ configData }) => {
   }
 
   const handleOnChange = (value) => {
-    loginFormik.setFieldValue("phone", `+${value}`);
+    loginFormik.setFieldValue("phone", value);
   };
-  const passwordHandler = (value) => {
-    loginFormik.setFieldValue("password", value);
-  };
+  // const passwordHandler = (value) => {
+  //   loginFormik.setFieldValue("password", value);
+  // };
   const handleCheckbox = (e) => {
     loginFormik.setFieldValue("tandc", e.target.checked);
   };
@@ -179,10 +182,9 @@ const SignIn = ({ configData }) => {
       } else {
         if (previousRouteName) {
           router.push("/home");
-        }else if (previousRouteName==="/order"){
+        } else if (previousRouteName === "/order") {
           router.push("/home");
-        }
-        else {
+        } else {
           await router.back();
         }
       }
@@ -208,19 +210,25 @@ const SignIn = ({ configData }) => {
   const { mutate } = useSignIn(handleError);
   const formSubmitHandler = (values) => {
     setIsApiCalling(true);
-    const newValues={...values,guest_id:guestId}
-    mutate(newValues, {
+    const newValues = { ...values, guest_id: guestId };
+    const signInData = {
+      // name: values.name,
+
+      phone: `+${values.phone.toString()}`,
+      guest_id: guestId,
+    };
+    mutate(signInData, {
       onSuccess: async (response) => {
         //setDefaultLanguage();
         if (configData?.customer_verification) {
           if (Number.parseInt(response?.is_phone_verified) === 1) {
-            await handleTokenAfterSignUp(response);
+            // await handleTokenAfterSignUp(response);
           } else {
             setOtpData({ phone: values?.phone });
             setMainToken(response);
           }
         } else {
-          await handleTokenAfterSignUp(response);
+          // await handleTokenAfterSignUp(response);
         }
       },
       onError: onErrorResponse,
@@ -231,9 +239,10 @@ const SignIn = ({ configData }) => {
     useVerifyPhone();
   const otpFormSubmitHandler = (values) => {
     const onSuccessHandler = (res) => {
+      handleTokenAfterSignUp(response);
       toast.success(res?.message);
       setOpenOtpModal(false);
-      handleTokenAfterSignIn(mainToken);
+      // handleTokenAfterSignIn(mainToken);
     };
     otpVerifyMutate(values, {
       onSuccess: onSuccessHandler,
@@ -245,7 +254,7 @@ const SignIn = ({ configData }) => {
     <SignInForm
       configData={configData}
       handleOnChange={handleOnChange}
-      passwordHandler={passwordHandler}
+      // passwordHandler={passwordHandler}
       loginFormik={loginFormik}
       lanDirection={lanDirection?.direction}
     />
@@ -257,6 +266,9 @@ const SignIn = ({ configData }) => {
       localStorage.removeItem("userDatafor");
     }
   };
+  // useEffect(()=>{
+  //   signUpFormik.setFieldValue('phone', "")
+  //   },[])
   return (
     <>
       <NoSsr>
@@ -275,7 +287,7 @@ const SignIn = ({ configData }) => {
                 spacing={2}
               >
                 <AuthHeader configData={configData} title={t("Sign In")} />
-                <form noValidate onSubmit={loginFormik.handleSubmit}>
+                <form noValidate autoComplete="off" onSubmit={loginFormik.handleSubmit}>
                   <CustomStackFullWidth spacing={2}>
                     {handleFormBasedOnDirection()}
                     <CustomStackFullWidth
@@ -297,9 +309,9 @@ const SignIn = ({ configData }) => {
                           </CustomTypography>
                         }
                       />
-                      <Link href="/forgot-password">
+                      {/* <Link href="/forgot-password">
                         {t("Forgot password?")}
-                      </Link>
+                      </Link> */}
                     </CustomStackFullWidth>
                     {/*<AcceptTermsAndConditions*/}
                     {/*  handleCheckbox={handleCheckbox}*/}
