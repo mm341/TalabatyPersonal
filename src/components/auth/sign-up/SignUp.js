@@ -44,12 +44,13 @@ const SignUp = () => {
   const guestId = getGuestId();
   const signUpFormik = useFormik({
     initialValues: {
-      name: "",
-
+      f_name: "",
+      l_name: "",
       phone: "",
     },
     validationSchema: SignUpValidation(),
     onSubmit: async (values) => {
+      
       try {
         formSubmitHandler(values);
       } catch (err) {}
@@ -60,8 +61,11 @@ const SignUp = () => {
     setOpenOtpModal(false);
   };
 
-  const NameHandler = (value) => {
-    signUpFormik.setFieldValue("name", value);
+  const FNameHandler = (value) => {
+    signUpFormik.setFieldValue("f_name", value);
+  };
+  const LNameHandler = (value) => {
+    signUpFormik.setFieldValue("l_name", value);
   };
 
   const handleOnChange = (value) => {
@@ -100,8 +104,8 @@ const SignUp = () => {
   const formSubmitHandler = (values) => {
     // const nweValues = { ...values, guest_id: guestId };
     const signUpData = {
-      name: values.name,
-
+      f_name: values.f_name,
+      l_name: values.l_name,
       phone: `+${values.phone.toString()}`,
       guest_id: guestId,
     };
@@ -112,7 +116,7 @@ const SignUp = () => {
           if (Number.parseInt(response?.is_phone_verified) === 1) {
             // handleTokenAfterSignUp(response);
           } else {
-            setOtpData({ phone: values?.phone });
+            setOtpData({ phone: `+${values.phone}` });
             // setMainToken(response);
           }
         } else {
@@ -123,9 +127,9 @@ const SignUp = () => {
     });
   };
 
-//   const handleClick = () => {
-//     window.open("/terms-and-conditions");
-//   };
+  //   const handleClick = () => {
+  //     window.open("/terms-and-conditions");
+  //   };
   const { mutate: otpVerifyMutate, isLoading: isLoadingOtpVerifyApi } =
     useVerifyPhone();
   const otpFormSubmitHandler = (values) => {
@@ -159,10 +163,11 @@ const SignUp = () => {
               >
                 <CustomStackFullWidth spacing={2}>
                   <SignUpForm
-				  isLoading={isLoading}
+                    isLoading={isLoading}
                     configData={configData}
                     handleOnChange={handleOnChange}
-                    NameHandler={NameHandler}
+                    FNameHandler={FNameHandler}
+                    LNameHandler={LNameHandler}
                     signUpFormik={signUpFormik}
                   />
 

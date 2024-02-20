@@ -9,7 +9,8 @@ import { getLanguage } from "../../../helper-functions/getLanguage";
 const SignUpForm = ({
   configData,
   handleOnChange,
-  NameHandler,
+  FNameHandler,
+  LNameHandler,
   isLoading,
   signUpFormik,
 }) => {
@@ -17,14 +18,23 @@ const SignUpForm = ({
   return (
     <NoSsr>
       <CustomStackFullWidth alignItems="center" spacing={{ xs: 3, md: 4 }}>
+      <CustomTextFieldWithFormik
+          required
+          label={t("First Name")}
+          touched={signUpFormik.touched.f_name}
+          errors={signUpFormik.errors.f_name}
+          fieldProps={signUpFormik.getFieldProps("f_name")}
+          onChangeHandler={FNameHandler}
+          value={signUpFormik.values.f_name}
+        />
         <CustomTextFieldWithFormik
           required
-          label={t("Name")}
-          touched={signUpFormik.touched.name}
-          errors={signUpFormik.errors.name}
-          fieldProps={signUpFormik.getFieldProps("name")}
-          onChangeHandler={NameHandler}
-          value={signUpFormik.values.name}
+          label={t("Last Name")}
+          touched={signUpFormik.touched.l_name}
+          errors={signUpFormik.errors.l_name}
+          fieldProps={signUpFormik.getFieldProps("l_name")}
+          onChangeHandler={LNameHandler}
+          value={signUpFormik.values.l_name}
         />
 
         <CustomPhoneInput

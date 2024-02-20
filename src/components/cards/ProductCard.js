@@ -238,6 +238,7 @@ const ProductCard = (props) => {
   const { mutate: cartItemRemoveMutate } = useDeleteCartItem();
   useEffect(() => {
     const isInCart = getItemFromCartlist();
+    
     if (isInCart) {
       setIsProductExist(true);
       setCount(isInCart?.quantity);
@@ -337,7 +338,9 @@ const ProductCard = (props) => {
   }, [item]);
   const isInCart = cartList?.find((things) => things.id === item?.id);
   const handleSuccess = (res) => {
+     console.log(res)
     if (res) {
+    
       let product = {};
       res?.forEach((item) => {
         product = {
@@ -472,8 +475,9 @@ const ProductCard = (props) => {
     }
   };
   const cartUpdateHandleSuccess = (res) => {
+  
     if (res) {
-      res?.forEach((item) => {
+      res?.carts?.forEach((item) => {
         if (isInCart?.cartItemId === item?.id) {
           const product = {
             ...item?.item,
@@ -492,8 +496,9 @@ const ProductCard = (props) => {
     }
   };
   const cartUpdateHandleSuccessDecrement = (res) => {
+    console.log(res)
     if (res) {
-      res?.forEach((item) => {
+      res?.carts?.forEach((item) => {
         const product = {
           ...item?.item,
           cartItemId: item?.id,

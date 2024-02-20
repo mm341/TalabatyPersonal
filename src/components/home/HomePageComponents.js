@@ -65,6 +65,7 @@ const HomePageComponents = ({ configData }) => {
 
   const getModuleWiseComponents = () => {
     switch (getCurrentModuleType()) {
+      
       case ModuleTypes.GROCERY:
         return <Grocery configData={configData} />;
       case ModuleTypes.PHARMACY:
@@ -77,7 +78,7 @@ const HomePageComponents = ({ configData }) => {
         return <Parcel configData={configData} />;
     }
   };
-
+ 
   return (
     <PushNotificationLayout>
       <CustomStackFullWidth>

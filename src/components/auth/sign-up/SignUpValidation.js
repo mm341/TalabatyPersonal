@@ -5,7 +5,8 @@ const SignUpValidation = () => {
   const { t } = useTranslation();
 
   return Yup.object({
-    name: Yup.string().required(t("name is required")),
+    f_name: Yup.string().required(t("first name is required")),
+    l_name: Yup.string().required(t("last name is required")),
     // l_name: Yup.string().required(t("Last name is required")),
     // email: Yup.string()
     //   .email(t("Must be a valid email"))

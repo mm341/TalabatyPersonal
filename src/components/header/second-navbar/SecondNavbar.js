@@ -157,7 +157,7 @@ const SecondNavBar = ({ configData }) => {
   }, [moduleType]);
 
   const setItemIntoCart = () => {
-    return data?.map((item) => ({
+    return data?.carts?.map((item) => ({
       ...item?.item,
       cartItemId: item?.id,
       totalPrice:

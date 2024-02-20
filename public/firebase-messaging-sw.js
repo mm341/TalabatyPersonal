@@ -6,13 +6,13 @@ importScripts(
 );
 // // Initialize the Firebase app in the service worker by passing the generated config
 const firebaseConfig = {
-  apiKey: "",
-  authDomain: "",
-  projectId: "",
-  storageBucket: "",
-  messagingSenderId: "",
-  appId: "",
-  measurementId: "",
+  apiKey: "AIzaSyBNIn1V247leTpKIMRsgTxgOCGyQaUHs2k",
+  authDomain: "talabatee-7f524.firebaseapp.com",
+  projectId: "talabatee-7f524",
+  storageBucket: "talabatee-7f524.appspot.com",
+  messagingSenderId: "137569750943",
+  appId: "1:137569750943:web:2f6902ea16e2b45d36f7aa",
+  measurementId: "G-6Y2F6LLL18"
 };
 
 firebase?.initializeApp(firebaseConfig);

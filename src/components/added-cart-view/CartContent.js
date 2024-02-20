@@ -61,7 +61,7 @@ const CartContent = (props) => {
 
   const cartUpdateHandleSuccess = (res) => {
     if (res) {
-      res?.forEach((item) => {
+      res?.carts?.forEach((item) => {
         if (cartItem?.cartItemId === item?.id) {
           const product = {
             ...item?.item,
@@ -81,7 +81,7 @@ const CartContent = (props) => {
   };
   const cartUpdateHandleSuccessDecrement = (res) => {
     if (res) {
-      res?.forEach((item) => {
+      res?.carts?.forEach((item) => {
         if (cartItem?.cartItemId === item?.id) {
           const product = {
             ...item?.item,

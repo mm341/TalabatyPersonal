@@ -224,7 +224,7 @@ const SignIn = ({ configData }) => {
           if (Number.parseInt(response?.is_phone_verified) === 1) {
             // await handleTokenAfterSignUp(response);
           } else {
-            setOtpData({ phone: values?.phone });
+            setOtpData({ phone: `+${values.phone}` });
             setMainToken(response);
           }
         } else {

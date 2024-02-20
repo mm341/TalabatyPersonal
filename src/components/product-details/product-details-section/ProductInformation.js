@@ -164,7 +164,7 @@ const ProductInformation = ({
   const handleSuccess = (res) => {
     if (res) {
       let product = {};
-      res?.forEach((item) => {
+      res?.carts?.forEach((item) => {
         product = {
           ...item?.item,
           cartItemId: item?.id,
