@@ -97,7 +97,8 @@ export const getDayNumber = (day) => {
 };
 const handleVariationValuesSum = (productVariations) => {
   let sum = 0;
-  if (productVariations.length > 0) {
+  
+  if (productVariations?.length > 0) {
     productVariations?.forEach((pVal) => {
       pVal?.values?.forEach((cVal) => {
         if (cVal?.isSelected) {
@@ -110,13 +111,14 @@ const handleVariationValuesSum = (productVariations) => {
 };
 const handleValuesSum = (productVariations) => {
   let sum = 0;
-  if (productVariations.length > 0) {
+  if (productVariations?.length > 0) {
     productVariations?.forEach((pVal) => (sum += Number.parseInt(pVal.price)));
   }
   return sum;
 };
 
 export const handleProductValueWithOutDiscount = (product) => {
+ 
   let productPrice = product?.price;
   if (getCurrentModuleType() === "food") {
     if (product?.food_variations?.length > 0) {
@@ -132,7 +134,7 @@ export const handleProductValueWithOutDiscount = (product) => {
         return productPrice;
       }
     } else {
-      productPrice = product.price;
+      productPrice = product?.price;
       return productPrice;
     }
   }
@@ -140,7 +142,7 @@ export const handleProductValueWithOutDiscount = (product) => {
 export const selectedAddonsTotal = (addOns) => {
   if (addOns?.length > 0) {
     let vv = addOns?.reduce(
-      (total, addOn) => addOn.price * addOn.quantity + total,
+      (total, addOn) => addOn?.price * addOn?.quantity + total,
       0
     );
 
@@ -150,9 +152,9 @@ export const selectedAddonsTotal = (addOns) => {
   }
 };
 const handleValueWithOutDiscount = (product) => {
-  let productPrice = product.price;
-  if (product.selectedOption.length > 0) {
-    productPrice = handleValuesSum(product.selectedOption);
+  let productPrice = product?.price;
+  if (product?.selectedOption?.length > 0) {
+    productPrice = handleValuesSum(product?.selectedOption);
     return productPrice;
   } else {
     return productPrice;
@@ -162,10 +164,10 @@ const handlePurchasedAmount = (cartList) => {
   if (getCurrentModuleType() === "food") {
     return cartList.reduce(
       (total, product) =>
-        (product.food_variations.length > 0
+        (product?.food_variations?.length > 0
           ? handleProductValueWithOutDiscount(product)
-          : product.price) *
-          product.quantity +
+          : product?.price) *
+          product?.quantity +
         selectedAddonsTotal(product.selectedAddons) +
         total,
       0
@@ -188,26 +190,26 @@ export const getCouponDiscount = (couponDiscount, storeData, cartList) => {
     if (purchasedAmount >= couponDiscount.min_purchase) {
       switch (couponDiscount.coupon_type) {
         case "zone_wise":
-          let zoneId = JSON.parse(couponDiscount.data);
+          let zoneId = JSON.parse(couponDiscount?.data);
           if (
             Number.parseInt(zoneId[0]) ===
-            Number.parseInt(couponDiscount.zoneId[0])
+            Number.parseInt(couponDiscount?.zoneId[0])
           ) {
-            if (couponDiscount && couponDiscount.discount_type === "amount") {
-              if (couponDiscount.max_discount === 0) {
-                return couponDiscount.discount;
+            if (couponDiscount && couponDiscount?.discount_type === "amount") {
+              if (couponDiscount?.max_discount === 0) {
+                return couponDiscount?.discount;
               } else {
-                return couponDiscount.discount;
+                return couponDiscount?.discount;
               }
             } else {
               let percentageWiseDis =
                 (purchasedAmount - getProductDiscount(cartList, storeData)) *
-                (couponDiscount.discount / 100);
-              if (couponDiscount.max_discount === 0) {
+                (couponDiscount?.discount / 100);
+              if (couponDiscount?.max_discount === 0) {
                 return percentageWiseDis;
               } else {
                 if (percentageWiseDis >= couponDiscount.max_discount) {
-                  return couponDiscount.max_discount;
+                  return couponDiscount?.max_discount;
                 } else {
                   return percentageWiseDis;
                 }
@@ -220,20 +222,20 @@ export const getCouponDiscount = (couponDiscount, storeData, cartList) => {
         case "store_wise":
           let storeId = JSON.parse(couponDiscount.data);
           if (Number.parseInt(storeId[0]) === storeData?.id) {
-            if (couponDiscount && couponDiscount.discount_type === "amount") {
-              if (couponDiscount.max_discount === 0) {
-                return couponDiscount.discount;
+            if (couponDiscount && couponDiscount?.discount_type === "amount") {
+              if (couponDiscount?.max_discount === 0) {
+                return couponDiscount?.discount;
               } else {
               }
             } else {
               let percentageWiseDis =
                 (purchasedAmount - getProductDiscount(cartList, storeData)) *
-                (couponDiscount.discount / 100);
-              if (couponDiscount.max_discount === 0) {
+                (couponDiscount?.discount / 100);
+              if (couponDiscount?.max_discount === 0) {
                 return percentageWiseDis;
               } else {
-                if (percentageWiseDis >= couponDiscount.max_discount) {
-                  return couponDiscount.max_discount;
+                if (percentageWiseDis >= couponDiscount?.max_discount) {
+                  return couponDiscount?.max_discount;
                 } else {
                   return percentageWiseDis;
                 }
@@ -246,21 +248,21 @@ export const getCouponDiscount = (couponDiscount, storeData, cartList) => {
         case "free_delivery":
           return 0;
         case "default":
-          if (couponDiscount && couponDiscount.discount_type === "amount") {
-            if (couponDiscount.max_discount === 0) {
-              return couponDiscount.discount;
+          if (couponDiscount && couponDiscount?.discount_type === "amount") {
+            if (couponDiscount?.max_discount === 0) {
+              return couponDiscount?.discount;
             } else {
-              return couponDiscount.discount;
+              return couponDiscount?.discount;
             }
           } else if ("percent") {
             let percentageWiseDis =
               (purchasedAmount - getProductDiscount(cartList, storeData)) *
-              (couponDiscount.discount / 100);
-            if (couponDiscount.max_discount === 0) {
+              (couponDiscount?.discount / 100);
+            if (couponDiscount?.max_discount === 0) {
               return percentageWiseDis;
             } else {
-              if (percentageWiseDis >= couponDiscount.max_discount) {
-                return couponDiscount.max_discount;
+              if (percentageWiseDis >= couponDiscount?.max_discount) {
+                return couponDiscount?.max_discount;
               } else {
                 return percentageWiseDis;
               }

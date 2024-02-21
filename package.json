@@ -1,12 +1,9 @@
 {
-  "homepage": "https://mm341.github.io/TalabatyPersonal",
   "name": "sixam-mart",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "predeploy": "yarn build",
-    "deploy": "gh-pages -d build",
     "build": "next build",
     "start": "next start -p 3002",
     "lint": "next lint"
@@ -33,7 +30,6 @@
     "eslint-config-next": "13.0.6",
     "firebase": "^9.15.0",
     "formik": "^2.2.9",
-    "gh-pages": "^6.1.1",
     "google-map-react": "^2.2.0",
     "i18next": "^22.0.8",
     "js-cookie": "^3.0.5",

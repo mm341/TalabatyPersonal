@@ -118,7 +118,7 @@ const getOtherModuleVariation = (itemVariations, selectedVariation) => {
   itemVariations?.forEach((item) => {
     selectedVariation?.forEach((sVari) => {
       if (sVari?.type === item?.type) {
-        selectedItem.push(item);
+        selectedItem?.push(item);
       }
     });
   });
