@@ -78,7 +78,7 @@ const SignIn = ({ configData }) => {
   };
   const cartListSuccessHandler = (res) => {
     if (res) {
-      const tempCartLists = res?.map((item) => ({
+      const tempCartLists = res?.carts?.map((item) => ({
         ...item?.item,
         cartItemId: item?.id,
         totalPrice:
@@ -105,10 +105,10 @@ const SignIn = ({ configData }) => {
     dispatch(setUser(res));
     //handleClose()
   };
-
+ 
   const loginFormik = useFormik({
     initialValues: {
-      phone:  "",
+      phone: "",
       // password: userDatafor ? userDatafor.password : "",
       tandc: false,
     },
@@ -171,6 +171,7 @@ const SignIn = ({ configData }) => {
 
   const handleTokenAfterSignUp = async (response) => {
     if (response) {
+      console.log(response)
       if (typeof window !== "undefined") {
         localStorage.setItem("token", response?.token);
         await profileRefetch();
@@ -239,7 +240,7 @@ const SignIn = ({ configData }) => {
     useVerifyPhone();
   const otpFormSubmitHandler = (values) => {
     const onSuccessHandler = (res) => {
-      handleTokenAfterSignUp(response);
+      handleTokenAfterSignUp(res);
       toast.success(res?.message);
       setOpenOtpModal(false);
       // handleTokenAfterSignIn(mainToken);
@@ -287,7 +288,11 @@ const SignIn = ({ configData }) => {
                 spacing={2}
               >
                 <AuthHeader configData={configData} title={t("Sign In")} />
-                <form noValidate autoComplete="off" onSubmit={loginFormik.handleSubmit}>
+                <form
+                  noValidate
+                  autoComplete="off"
+                  onSubmit={loginFormik.handleSubmit}
+                >
                   <CustomStackFullWidth spacing={2}>
                     {handleFormBasedOnDirection()}
                     <CustomStackFullWidth
