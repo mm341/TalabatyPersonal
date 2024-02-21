@@ -32,7 +32,7 @@ import ModuleWiseNav from "./ModuleWiseNav";
 import WishListCardView from "../../wishlist";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import useGetAllCartList from "../../../api-manage/hooks/react-query/add-cart/useGetAllCartList";
-import { setCartList } from "../../../redux/slices/cart";
+import { setCartDetailsPrice, setCartList } from "../../../redux/slices/cart";
 import { clearOfflinePaymentInfo } from "../../../redux/slices/offlinePaymentData";
 import { getGuestId } from "../../../helper-functions/getToken";
 import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined";
@@ -157,6 +157,7 @@ const SecondNavBar = ({ configData }) => {
   }, [moduleType]);
 
   const setItemIntoCart = () => {
+    dispatch(setCartDetailsPrice(data));
     return data?.carts?.map((item) => ({
       ...item?.item,
       cartItemId: item?.id,

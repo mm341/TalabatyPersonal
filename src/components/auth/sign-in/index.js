@@ -50,7 +50,7 @@ import OtpForm from "../sign-up/OtpForm";
 import SignUpValidation from "./SignInValidation";
 import SocialLogins from "./social-login/SocialLogins";
 import useGetAllCartList from "../../../api-manage/hooks/react-query/add-cart/useGetAllCartList";
-import { setCartList } from "../../../redux/slices/cart";
+import { setCartDetailsPrice, setCartList } from "../../../redux/slices/cart";
 import { getGuestId } from "../../../helper-functions/getToken";
 import { handleProductValueWithOutDiscount } from "../../../utils/CustomFunctions";
 import { getModule } from "../../../helper-functions/getLanguage";
@@ -77,6 +77,7 @@ const SignIn = ({ configData }) => {
     return JSON.parse(window.localStorage.getItem("module"));
   };
   const cartListSuccessHandler = (res) => {
+    dispatch(setCartDetailsPrice(res));
     if (res) {
       const tempCartLists = res?.carts?.map((item) => ({
         ...item?.item,
@@ -93,6 +94,7 @@ const SignIn = ({ configData }) => {
             : getSelectedVariations(item?.item?.food_variations),
       }));
       dispatch(setCartList(tempCartLists));
+      
     }
   };
 

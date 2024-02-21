@@ -19,6 +19,7 @@ const CartContents = (props) => {
   const isSmall = useMediaQuery(theme.breakpoints.down("md"));
   const discountContent = t("You have Saved");
 
+  console.log(cartList)
   return (
     <CustomStackFullWidth
       justifyContent="flex-start"

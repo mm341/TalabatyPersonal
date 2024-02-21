@@ -6,6 +6,7 @@ import { getAmountWithSign } from "../../helper-functions/CardHelpers";
 import { cartItemsTotalAmount } from "../../utils/CustomFunctions";
 
 const CartTotalPrice = ({ cartList }) => {
+  console.log(cartList)
   return (
     <>
       <CustomStackFullWidth

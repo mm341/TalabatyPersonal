@@ -1,10 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import _ from "lodash";
 import { getCurrentModuleType } from "../../helper-functions/getCurrentModuleType";
-import {
-  getConvertDiscount,
-  getTotalVariationsPrice,
-} from "../../utils/CustomFunctions";
 
 const initialState = {
   cartItem: null,
@@ -15,6 +11,11 @@ const initialState = {
   type: "regular",
   totalAmount: null,
   walletAmount: null,
+  addon_price: 0,
+  discount: 0,
+  item_price: 0,
+  total: 0,
+  variation_price: 0,
 };
 
 export const cartSlice = createSlice({
@@ -24,6 +25,14 @@ export const cartSlice = createSlice({
     setCartList: (state = initialState, action) => {
       state.cartList = action.payload;
     },
+    setCartDetailsPrice: (state = initialState, action) => {
+      state.addon_price = action.payload?.addon_price;
+      state.discount = action.payload?.discount;
+      state.item_price = action.payload?.item_price;
+      state.total = action.payload?.total;
+      state.variation_price = action.payload?.variation_price;
+    },
+
     setCart: (state = initialState, action) => {
       if (action.payload.module_type !== "food") {
         let isItemExist = state?.cartList?.find(
@@ -144,7 +153,7 @@ export const cartSlice = createSlice({
             item.id === action.payload.id
               ? {
                   ...item,
-                  totalPrice:action.payload.totalPrice,
+                  totalPrice: action.payload.totalPrice,
                   quantity: action.payload.quantity,
                 }
               : item
@@ -160,8 +169,8 @@ export const cartSlice = createSlice({
             return {
               ...action.payload,
               price: action.payload.price,
-              quantity: action.payload.quantity ,
-              totalPrice:action.payload.totalPrice,
+              quantity: action.payload.quantity,
+              totalPrice: action.payload.totalPrice,
             };
           } else {
             return stateItem;
@@ -198,7 +207,7 @@ export const cartSlice = createSlice({
               ? {
                   ...item,
                   totalPrice: action.payload.totalPrice,
-                  quantity: action.payload.quantity ,
+                  quantity: action.payload.quantity,
                 }
               : item
           );
@@ -208,7 +217,7 @@ export const cartSlice = createSlice({
               ? {
                   ...item,
                   totalPrice: action.payload.totalPrice,
-                  quantity: action.payload.quantity ,
+                  quantity: action.payload.quantity,
                 }
               : item
           );
@@ -223,8 +232,8 @@ export const cartSlice = createSlice({
             return {
               ...action.payload,
               price: action.payload.price,
-              quantity: action.payload.quantity ,
-              totalPrice:action.payload.totalPrice,
+              quantity: action.payload.quantity,
+              totalPrice: action.payload.totalPrice,
             };
           } else {
             return stateItem;
@@ -270,6 +279,7 @@ export const cartSlice = createSlice({
 export const {
   cart,
   setCartList,
+  setCartDetailsPrice,
   setCart,
   setUpdateItemToCart,
   setVariationToCart,

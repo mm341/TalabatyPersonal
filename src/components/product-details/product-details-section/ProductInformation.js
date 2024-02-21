@@ -7,7 +7,12 @@ import IncrementDecrementManager from "./IncrementDecrementManager";
 import ProductInformationBottomSection from "./ProductInformationBottomSection";
 
 import { ACTION, initialState, reducer } from "./states";
-import { setCart, setCartList, setUpdateItemToCart } from "../../../redux/slices/cart";
+import {
+  setCart,
+  setCartDetailsPrice,
+  setCartList,
+  setUpdateItemToCart,
+} from "../../../redux/slices/cart";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import CustomModal from "../../modal";
@@ -74,7 +79,8 @@ const ProductInformation = ({
   const [state, dispatch] = useReducer(reducer, initialState);
   const { t } = useTranslation();
   const { mutate, isLoading } = useAddCartItem();
-  const { mutate: updateMutate, isLoading: updateIsLoading } = useCartItemUpdate();
+  const { mutate: updateMutate, isLoading: updateIsLoading } =
+    useCartItemUpdate();
   const handleClearCartModalOpen = () => setClearCartModal(true);
 
   const handleClose = (value) => {
@@ -210,8 +216,8 @@ const ProductInformation = ({
   };
 
   const updateCartSuccessHandler = (res) => {
+    dispatch(setCartDetailsPrice(data));
     if (res) {
-
       const pp = res?.map((item) => {
         const newItem = {
           ...item?.item,
@@ -238,7 +244,7 @@ const ProductInformation = ({
       toast.success(t(product_update_to_cart_message));
       handleModalClose?.();
     }
-  }
+  };
 
   const handleUpdateToCart = (cartItem) => {
     if (
@@ -251,19 +257,22 @@ const ProductInformation = ({
       const itemIsInCart = cartList.find(
         (item) =>
           item?.id === productDetailsData?.id &&
-          JSON.stringify(item?.selectedOption?.[0]) === JSON.stringify(state.modalData[0]?.selectedOption?.[0])
+          JSON.stringify(item?.selectedOption?.[0]) ===
+            JSON.stringify(state.modalData[0]?.selectedOption?.[0])
       );
       const cartItemObject = {
         cart_id: itemIsInCart?.cartItemId,
         guest_id: getGuestId(),
-        model: state.modalData[0]?.available_date_starts ? "ItemCampaign" : "Item",
+        model: state.modalData[0]?.available_date_starts
+          ? "ItemCampaign"
+          : "Item",
         add_on_ids: [],
         add_on_qtys: [],
         item_id: state.modalData[0]?.id,
         price: state.modalData[0]?.totalPrice,
         quantity: state.modalData[0]?.quantity,
         variation: state.modalData[0]?.selectedOption,
-      }
+      };
       updateMutate(cartItemObject, {
         onSuccess: updateCartSuccessHandler,
         onError: onErrorResponse,
