@@ -17,6 +17,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAmountWithSign } from "../../helper-functions/CardHelpers";
 import {
   setCart,
+  setCartDetailsPrice,
+  setCartList,
   setDecrementToCartItem,
   setIncrementToCartItem,
   setRemoveItemFromCart,
@@ -338,20 +340,22 @@ const ProductCard = (props) => {
   }, [item]);
   const isInCart = cartList?.find((things) => things.id === item?.id);
   const handleSuccess = (res) => {
-     console.log(res)
+    // console.log(res)
+    //  console.log(res)
     if (res) {
     
-      let product = {};
-      res?.forEach((item) => {
-        product = {
-          ...item?.item,
-          cartItemId: item?.id,
-          quantity: item?.quantity,
-          totalPrice: item?.price,
-          selectedOption: [],
-        };
-      });
-      reduxDispatch(setCart(product));
+      // let product = {};
+      // res?.forEach((item) => {
+      //   product = {
+      //     ...item?.item,
+      //     cartItemId: item?.id,
+      //     quantity: item?.quantity,
+      //     totalPrice: item?.price,
+      //     selectedOption: [],
+      //   };
+      // });
+      reduxDispatch(setCartList(res?.carts));
+      reduxDispatch(setCartDetailsPrice(res));
       toast.success(t("Item added to cart"));
       dispatch({ type: ACTION.setClearCartModal, payload: false });
     }
@@ -477,40 +481,44 @@ const ProductCard = (props) => {
   const cartUpdateHandleSuccess = (res) => {
   
     if (res) {
-      res?.carts?.forEach((item) => {
-        if (isInCart?.cartItemId === item?.id) {
-          const product = {
-            ...item?.item,
-            cartItemId: item?.id,
-            totalPrice: item?.price,
-            quantity: item?.quantity,
-            food_variations: item?.item?.food_variations,
-            selectedAddons: item?.item?.addons,
-            itemBasePrice: item?.item?.price,
-            selectedOption: item?.variation,
-          };
+      // res?.carts?.forEach((item) => {
+      //   if (isInCart?.cartItemId === item?.id) {
+      //     const product = {
+      //       ...item?.item,
+      //       cartItemId: item?.id,
+      //       totalPrice: item?.price,
+      //       quantity: item?.quantity,
+      //       food_variations: item?.item?.food_variations,
+      //       selectedAddons: item?.item?.addons,
+      //       itemBasePrice: item?.item?.price,
+      //       selectedOption: item?.variation,
+      //     };
 
-          reduxDispatch(setIncrementToCartItem(product)); // Dispatch the single product
-        }
-      });
+      //     reduxDispatch(setIncrementToCartItem(product)); // Dispatch the single product
+      //   }
+      // });
+      reduxDispatch(setCartDetailsPrice(res));
+      reduxDispatch(setCartList(res?.carts));
     }
   };
   const cartUpdateHandleSuccessDecrement = (res) => {
-    console.log(res)
+    // console.log(res)
     if (res) {
-      res?.carts?.forEach((item) => {
-        const product = {
-          ...item?.item,
-          cartItemId: item?.id,
-          totalPrice: item?.price,
-          quantity: item?.quantity,
-          food_variations: item?.item?.food_variations,
-          selectedAddons: item?.item?.addons,
-          itemBasePrice: item?.item?.price,
-          selectedOption: item?.variation,
-        };
-        reduxDispatch(setDecrementToCartItem(product));
-      });
+      // res?.carts?.forEach((item) => {
+      //   const product = {
+      //     ...item?.item,
+      //     cartItemId: item?.id,
+      //     totalPrice: item?.price,
+      //     quantity: item?.quantity,
+      //     food_variations: item?.item?.food_variations,
+      //     selectedAddons: item?.item?.addons,
+      //     itemBasePrice: item?.item?.price,
+      //     selectedOption: item?.variation,
+      //   };
+      //   reduxDispatch(setDecrementToCartItem(product));
+      // });
+      reduxDispatch(setCartDetailsPrice(res));
+      reduxDispatch(setCartList(res?.carts));
     }
   };
   const handleIncrement = () => {
@@ -981,7 +989,8 @@ const ProductCard = (props) => {
         />
       ) : (
         <>{cardFor === "flashSale" ? (
-          <>{stock !== 0 &&
+          <>
+          {stock !== 0 &&
             <ModuleModal
               open={state.openModal}
               handleModalClose={handleClose}
@@ -991,7 +1000,9 @@ const ProductCard = (props) => {
               removeFromWishlistHandler={removeFromWishlistHandler}
               isWishlisted={isWishlisted}
             />
-          }</>
+          }
+          
+          </>
         ) : (
           <ModuleModal
             open={state.openModal}

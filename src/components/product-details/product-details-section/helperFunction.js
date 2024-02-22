@@ -1,7 +1,7 @@
 import { ACTION } from "./states";
 import { store } from "../../../redux/store/index";
-import {getTotalVariationsPrice} from "../../../utils/CustomFunctions";
-import {getCurrentModuleType} from "../../../helper-functions/getCurrentModuleType";
+import { getTotalVariationsPrice } from "../../../utils/CustomFunctions";
+import { getCurrentModuleType } from "../../../helper-functions/getCurrentModuleType";
 export const handleInitialTotalPriceVarPriceQuantitySet = (
   productDetailsData,
   dispatch,
@@ -116,55 +116,56 @@ export const getVariationsForCartData = (newVariation) => {
       })
     : [];
 };
-export const getItemDataForAddToCart = (values,updateQuantity, mainPrice,guest_id) => {
-
+export const getItemDataForAddToCart = (
+  values,
+  updateQuantity,
+  mainPrice,
+  guest_id
+) => {
   let totalQty = 0;
+  console.log(values.variation)
   return {
     guest_id: guest_id,
-    cart_id: values?.cartItemId,
-    model: values?.available_date_starts ? "ItemCampaign" : "Item",
+    cart_id: values?.id,
+    model: values?.item?.available_date_starts ? "ItemCampaign" : "Item",
     add_on_ids:
-      values?.add_ons?.length > 0
-        ? values?.addons?.map((add) => {
-            return add.id;
-          })
+      values?.add_on_ids?.length > 0
+        ? // ? values?.addons?.map((add) => {
+          //   return add.id;
+          // })
+          values?.add_on_ids
         : [],
-    add_on_qtys:
-      values?.add_ons?.length > 0
-        ? values?.addons?.map((add) => {
-            totalQty += add.quantity;
-            return totalQty;
-          })
-        : [],
-    item_id: values?.id,
+    add_on_qtys: values?.add_on_qtys?.length > 0 ? values?.add_on_qtys : [],
+    item_id: values?.item?.id,
     price: mainPrice,
     quantity: updateQuantity,
     variation:
-      values?.module_type === "food"
-        ? values?.food_variations?.length > 0
-          ? values?.food_variations?.map((variation) => {
+      values?.item?.module_type === "food"
+        ? values?.item?.food_variations?.length > 0
+          ? values?.item?.food_variations?.map((variation) => {
               return {
-                name: variation.name,
+                name: variation?.name,
                 values: {
                   label: handleValuesFromCartItems(variation.values),
                 },
               };
             })
           : []
-        : values?.selectedOption?.length > 0
-        ? values?.selectedOption
+        : values?.variation?.length > 0
+        ? values?.variation
         : [],
   };
 };
-export const getPriceAfterQuantityChange=(cart,Quantity)=>{
-  let mainPrice=0
-  const price =
-      cart?.price +
-      getTotalVariationsPrice(cart?.food_variations);
+export const getPriceAfterQuantityChange = (cart, Quantity) => {
+  let mainPrice = 0;
+  const price = cart?.price + getTotalVariationsPrice(cart?.food_variations);
   //here quantity is incremented with number 1
-  const productPrice = price * Quantity ;
-   mainPrice=getCurrentModuleType() === "food" ? productPrice: (cart?.selectedOption?.length > 0
-      ? cart?.selectedOption?.[0]?.price
-      : cart?.price) * Quantity
-  return mainPrice
-}
+  const productPrice = price * Quantity;
+  mainPrice =
+    getCurrentModuleType() === "food"
+      ? productPrice
+      : (cart?.selectedOption?.length > 0
+          ? cart?.selectedOption?.[0]?.price
+          : cart?.price) * Quantity;
+  return mainPrice;
+};

@@ -16,6 +16,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   cart,
   setCart,
+  setCartDetailsPrice,
+  setCartList,
   setDecrementToCartItem,
   setIncrementToCartItem,
   setRemoveItemFromCart,
@@ -46,7 +48,11 @@ import {
   handleValuesFromCartItems,
 } from "../product-details/product-details-section/helperFunction";
 import Loading from "../custom-loading/Loading";
-import {getConvertDiscount, getTotalVariationsPrice, handleTotalAmountWithAddons} from "../../utils/CustomFunctions";
+import {
+  getConvertDiscount,
+  getTotalVariationsPrice,
+  handleTotalAmountWithAddons,
+} from "../../utils/CustomFunctions";
 
 const CartContent = (props) => {
   const { cartItem, imageBaseUrl } = props;
@@ -56,69 +62,85 @@ const CartContent = (props) => {
   const dispatch = useDispatch();
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
   const guestId = localStorage.getItem("guest_id");
-  const { mutate,isLoading:removeIsLoading } = useDeleteCartItem();
-  const { mutate: updateMutate,isLoading } = useCartItemUpdate();
+  const { mutate, isLoading: removeIsLoading } = useDeleteCartItem();
+  const { mutate: updateMutate, isLoading } = useCartItemUpdate();
 
   const cartUpdateHandleSuccess = (res) => {
     if (res) {
-      res?.carts?.forEach((item) => {
-        if (cartItem?.cartItemId === item?.id) {
-          const product = {
-            ...item?.item,
-            cartItemId: item?.id,
-            totalPrice: item?.price,
-            quantity: item?.quantity,
-            food_variations: item?.item?.food_variations,
-            selectedAddons: item?.item?.addons,
-            itemBasePrice: item?.item?.price,
-            selectedOption: item?.variation,
-          };
+      dispatch(setCartDetailsPrice(res));
+      dispatch(setCartList(res?.carts));
+      // res?.carts?.forEach((item) => {
+      //   if (cartItem?.cartItemId === item?.id) {
+      //     const product = {
+      //       ...item?.item,
+      //       cartItemId: item?.id,
+      //       totalPrice: item?.price,
+      //       quantity: item?.quantity,
+      //       food_variations: item?.item?.food_variations,
+      //       selectedAddons: item?.item?.addons,
+      //       itemBasePrice: item?.item?.price,
+      //       selectedOption: item?.variation,
+      //       unit_price: item?.unit_price,
+      //     };
 
-          dispatch(setIncrementToCartItem(product)); // Dispatch the single product
-        }
-      });
+      //     dispatch(setIncrementToCartItem(product)); // Dispatch the single product
+      //   }
+      // });
     }
   };
+
+  // console.log(cartItem);
   const cartUpdateHandleSuccessDecrement = (res) => {
     if (res) {
-      res?.carts?.forEach((item) => {
-        if (cartItem?.cartItemId === item?.id) {
-          const product = {
-            ...item?.item,
-            cartItemId: item?.id,
-            totalPrice: item?.price,
-            quantity: item?.quantity,
-            food_variations: item?.item?.food_variations,
-            selectedAddons: item?.item?.addons,
-            itemBasePrice: item?.item?.price,
-            selectedOption: item?.variation,
-          };
-          dispatch(setDecrementToCartItem(product));
-        }
-      });
-    }
+      dispatch(setCartDetailsPrice(res));
+      dispatch(setCartList(res?.carts));
+    //   res?.carts?.forEach((item) => {
+    //     if (cartItem?.cartItemId === item?.id) {
+    //       const product = {
+    //         ...item?.item,
+    //         cartItemId: item?.id,
+    //         totalPrice: item?.price,
+    //         quantity: item?.quantity,
+    //         food_variations: item?.item?.food_variations,
+    //         selectedAddons: item?.item?.addons,
+    //         itemBasePrice: item?.item?.price,
+    //         selectedOption: item?.variation,
+    //         unit_price: item?.unit_price,
+    //       };
+    //       dispatch(setDecrementToCartItem(product));
+    //     }
+    //   });
+    // }
   };
+}
   const handleIncrement = (cartItem) => {
-    const updateQuantity=cartItem?.quantity+1
+    const updateQuantity = cartItem?.quantity + 1;
     const price =
-        cartItem?.price +
-        getTotalVariationsPrice(cartItem?.food_variations);
+      cartItem?.price + getTotalVariationsPrice(cartItem?.food_variations);
     //here quantity is incremented with number 1
     const productPrice = price * updateQuantity;
 
     const discountedTotalPrice = getConvertDiscount(
-        cartItem?.discount_type === "amount"
-            ? cartItem?.discount * (updateQuantity)
-            : cartItem?.discount,
-        cartItem?.discount_type,
-        productPrice,
-        cartItem?.store_discount
+      cartItem?.discount_type === "amount"
+        ? cartItem?.discount * updateQuantity
+        : cartItem?.discount,
+      cartItem?.discount_type,
+      productPrice,
+      cartItem?.store_discount
     );
-  const mainPrice=getCurrentModuleType() === "food" ? productPrice: (cartItem?.selectedOption?.length > 0
-          ? cartItem?.selectedOption?.[0]?.price
-          : cartItem?.price) * updateQuantity
+    const mainPrice =
+      getCurrentModuleType() === "food"
+        ? productPrice
+        : (cartItem?.selectedOption?.length > 0
+            ? cartItem?.selectedOption?.[0]?.price
+            : cartItem?.price) * updateQuantity;
 
-    const itemObject = getItemDataForAddToCart(cartItem,updateQuantity,mainPrice, guestId);
+    const itemObject = getItemDataForAddToCart(
+      cartItem,
+      updateQuantity,
+      mainPrice,
+      guestId
+    );
 
     if (getCurrentModuleType() !== "food") {
       if (cartItem?.stock <= cartItem?.quantity) {
@@ -141,8 +163,9 @@ const CartContent = (props) => {
         }
       }
     } else {
-      if (cartItem?.maximum_cart_quantity) {
-        if (cartItem?.maximum_cart_quantity <= cartItem?.quantity) {
+      // console.log(cartItem)
+      if (cartItem?.item?.maximum_cart_quantity) {
+        if (cartItem?.item?.maximum_cart_quantity <= cartItem?.quantity) {
           toast.error(t(out_of_limits));
         } else {
         }
@@ -155,25 +178,31 @@ const CartContent = (props) => {
   };
 
   const handleDecrement = () => {
-    const updateQuantity=cartItem?.quantity - 1
+    const updateQuantity = cartItem?.quantity - 1;
     const price =
-        cartItem?.price +
-        getTotalVariationsPrice(cartItem?.food_variations);
+      cartItem?.price + getTotalVariationsPrice(cartItem?.food_variations);
     //here quantity is decremented with number 1
-    const productPrice = price * (updateQuantity);
+    const productPrice = price * updateQuantity;
     const discountedTotalPrice = getConvertDiscount(
-        cartItem?.discount_type === "amount"
-            ? cartItem?.discount * (updateQuantity)
-            : cartItem?.discount,
-        cartItem?.discount_type,
-        productPrice,
-        cartItem?.store_discount
+      cartItem?.discount_type === "amount"
+        ? cartItem?.discount * updateQuantity
+        : cartItem?.discount,
+      cartItem?.discount_type,
+      productPrice,
+      cartItem?.store_discount
     );
-    const mainPrice=getCurrentModuleType() === "food" ? productPrice: (cartItem?.selectedOption?.length > 0
+    const mainPrice =
+      getCurrentModuleType() === "food"
+        ? productPrice
+        : (cartItem?.selectedOption?.length > 0
             ? cartItem?.selectedOption?.[0]?.price
-            : cartItem?.price) *
-        (updateQuantity )
-    const itemObject = getItemDataForAddToCart(cartItem,updateQuantity,mainPrice, guestId);
+            : cartItem?.price) * updateQuantity;
+    const itemObject = getItemDataForAddToCart(
+      cartItem,
+      updateQuantity,
+      mainPrice,
+      guestId
+    );
     updateMutate(itemObject, {
       onSuccess: cartUpdateHandleSuccessDecrement,
       onError: onErrorResponse,
@@ -186,7 +215,7 @@ const CartContent = (props) => {
   };
   const handleRemove = () => {
     const cartIdAndGuestId = {
-      cart_id: cartItem?.cartItemId,
+      cart_id: cartItem?.id,
       guestId: guestId,
     };
     mutate(cartIdAndGuestId, {
@@ -228,46 +257,26 @@ const CartContent = (props) => {
             width="80px"
             smWidth="65px"
             smHeight="65px"
-            src={`${imageBaseUrl}/${cartItem?.image}`}
+            src={`${imageBaseUrl}/${cartItem?.item?.image}`}
             borderRadius=".7rem"
             objectfit="cover"
           />
         </Stack>
         <Stack width="0px" flexGrow="1" justifyContent="center" spacing={0.2}>
           <Typography fontWeight="500" fontSize={{ xs: "12px", md: "14px" }}>
-            {cartItem?.name}
+            {cartItem?.item?.name}
           </Typography>
+          {/*  variation */}
           <VariationContent cartItem={cartItem} />
           <Typography fontWeight="500" fontSize={{ xs: "13px", md: "16px" }}>
-
-            {
-                getAmountWithSign(
-                    handleTotalAmountWithAddons(
-                        getDiscountedAmount(
-                            cartItem?.totalPrice,
-                            cartItem?.discount,
-                            cartItem?.discount_type,
-                            cartItem?.store_discount,
-                            cartItem?.quantity
-                        ),
-                        cartItem?.selectedAddons
-                    )
-                )}
-            {/*{getAmountWithSign(*/}
-            {/*  getDiscountedAmount(*/}
-            {/*    cartItem?.totalPrice,*/}
-            {/*    cartItem?.discount,*/}
-            {/*    cartItem?.discount_type,*/}
-            {/*    cartItem?.store_discount,*/}
-            {/*    cartItem?.quantity*/}
-            {/*  )*/}
-            {/*)}*/}
+           
+            {getAmountWithSign(cartItem?.price)}
           </Typography>
         </Stack>
         <CartIncrementStack>
           {cartItem?.quantity === 1 ? (
             <IconButton
-                disabled={removeIsLoading}
+              disabled={removeIsLoading}
               aria-label="delete"
               size="small"
               color="error"
@@ -293,14 +302,21 @@ const CartContent = (props) => {
               />
             </IconButton>
           )}
-          {isLoading?(
-              <Stack width="16px" height="18px">
-            <Loading color={theme.palette.primary.main} />
-          </Stack>):( <Typography fontSize="12px" fontWeight="500">
-            {cartItem?.quantity}
-          </Typography>)}
+          {isLoading ? (
+            <Stack width="16px" height="18px">
+              <Loading color={theme.palette.primary.main} />
+            </Stack>
+          ) : (
+            <Typography fontSize="12px" fontWeight="500">
+              {cartItem?.quantity}
+            </Typography>
+          )}
 
-          <IconButton aria-label="delete" sx={{ padding: "2px" }} disabled={isLoading}>
+          <IconButton
+            aria-label="delete"
+            sx={{ padding: "2px" }}
+            disabled={isLoading}
+          >
             <AddIcon
               sx={{
                 color: (theme) => theme.palette.primary.main,
@@ -332,8 +348,7 @@ const CartContent = (props) => {
           open={updateModalOpen}
           handleModalClose={() => setUpdateModalOpen(false)}
           configData={configData}
-          productDetailsData={{ ...cartItem,
-            cart_id: cartItem?.cartItemId,}}
+          productDetailsData={{ ...cartItem, cart_id: cartItem?.cartItemId }}
         />
       )}
     </>

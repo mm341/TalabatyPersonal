@@ -48,7 +48,7 @@ export const fetchToken = async (setTokenFound, setFcmToken) => {
       }
     })
     .catch((err) => {
-      console.error(err);
+      // console.error(err);
       // catch error while creating client token
     });
 };

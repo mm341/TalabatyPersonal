@@ -10,16 +10,16 @@ import CustomImageContainer from "../CustomImageContainer";
 import "simplebar-react/dist/simplebar.min.css";
 import { getAmountWithSign } from "../../helper-functions/CardHelpers";
 import { cartItemTotalDiscount } from "../../utils/CustomFunctions";
+import { useSelector } from "react-redux";
 
 const CartContents = (props) => {
   const { cartList, imageBaseUrl, refetch } = props;
 
   const { t } = useTranslation();
   const theme = useTheme();
-  const isSmall = useMediaQuery(theme.breakpoints.down("md"));
   const discountContent = t("You have Saved");
+  const { discount } = useSelector((state) => state.cart);
 
-  console.log(cartList)
   return (
     <CustomStackFullWidth
       justifyContent="flex-start"
@@ -35,9 +35,7 @@ const CartContents = (props) => {
           objectfit="cover"
         />
         <Typography color={theme.palette.primary.main} fontSize="12px">
-          {`${discountContent} ${getAmountWithSign(
-            cartItemTotalDiscount(cartList)
-          )}`}
+          {`${discountContent} ${getAmountWithSign(discount)}`}
         </Typography>
       </Stack>
 

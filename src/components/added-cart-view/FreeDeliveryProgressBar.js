@@ -11,7 +11,7 @@ import LinearProgress, {
 import { Stack } from "@mui/system";
 import { t } from "i18next";
 import { getAmountWithSign } from "../../helper-functions/CardHelpers";
-import { cartItemsTotalAmount } from "../../utils/CustomFunctions";
+
 export const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 4,
   marginTop: "3px",
@@ -24,22 +24,22 @@ export const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     backgroundColor: theme.palette.primary.main,
   },
 }));
-const FreeDeliveryProgressBar = ({ configData, cartList }) => {
+const FreeDeliveryProgressBar = ({ configData, total }) => {
   const theme = useTheme();
-  const freeDeliveryTargetAmount = (configData, cartList) => {
+  const freeDeliveryTargetAmount = (configData, total) => {
     let lessAmount =
-      Number(configData?.free_delivery_over) - cartItemsTotalAmount(cartList);
+      Number(configData?.free_delivery_over) - total;
     if (
-      cartItemsTotalAmount(cartList) >= Number(configData?.free_delivery_over)
+      total >= Number(configData?.free_delivery_over)
     ) {
       return 0;
     } else {
       return lessAmount;
     }
   };
-  const reamingAmount = freeDeliveryTargetAmount(configData, cartList);
+  const reamingAmount = freeDeliveryTargetAmount(configData, total);
   const convertedNumberToHundred = Math.round(
-    (100 / configData?.free_delivery_over) * cartItemsTotalAmount(cartList)
+    (100 / configData?.free_delivery_over) * total
   );
   const convertedValueToHundred = Math.min(
     Math.max(convertedNumberToHundred, 0),

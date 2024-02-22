@@ -169,21 +169,28 @@ const ProductInformation = ({
   };
   const handleSuccess = (res) => {
     if (res) {
-      let product = {};
-      res?.carts?.forEach((item) => {
-        product = {
-          ...item?.item,
-          cartItemId: item?.id,
-          quantity: item?.quantity,
-          totalPrice: item?.price,
-          selectedOption: item?.variation,
-        };
-      });
+      // let product = {};
+      // res?.carts?.forEach((item) => {
+      //   product = {
+      //     ...item?.item,
+      //     cartItemId: item?.id,
+      //     quantity: item?.quantity,
+      //     totalPrice: item?.price,
+      //     selectedOption: item?.variation,
+      //     unit_price: item?.unit_price,
+      //   };
+      // });
+      // dispatchRedux(
+      //   setCart({
+      //     ...product,
+      //   })
+      // );
       dispatchRedux(
-        setCart({
-          ...product,
-        })
+       setCartList(res?.carts)
       );
+      dispatchRedux(
+        setCartDetailsPrice(res)
+       );
       toast.success(t("Item added to cart"));
       handleModalClose?.();
       setClearCartModal(false);
@@ -216,19 +223,20 @@ const ProductInformation = ({
   };
 
   const updateCartSuccessHandler = (res) => {
-    dispatch(setCartDetailsPrice(data));
+    // dispatch(setCartDetailsPrice(data));
     if (res) {
-      const pp = res?.map((item) => {
-        const newItem = {
-          ...item?.item,
-          cartItemId: item?.id,
-          quantity: item?.quantity,
-          totalPrice: item?.price,
-          selectedOption: item?.variation,
-        };
+      // const pp = res?.map((item) => {
+      //   const newItem = {
+      //     ...item?.item,
+      //     cartItemId: item?.id,
+      //     quantity: item?.quantity,
+      //     totalPrice: item?.price,
+      //     selectedOption: item?.variation,
+      //     unit_price: item?.unit_price,
+      //   };
 
-        return newItem;
-      });
+      //   return newItem;
+      // });
       //
       // let product = {};
       // res?.forEach((item) => {
@@ -240,13 +248,20 @@ const ProductInformation = ({
       //     selectedOption: item?.variation,
       //   };
       // });
-      dispatchRedux(setCartList(pp));
+      // dispatchRedux(setCartList(pp));
+      dispatchRedux(
+        setCartList(res?.carts)
+       );
+       dispatchRedux(
+         setCartDetailsPrice(res)
+        );
       toast.success(t(product_update_to_cart_message));
       handleModalClose?.();
     }
   };
 
   const handleUpdateToCart = (cartItem) => {
+    // console.log(state)
     if (
       JSON.stringify(productDetailsData) === JSON.stringify(state.modalData[0])
     ) {
@@ -273,6 +288,8 @@ const ProductInformation = ({
         quantity: state.modalData[0]?.quantity,
         variation: state.modalData[0]?.selectedOption,
       };
+
+      console.log(cartItemObject)
       updateMutate(cartItemObject, {
         onSuccess: updateCartSuccessHandler,
         onError: onErrorResponse,

@@ -88,6 +88,7 @@ const SignIn = ({ configData }) => {
         quantity: item?.quantity,
         food_variations: item?.item?.food_variations,
         itemBasePrice: item?.item?.price,
+        unit_price:item?.unit_price,
         selectedOption:
           getModule()?.module_type !== "food"
             ? item?.variation
@@ -173,7 +174,7 @@ const SignIn = ({ configData }) => {
 
   const handleTokenAfterSignUp = async (response) => {
     if (response) {
-      console.log(response)
+     
       if (typeof window !== "undefined") {
         localStorage.setItem("token", response?.token);
         await profileRefetch();

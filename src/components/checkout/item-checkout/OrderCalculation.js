@@ -45,11 +45,13 @@ const OrderCalculation = (props) => {
 
   const theme = useTheme();
   let couponType = "coupon";
+  const { total } = useSelector((state) => state.cart);
   const handleDeliveryFee = () => {
     let price = getDeliveryFees(
       storeData,
       configData,
-      cartList,
+      total,
+
       distanceData?.data,
       couponDiscount,
       couponType,

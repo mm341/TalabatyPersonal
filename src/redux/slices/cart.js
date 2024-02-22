@@ -133,9 +133,9 @@ export const cartSlice = createSlice({
     setIncrementToCartItem: (state = initialState, action) => {
       let newData;
       if (getCurrentModuleType() === "food") {
-        if (action.payload.food_variations.length > 0) {
+        if (action?.payload?.food_variations?.length > 0) {
           let index = state.cartList.findIndex((item) =>
-            _.isEqual(item.food_variations, action.payload.food_variations)
+            _.isEqual(item?.food_variations, action?.payload?.food_variations)
           );
           newData = state.cartList.map((item, i) =>
             // action.payload.totalPrice * action.payload.quantity  +
@@ -145,6 +145,7 @@ export const cartSlice = createSlice({
                   ...item,
                   totalPrice: action.payload.totalPrice,
                   quantity: action.payload.quantity,
+                  unit_price: action.payload?.unit_price,
                 }
               : item
           );
@@ -155,6 +156,7 @@ export const cartSlice = createSlice({
                   ...item,
                   totalPrice: action.payload.totalPrice,
                   quantity: action.payload.quantity,
+                  unit_price: action.payload?.unit_price,
                 }
               : item
           );
@@ -171,6 +173,7 @@ export const cartSlice = createSlice({
               price: action.payload.price,
               quantity: action.payload.quantity,
               totalPrice: action.payload.totalPrice,
+              unit_price: action.payload?.unit_price,
             };
           } else {
             return stateItem;
@@ -208,6 +211,7 @@ export const cartSlice = createSlice({
                   ...item,
                   totalPrice: action.payload.totalPrice,
                   quantity: action.payload.quantity,
+                  unit_price: action.payload?.unit_price,
                 }
               : item
           );
@@ -218,6 +222,7 @@ export const cartSlice = createSlice({
                   ...item,
                   totalPrice: action.payload.totalPrice,
                   quantity: action.payload.quantity,
+                  unit_price: action.payload?.unit_price,
                 }
               : item
           );
@@ -234,6 +239,7 @@ export const cartSlice = createSlice({
               price: action.payload.price,
               quantity: action.payload.quantity,
               totalPrice: action.payload.totalPrice,
+              unit_price: action.payload?.unit_price,
             };
           } else {
             return stateItem;

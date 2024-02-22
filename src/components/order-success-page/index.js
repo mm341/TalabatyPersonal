@@ -34,13 +34,13 @@ const OrderSuccessPage = ({ configData }) => {
             }
           }
         } else {
-          console.error("Decoded token is not a string:", decodedToken);
+          // console.error("Decoded token is not a string:", decodedToken);
         }
       } catch (error) {
-        console.error("Error decoding token:", error);
+        // console.error("Error decoding token:", error);
       }
     } else {
-      console.error("Token is missing.");
+      // console.error("Token is missing.");
     }
   }, [token]);
   return (

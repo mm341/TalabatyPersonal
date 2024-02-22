@@ -47,7 +47,7 @@ const DrawerMenu = ({ setToggled }) => {
         }
       }, 500);
     } catch (err) {
-      console.error(err);
+      // console.error(err);
     }
   };
 

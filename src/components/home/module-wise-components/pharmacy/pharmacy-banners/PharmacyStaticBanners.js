@@ -107,7 +107,7 @@ const PharmacyStaticBanners = (props) => {
   useEffect(() => {
     refetch();
   }, []);
-  console.log({ data });
+  // console.log({ data });
   const handleBannerClick = (banner) => {
     router.push(
       {

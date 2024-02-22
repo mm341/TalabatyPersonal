@@ -20,7 +20,7 @@ const CouponButtonComponent = ({ couponTitle, value, copy, setCopy }) => {
         ));
       })
       .catch((error) => {
-        console.error("Failed to copy code:", error);
+        // console.error("Failed to copy code:", error);
       });
   };
 

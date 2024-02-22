@@ -42,7 +42,7 @@ import { handleProductValueWithOutDiscount } from "../../../utils/CustomFunction
 const Cart = ({ isLoading }) => {
   const [sideDrawerOpen, setSideDrawerOpen] = useState(false);
   const { cartList } = useSelector((state) => state.cart);
-  const dispatch = useDispatch();
+
   const handleIconClick = () => {
     setSideDrawerOpen(true);
   };
@@ -156,32 +156,36 @@ const SecondNavBar = ({ configData }) => {
     cartListRefetch();
   }, [moduleType]);
 
-  const setItemIntoCart = () => {
-    dispatch(setCartDetailsPrice(data));
-    return data?.carts?.map((item) => ({
-      ...item?.item,
-      cartItemId: item?.id,
-      totalPrice:
-        handleProductValueWithOutDiscount({
-          ...item?.item,
-          selectedOption:
-            getModule()?.module_type !== "food"
-              ? getOtherModuleVariation(item?.item?.variations, item?.variation)
-              : [],
-        }) * item?.quantity,
-      selectedAddons: item?.item?.addons,
-      quantity: item?.quantity,
-      food_variations: item?.item?.food_variations,
-      itemBasePrice: item?.item?.price,
-      selectedOption:
-        getModule()?.module_type !== "food"
-          ? getOtherModuleVariation(item?.item?.variations, item?.variation)
-          : getSelectedVariations(item?.item?.food_variations),
-    }));
-  };
+  // const setItemIntoCart = () => {
+  //   dispatch(setCartDetailsPrice(data));
+
+  //   return data?.carts?.map((item) => ({
+  //     ...item?.item,
+  //     cartItemId: item?.id,
+  //     totalPrice:
+  //       handleProductValueWithOutDiscount({
+  //         ...item?.item,
+  //         selectedOption:
+  //           getModule()?.module_type !== "food"
+  //             ? getOtherModuleVariation(item?.item?.variations, item?.variation)
+  //             : [],
+  //       }) * item?.quantity,
+  //       unit_price:item?.unit_price,
+  //     selectedAddons: item?.item?.addons,
+  //     quantity: item?.quantity,
+  //     food_variations: item?.item?.food_variations,
+  //     itemBasePrice: item?.item?.price,
+  //     unit_price:item?.unit_price,
+  //     selectedOption:
+  //       getModule()?.module_type !== "food"
+  //         ? getOtherModuleVariation(item?.item?.variations, item?.variation)
+  //         : getSelectedVariations(item?.item?.food_variations),
+  //   }));
+  // };
 
   useEffect(() => {
-    dispatch(setCartList(setItemIntoCart()));
+    dispatch(setCartList(data?.carts));
+    dispatch(setCartDetailsPrice(data));
   }, [data]);
 
   useEffect(() => {

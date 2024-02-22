@@ -36,6 +36,8 @@ const CardView = (props) => {
     setSideDrawerOpen(false);
   };
 
+
+ 
   const getModuleWiseCartContent = () => {
     return (
       <CartContents

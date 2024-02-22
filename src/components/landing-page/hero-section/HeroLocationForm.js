@@ -181,7 +181,7 @@ const HeroLocationForm = () => {
     // }
     setGeoLocationEnable(true);
     setZoneIdEnabled(true);
-    console.log("ccccc", currentLocation, location);
+    // console.log("ccccc", currentLocation, location);
     if (currentLocation && location) {
       if (getToken()) {
         wishlistRefetch();

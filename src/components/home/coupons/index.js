@@ -48,7 +48,7 @@ const CouponBox = ({ item }) => {
         ));
       })
       .catch((error) => {
-        console.error("Failed to copy code:", error);
+        // console.error("Failed to copy code:", error);
       });
   };
   const get = t("get");

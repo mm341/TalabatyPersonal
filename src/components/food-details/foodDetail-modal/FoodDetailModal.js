@@ -32,6 +32,8 @@ import {
   setBuyNowItemList,
   setCampaignItemList,
   setCart,
+  setCartDetailsPrice,
+  setCartList,
   setClearCart,
   setUpdateVariationToCart,
 } from "../../../redux/slices/cart";
@@ -172,22 +174,24 @@ const FoodDetailModal = ({
     ),
   });
   const handleSuccess = (res) => {
-   
     if (res) {
+      dispatch(setCartDetailsPrice(res));
       let product = {};
-      res?.carts?.forEach((item) => {
-        product = {
-          ...item?.item,
-          cartItemId: item?.id,
-          totalPrice: item?.price,
-          quantity: item?.quantity,
-          food_variations: item?.item?.food_variations,
-          selectedAddons: selectedAddons,
-          selectedOption: selectedOptions,
-          itemBasePrice: item?.item?.price,
-        };
-      });
-      dispatch(setCart(product));
+      // res?.carts?.forEach((item) => {
+      //   product = {
+      //     ...item?.item,
+      //     cartItemId: item?.id,
+      //     totalPrice: item?.price,
+      //     quantity: item?.quantity,
+      //     food_variations: item?.item?.food_variations,
+      //     selectedAddons: selectedAddons,
+      //     selectedOption: selectedOptions,
+      //     itemBasePrice: item?.item?.price,
+      //     unit_price: item?.unit_price,
+      //   };
+      // });
+      // dispatch(setCart(product));
+      dispatch(setCartList(res?.carts));
       handleClose();
       //dispatch()
     }
@@ -195,31 +199,35 @@ const FoodDetailModal = ({
   const updateCartSuccessHandler = (res) => {
     const indexNumber = getIndexFromArrayByComparision(cartList, modalData[0]);
     if (res) {
-      let product = {};
-      res?.carts?.forEach((item) => {
-        product = {
-          ...item?.item,
-          cartItemId: item?.id,
-          totalPrice: item?.price,
-          quantity: item?.quantity,
-          food_variations: item?.item?.food_variations,
-          selectedAddons: selectedAddons,
-          selectedOption: selectedOptions,
-          itemBasePrice: item?.item?.price,
-        };
-      });
-      dispatch(
-        setUpdateVariationToCart({
-          newObj: product,
-          indexNumber: indexNumber,
-        })
-      );
+      dispatch(setCartDetailsPrice(res));
+      // let product = {};
+      // res?.carts?.forEach((item) => {
+      //   product = {
+      //     ...item?.item,
+      //     cartItemId: item?.id,
+      //     totalPrice: item?.price,
+      //     quantity: item?.quantity,
+      //     food_variations: item?.item?.food_variations,
+      //     selectedAddons: selectedAddons,
+      //     selectedOption: selectedOptions,
+      //     itemBasePrice: item?.item?.price,
+      //     unit_price: item?.unit_price,
+      //   };
+      // });
+      // dispatch(
+      //   setUpdateVariationToCart({
+      //     newObj: product,
+      //     indexNumber: indexNumber,
+      //   })
+      // );
+      dispatch(setCartList(res?.carts));
       toast.success(t("Item updated successfully"));
       handleModalClose?.();
       //dispatch()
     }
   };
 
+  //  add for api
   const addOrUpdateToCartByDispatch = () => {
     if (productUpdate) {
       //for updating
@@ -238,8 +246,7 @@ const FoodDetailModal = ({
         add_on_qtys:
           selectedAddons?.length > 0
             ? selectedAddons?.map((add) => {
-                totalQty += add.quantity;
-                return totalQty;
+                return add?.quantity;
               })
             : [],
         item_id: product?.id,
@@ -263,31 +270,6 @@ const FoodDetailModal = ({
         onError: onErrorResponse,
       });
     } else {
-      //for adding;
-      // dispatch(
-      //   setCart({
-      //     ...modalData[0],
-      //     totalPrice: getDiscountedAmount(
-      //       totalPrice,
-      //       product?.discount,
-      //       product?.discount_type,
-      //       product?.store_discount,
-      //       quantity
-      //     ),
-      //     quantity: quantity,
-      //     food_variations: getNewVariationForDispatch(),
-      //     selectedAddons: selectedAddons,
-      //     selectedOption: otherSelectedOption,
-      //     itemBasePrice: getDiscountedAmount(
-      //       calculateItemBasePrice(modalData[0], selectedOptions),
-      //       product?.discount,
-      //       product?.discount_type,
-      //       product?.store_discount,
-      //       quantity
-      //     ),
-      //     // selectedVariations: selectedVariations,
-      //   })
-      // );
       let totalQty = 0;
       const itemObject = {
         guest_id: guestId,
@@ -301,8 +283,7 @@ const FoodDetailModal = ({
         add_on_qtys:
           selectedAddons?.length > 0
             ? selectedAddons?.map((add) => {
-                totalQty += add.quantity;
-                return totalQty;
+                return add.quantity;
               })
             : [],
         item_id: modalData[0]?.id,
@@ -326,6 +307,7 @@ const FoodDetailModal = ({
       });
     }
   };
+
   const handleBuyOrOrderNow = (status) => {
     const product = getNewObj();
     if (status === "buy_now") {
@@ -349,7 +331,7 @@ const FoodDetailModal = ({
 
   const handleRequiredItemsToaster = (itemsArray, selectedOptions) => {
     itemsArray?.forEach((item) => {
-      if (selectedOptions.length > 0) {
+      if (selectedOptions?.length > 0) {
         selectedOptions?.forEach((sOption) => {
           if (sOption.choiceIndex !== item.indexNumber) {
             const text = item.name;
@@ -451,8 +433,8 @@ const FoodDetailModal = ({
         }
       });
     }
-    if (requiredItemsList.length > 0) {
-      if (selectedOptions.length === 0) {
+    if (requiredItemsList?.length > 0) {
+      if (selectedOptions?.length === 0) {
         handleRequiredItemsToaster(requiredItemsList, selectedOptions);
       } else {
         let itemCount = 0;
@@ -732,11 +714,12 @@ const FoodDetailModal = ({
     [selectedOptions]
   );
   const changeAddOns = (addOn) => {
+    // console.log(addOn)
     if (addOn?.isChecked && addOn?.quantity > 0) {
       let newArray = [];
       if (selectedAddons?.length > 0) {
         newArray = [...selectedAddons];
-        const existIndex = newArray.findIndex((item) => item.id === addOn.id);
+        const existIndex = newArray.findIndex((item) => item?.id === addOn?.id);
         if (existIndex !== -1) {
           newArray[existIndex] = addOn;
         } else {
@@ -747,10 +730,11 @@ const FoodDetailModal = ({
       }
       setSelectedAddOns(newArray);
     } else {
-      let filter = selectedAddons.filter((item) => item.id !== addOn.id);
+      let filter = selectedAddons?.filter((item) => item?.id !== addOn?.id);
       setSelectedAddOns(filter);
     }
   };
+
   const handleTotalPrice = () => {
     let price;
     if (productUpdate) {
@@ -816,17 +800,17 @@ const FoodDetailModal = ({
       toast.error(not_logged_in_message);
     }
   };
-  const handleSignInSuccess = () => {
-    dispatch(
-      setCampCart({
-        ...modalData[0],
-        totalPrice: totalPrice,
-        quantity: quantity,
-        selectedAddons: selectedAddons,
-      })
-    );
-    router.push(`/checkout?page=campaign`, undefined, { shallow: true });
-  };
+  // const handleSignInSuccess = () => {
+  //   dispatch(
+  //     setCampCart({
+  //       ...modalData[0],
+  //       totalPrice: totalPrice,
+  //       quantity: quantity,
+  //       selectedAddons: selectedAddons,
+  //     })
+  //   );
+  //   router.push(`/checkout?page=campaign`, undefined, { shallow: true });
+  // };
   const [selectedChoice, setChoices] = useState([]);
   const cartResetHandler = () => {
     setClearCartModal(false);

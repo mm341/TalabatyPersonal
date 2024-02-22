@@ -3,13 +3,11 @@ import { store } from "../redux/store";
 export const getAmountWithSign = (amount) => {
   const stores = store?.getState();
   const { configData } = stores?.configData;
-  let newAmount = ((amount * 100) / 100).toFixed(
-    Number.parseInt(configData?.digit_after_decimal_point)
-  );
+ 
   if (configData?.currency_symbol_direction === "left") {
-    return `${configData?.currency_symbol}${newAmount}`;
+    return `${configData?.currency_symbol} ${amount}`;
   } else if (configData?.currency_symbol_direction === "right") {
-    return `${newAmount}${configData?.currency_symbol}`;
+    return `${amount} ${configData?.currency_symbol}`;
   }
   return amount;
 };
@@ -38,6 +36,7 @@ export const getDiscountedAmount = (
   return mainPrice;
 };
 export const getSelectedAddOn = (add_ons) => {
+  
   let add_on = "";
   if (add_ons?.length > 0) {
     add_ons?.map((item, index) => {

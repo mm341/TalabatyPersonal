@@ -3,10 +3,12 @@ import { CustomStackFullWidth } from "../../styled-components/CustomStyles.style
 import { Typography } from "@mui/material";
 import { t } from "i18next";
 import { getAmountWithSign } from "../../helper-functions/CardHelpers";
-import { cartItemsTotalAmount } from "../../utils/CustomFunctions";
 
-const CartTotalPrice = ({ cartList }) => {
-  console.log(cartList)
+import { useSelector } from "react-redux";
+
+const CartTotalPrice = () => {
+  //  selector
+  const {total}=useSelector((state)=>state.cart)
   return (
     <>
       <CustomStackFullWidth
@@ -18,7 +20,7 @@ const CartTotalPrice = ({ cartList }) => {
           {t("Subtotal")}
         </Typography>
         <Typography fontSize="15px" fontWeight="700">
-          {getAmountWithSign(cartItemsTotalAmount(cartList))}
+          {getAmountWithSign(total)}
         </Typography>
       </CustomStackFullWidth>
     </>

@@ -10,15 +10,16 @@ import { OrderFoodSubtitle } from "../checkout/CheckOut.style";
 const VariationContent = ({ cartItem }) => {
   const { t } = useTranslation();
   const handleProduct = () => {
-    if (cartItem?.selectedOption?.length > 0) {
+    console.log(cartItem)
+    if (cartItem?.variation?.length > 0) {
       return (
         <Stack>
-          {cartItem?.choice_options?.map((item, index) => {
+          {cartItem?.item?.choice_options?.map((item, index) => {
             return (
               <Stack key={index}>
                 <Typography color="customColor.textGray" fontSize="12px">
                   {item?.title} :{" "}
-                  {cartItem?.selectedOption?.[0]?.type.split("-")?.[index]}
+                  {cartItem?.variation?.[0]?.type.split("-")?.[index]}
                 </Typography>
               </Stack>
             );
@@ -27,16 +28,17 @@ const VariationContent = ({ cartItem }) => {
       );
     }
   };
+  
   const handleFood = () => {
     return (
       <CustomStackFullWidth>
-        <VisibleVariations variations={cartItem?.food_variations} t={t} />
-        {cartItem?.selectedAddons?.length > 0 && (
+        <VisibleVariations variations={cartItem?.item?.food_variations} t={t} />
+        {cartItem?.item?.addons?.length > 0 && (
           <Stack direction="row" alignItems="center" flexWrap="wrap" gap="5px">
             <OrderFoodSubtitle>{t("Addon")}</OrderFoodSubtitle>
             <OrderFoodSubtitle>:</OrderFoodSubtitle>
             <OrderFoodSubtitle>
-              {getSelectedAddOn(cartItem?.selectedAddons)}
+              {getSelectedAddOn(cartItem?.item?.addons)}
             </OrderFoodSubtitle>
           </Stack>
         )}
@@ -46,7 +48,7 @@ const VariationContent = ({ cartItem }) => {
 
   return (
     <div>
-      {cartItem?.module_type === "food" ? handleFood() : handleProduct()}
+      {cartItem?.item?.module_type === "food" ? handleFood() : handleProduct()}
     </div>
   );
 };

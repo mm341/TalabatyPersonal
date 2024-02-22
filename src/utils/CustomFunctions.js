@@ -708,7 +708,7 @@ const getDeliveryFeeByBadWeather = (
 export const getDeliveryFees = (
   storeData,
   configData,
-  cartList,
+  
   distance,
   couponDiscount,
   couponType,
@@ -727,7 +727,7 @@ export const getDeliveryFees = (
     );
     let deliveryFee = convertedDistance * configData?.per_km_shipping_charge;
 
-    let totalOrderAmount = cartItemsTotalAmount(cartList);
+    let totalOrderAmount = total;
     //restaurant self delivery system checking
     if (Number.parseInt(storeData?.self_delivery_system) === 1) {
       if (storeData?.free_delivery) {
