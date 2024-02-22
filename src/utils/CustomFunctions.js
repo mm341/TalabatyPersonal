@@ -807,7 +807,7 @@ export const getSubTotalPrice = (cartList) => {
   if (getCurrentModuleType() === "food") {
     return cartList.reduce(
       (total, product) =>
-        (product?.food_variations.length > 0
+        (product?.food_variations?.length > 0
           ? getItemTotalWithoutDiscount(product)
           : product.price) *
           product.quantity +

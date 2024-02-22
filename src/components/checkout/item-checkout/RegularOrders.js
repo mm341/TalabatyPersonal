@@ -58,7 +58,7 @@ const RegularOrders = (props) => {
               <CustomImageContainer
                 height="30px"
                 width="30px"
-                src={`${productBaseUrl}/${item.image}`}
+                src={`${productBaseUrl}/${item?.item.image}`}
                 loading="lazy"
               />
             </Stack>
@@ -70,14 +70,14 @@ const RegularOrders = (props) => {
             >
               <Stack direction="row" spacing={1.3}>
                 <OrderFoodSubtitle>
-                  {item.quantity}
+                  {item?.quantity}
                   <Typography component="span" fontSize="12px" pl="5px">
                     x
                   </Typography>
                 </OrderFoodSubtitle>
 
                 <Stack>
-                  <OrderFoodName>{item.name}</OrderFoodName>
+                  <OrderFoodName>{item?.name}</OrderFoodName>
                   <VariationContent cartItem={item} />
                 </Stack>
               </Stack>

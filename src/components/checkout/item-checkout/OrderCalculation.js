@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Grid, Stack, Typography } from "@mui/material";
 import { CalculationGrid, TotalGrid } from "../CheckOut.style";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useTheme } from "@mui/material/styles";
 import CustomDivider from "../../CustomDivider";
 import {
@@ -42,10 +42,10 @@ const OrderCalculation = (props) => {
   } = props;
   const { t } = useTranslation();
   const [freeDelivery, setFreeDelivery] = useState("false");
-
+const {item_price,total,discount}=useSelector((state)=>state.cart)
   const theme = useTheme();
   let couponType = "coupon";
-  const { total } = useSelector((state) => state.cart);
+  // const { total } = useSelector((state) => state.cart);
   const handleDeliveryFee = () => {
     let price = getDeliveryFees(
       storeData,
@@ -119,7 +119,7 @@ const OrderCalculation = (props) => {
   };
   const discountedPrice = getProductDiscount(cartList, storeData);
   const totalAmountAfterPartial = handleOrderAmount() - walletBalance;
-
+console.log(cartList)
   return (
     <>
       <CalculationGrid container item md={12} xs={12} spacing={1} mt="1rem">
@@ -128,7 +128,7 @@ const OrderCalculation = (props) => {
         </Grid>
         <Grid item md={4} xs={4} align="right">
           <Typography textTransform="capitalize" align="right">
-            {getAmountWithSign(getSubTotalPrice(cartList))}
+            {getAmountWithSign(item_price)}
           </Typography>
         </Grid>
         <Grid item md={8} xs={8}>
@@ -144,7 +144,7 @@ const OrderCalculation = (props) => {
           >
             <Typography>{"(-)"}</Typography>
             <Typography>
-              {storeData ? getAmountWithSign(discountedPrice) : null}
+              {discount ? getAmountWithSign(discount) : null}
             </Typography>
           </Stack>
         </Grid>
@@ -275,7 +275,7 @@ const OrderCalculation = (props) => {
           </Grid>
           <Grid item md={4} xs={4} align="right">
             <Typography color={theme.palette.primary.main} align="right">
-              {storeData && cartList && getAmountWithSign(handleOrderAmount())}
+              {storeData && cartList && getAmountWithSign(total)}
             </Typography>
           </Grid>
         </TotalGrid>
