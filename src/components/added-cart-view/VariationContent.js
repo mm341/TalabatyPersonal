@@ -10,7 +10,7 @@ import { OrderFoodSubtitle } from "../checkout/CheckOut.style";
 const VariationContent = ({ cartItem }) => {
   const { t } = useTranslation();
   const handleProduct = () => {
-    console.log(cartItem)
+    
     if (cartItem?.variation?.length > 0) {
       return (
         <Stack>
@@ -33,7 +33,7 @@ const VariationContent = ({ cartItem }) => {
     return (
       <CustomStackFullWidth>
         <VisibleVariations variations={cartItem?.item?.food_variations} t={t} />
-        {cartItem?.item?.addons?.length > 0 && (
+        {cartItem?.add_on_ids?.length > 0 && (
           <Stack direction="row" alignItems="center" flexWrap="wrap" gap="5px">
             <OrderFoodSubtitle>{t("Addon")}</OrderFoodSubtitle>
             <OrderFoodSubtitle>:</OrderFoodSubtitle>

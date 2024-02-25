@@ -106,3 +106,4 @@ export const cart_all_item_remove = "api/v1/customer/cart/remove";
 export const all_cart_list = "api/v1/customer/cart/list";
 export const cart_item_delete = "api/v1/customer/cart/remove-item";
 export const cart_item_update = "api/v1/customer/cart/update";
+export const getCheckOutData = "/api/v1/customer/cart/get_checkout_data"

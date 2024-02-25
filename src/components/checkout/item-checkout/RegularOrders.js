@@ -43,6 +43,7 @@ const RegularOrders = (props) => {
   const { configData, cartList, t, isSmall } = props;
   const theme = useTheme();
   const productBaseUrl = configData?.base_urls?.item_image_url;
+ 
   return (
     <>
       {cartList.length > 0 ? (
@@ -58,7 +59,7 @@ const RegularOrders = (props) => {
               <CustomImageContainer
                 height="30px"
                 width="30px"
-                src={`${productBaseUrl}/${item?.item.image}`}
+                src={`${productBaseUrl}/${item?.item?.image}`}
                 loading="lazy"
               />
             </Stack>
@@ -82,7 +83,7 @@ const RegularOrders = (props) => {
                 </Stack>
               </Stack>
               <OrderFoodAmount>
-                {getAmountWithSign(handleProductValueWithOutDiscount(item))}
+                {getAmountWithSign(item?.price)}
               </OrderFoodAmount>
             </Stack>
           </CustomStackFullWidth>

@@ -58,7 +58,7 @@ const DeliveryAddress = ({
   const [openSaveAddress, setOpenSaveAddress] = useState(false);
   const [editAddress, setEditAddress] = useState(null);
   const token = localStorage.getItem("token");
-
+// console.log(editAddress)
 
   const saveAddressModalClose = () => {
     setOpenSaveAddress(false);

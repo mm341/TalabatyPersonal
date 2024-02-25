@@ -544,14 +544,14 @@ const FoodDetailModal = ({
     if (choiceType === "single") {
       if (checked) {
         //selected or checked variation handling
-        if (selectedOptions.length > 0) {
-          const isExist = selectedOptions.find(
+        if (selectedOptions?.length > 0) {
+          const isExist = selectedOptions?.find(
             (item) =>
               item.choiceIndex === choiceIndex &&
               item.optionIndex === optionIndex
           );
           if (isExist) {
-            const newSelectedOptions = selectedOptions.filter(
+            const newSelectedOptions = selectedOptions?.filter(
               (sOption) =>
                 sOption.choiceIndex === choiceIndex &&
                 sOption.label !== isExist.label
@@ -704,7 +704,7 @@ const FoodDetailModal = ({
   };
   const radioCheckHandler = useCallback(
     (choiceIndex, option, optionIndex) => {
-      const isExist = selectedOptions.find(
+      const isExist = selectedOptions?.find(
         (sOption) =>
           sOption.choiceIndex === choiceIndex &&
           sOption.optionIndex === optionIndex
@@ -774,9 +774,10 @@ const FoodDetailModal = ({
   const { mutate: addFavoriteMutation } = useAddToWishlist();
 
   const isInCart = (id) => {
+
     if (productUpdate) {
-      const isInCart = cartList.filter((item) => item.id === id);
-      if (isInCart.length > 0) {
+      const isInCart = cartList?.filter((item) => item?.item.id === id);
+      if (isInCart?.length > 0) {
         return true;
       } else {
         return false;
@@ -933,12 +934,7 @@ const FoodDetailModal = ({
                     changeChoices={changeChoices}
                   />
                 )}
-              {/*{modalData.length > 0 && modalData[0].variations?.length > 0 && (*/}
-              {/*  <OtherVariationManager*/}
-              {/*    modalData={modalData[0]}*/}
-              {/*    handleChoices={handleChoices}*/}
-              {/*  />*/}
-              {/*)}*/}
+             
               {modalData.length > 0 && modalData[0].add_ons?.length > 0 && (
                 <AddOnsManager
                   t={t}

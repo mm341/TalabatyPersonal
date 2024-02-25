@@ -289,7 +289,7 @@ const ProductInformation = ({
         variation: state.modalData[0]?.selectedOption,
       };
 
-      console.log(cartItemObject)
+     
       updateMutate(cartItemObject, {
         onSuccess: updateCartSuccessHandler,
         onError: onErrorResponse,

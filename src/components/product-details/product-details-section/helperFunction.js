@@ -123,7 +123,7 @@ export const getItemDataForAddToCart = (
   guest_id
 ) => {
   let totalQty = 0;
-  console.log(values.variation)
+
   return {
     guest_id: guest_id,
     cart_id: values?.id,

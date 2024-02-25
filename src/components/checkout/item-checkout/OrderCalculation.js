@@ -2,124 +2,45 @@ import React, { useState } from "react";
 import { Grid, Stack, Typography } from "@mui/material";
 import { CalculationGrid, TotalGrid } from "../CheckOut.style";
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useTheme } from "@mui/material/styles";
 import CustomDivider from "../../CustomDivider";
-import {
-  getCalculatedTotal,
-  getCouponDiscount,
-  getDeliveryFees,
-  getProductDiscount,
-  getSubTotalPrice,
-  getTaxableTotalPrice,
-} from "../../../utils/CustomFunctions";
+
 import { getAmountWithSign } from "../../../helper-functions/CardHelpers";
-import { setTotalAmount } from "../../../redux/slices/cart";
 
 const OrderCalculation = (props) => {
+  //  props
   const {
     cartList,
     storeData,
     couponDiscount,
-    taxAmount,
-    distanceData,
-    total_order_amount,
+
     configData,
     orderType,
-    couponInfo,
-    deliveryTip,
-    origin,
-    destination,
-    zoneData,
-    setDeliveryFee,
-    extraCharge,
-    extraChargeLoading,
+
     usePartialPayment,
     walletBalance,
-    setPayableAmount,
-    additionalCharge,
+
     payableAmount,
   } = props;
-  const { t } = useTranslation();
-  const [freeDelivery, setFreeDelivery] = useState("false");
-const {item_price,total,discount}=useSelector((state)=>state.cart)
+  //  hooks
   const theme = useTheme();
-  let couponType = "coupon";
-  // const { total } = useSelector((state) => state.cart);
-  const handleDeliveryFee = () => {
-    let price = getDeliveryFees(
-      storeData,
-      configData,
-      total,
+  const { t } = useTranslation();
 
-      distanceData?.data,
-      couponDiscount,
-      couponType,
-      orderType,
-      zoneData,
-      origin,
-      destination,
-      extraCharge
-    );
-
-    setDeliveryFee(orderType === "delivery" ? 0 : price);
-    if (price === 0) {
-      return <Typography>{t("Free")}</Typography>;
-    } else {
-      return (
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="flex-end"
-          spacing={0.5}
-          width="100%"
-        >
-          <Typography>{"(+)"}</Typography>
-          <Typography>{storeData && getAmountWithSign(price)}</Typography>
-        </Stack>
-      );
-    }
-  };
-  const handleCouponDiscount = () => {
-    let couponDiscountValue = getCouponDiscount(
-      couponDiscount,
-      storeData,
-      cartList
-    );
-
-    if (couponDiscount && couponDiscount.coupon_type === "free_delivery") {
-      setFreeDelivery("true");
-      return 0;
-    } else {
-      return getAmountWithSign(couponDiscountValue);
-    }
-  };
-  const dispatch = useDispatch();
-  const handleOrderAmount = () => {
-    let totalAmount = getCalculatedTotal(
-      cartList,
-      couponDiscount,
-      storeData,
-      configData,
-      distanceData,
-      couponType,
-      orderType,
-      freeDelivery,
-      Number(deliveryTip),
-      zoneData,
-      origin,
-      destination,
-      extraCharge,
-      additionalCharge
-    );
-
-    setPayableAmount(totalAmount);
-    dispatch(setTotalAmount(totalAmount));
-    return totalAmount;
-  };
-  const discountedPrice = getProductDiscount(cartList, storeData);
-  const totalAmountAfterPartial = handleOrderAmount() - walletBalance;
-console.log(cartList)
+  //  selectors
+  const {
+    item_price,
+    total,
+    discount,
+    delivery_charge,
+    tips,
+    tax,
+    coupon_discount_amount,
+    addon_price,
+    sub_total,
+    variation_price,
+  } = useSelector((state) => state.cart);
+  const { couponInfo } = useSelector((state) => state.profileInfo);
   return (
     <>
       <CalculationGrid container item md={12} xs={12} spacing={1} mt="1rem">
@@ -131,30 +52,68 @@ console.log(cartList)
             {getAmountWithSign(item_price)}
           </Typography>
         </Grid>
+        {variation_price > 0 ? (
+          <>
+            <Grid item md={8} xs={8}>
+              {t("Variation Price")}
+            </Grid>
+            <Grid item md={4} xs={4} align="right">
+              <Typography textTransform="capitalize" align="right">
+                {getAmountWithSign(variation_price)}
+              </Typography>
+            </Grid>
+          </>
+        ) : null}
+
+        {discount > 0 ? (
+          <>
+            <Grid item md={8} xs={8}>
+              {t("Discount")}
+            </Grid>
+            <Grid item md={4} xs={4} align="right">
+              <Stack
+                width="100%"
+                direction="row"
+                alignItems="center"
+                justifyContent="flex-end"
+                spacing={0.5}
+              >
+                <Typography>{"(-)"}</Typography>
+                <Typography>
+                  {discount ? getAmountWithSign(discount) : null}
+                </Typography>
+              </Stack>
+            </Grid>
+          </>
+        ) : null}
         <Grid item md={8} xs={8}>
-          {t("Discount")}
+          {t("Sub Total")}
         </Grid>
         <Grid item md={4} xs={4} align="right">
-          <Stack
-            width="100%"
-            direction="row"
-            alignItems="center"
-            justifyContent="flex-end"
-            spacing={0.5}
-          >
-            <Typography>{"(-)"}</Typography>
-            <Typography>
-              {discount ? getAmountWithSign(discount) : null}
-            </Typography>
-          </Stack>
+          <Typography textTransform="capitalize" align="right">
+            {getAmountWithSign(sub_total)}
+          </Typography>
         </Grid>
-        {couponDiscount ? (
+        {addon_price > 0 ? (
+          <>
+            <Grid item md={8} xs={8}>
+              {t("Addons Price")}
+            </Grid>
+            <Grid item md={4} xs={4} align="right">
+              <Typography textTransform="capitalize" align="right">
+                {getAmountWithSign(addon_price)}
+              </Typography>
+            </Grid>
+          </>
+        ) : null}
+
+        {couponInfo ? (
           <>
             <Grid item md={8} xs={8}>
               {t("Coupon Discount")}
             </Grid>
             <Grid item md={4} xs={4} align="right">
-              {couponDiscount.coupon_type === "free_delivery" ? (
+              {couponInfo?.coupon_type === "free_delivery" ? (
                 <Typography textTransform="capitalize">
                   {t("Free Delivery")}
                 </Typography>
@@ -167,15 +126,16 @@ console.log(cartList)
                 >
                   <Typography>{"(-)"}</Typography>
                   <Typography>
-                    {storeData && cartList && handleCouponDiscount()}
+                    {/* {storeData && cartList && handleCouponDiscount()} */}
+                    {getAmountWithSign(Number(coupon_discount_amount))}
                   </Typography>
                 </Stack>
               )}
             </Grid>
           </>
         ) : null}
-        {storeData ? (
-          storeData?.tax ? (
+        {tax ? (
+          tax ? (
             <>
               <Grid item md={8} xs={8}>
                 {t("TAX")} ({storeData?.tax}%{" "}
@@ -191,24 +151,14 @@ console.log(cartList)
                   {configData?.tax_included === 0 && (
                     <Typography>{"(+)"}</Typography>
                   )}
-                  <Typography>
-                    {storeData &&
-                      getAmountWithSign(
-                        getTaxableTotalPrice(
-                          cartList,
-                          couponDiscount,
-                          storeData,
-                          configData?.tax_included
-                        )
-                      )}
-                  </Typography>
+                  <Typography>{getAmountWithSign(tax)}</Typography>
                 </Stack>
               </Grid>
             </>
           ) : null
         ) : null}
         {orderType === "delivery" || orderType === "schedule_order" ? (
-          Number.parseInt(configData?.dm_tips_status) === 1 ? (
+          (Number.parseInt(configData?.dm_tips_status) === 1 && Number(tips)>0) ? (
             <>
               <Grid item md={8} xs={8} sx={{ textTransform: "capitalize" }}>
                 {t("Deliveryman tips")}
@@ -221,7 +171,7 @@ console.log(cartList)
                   spacing={0.5}
                 >
                   <Typography>{"(+)"}</Typography>
-                  <Typography>{getAmountWithSign(deliveryTip)}</Typography>
+                  <Typography>{getAmountWithSign(tips)}</Typography>
                 </Stack>
               </Grid>
             </>
@@ -248,21 +198,13 @@ console.log(cartList)
             </Grid>
           </>
         ) : null}
-        {orderType === "delivery" || orderType === "schedule_order" ? (
+        {((orderType === "delivery" || orderType === "schedule_order") ) ? (
           <>
             <Grid item md={8} xs={8} sx={{ textTransform: "capitalize" }}>
               {t("Delivery fee")}
             </Grid>
             <Grid item md={4} xs={4} align="right">
-              {couponDiscount ? (
-                couponDiscount?.coupon_type === "free_delivery" ? (
-                  <Typography>{t("Free")}</Typography>
-                ) : (
-                  storeData && handleDeliveryFee()
-                )
-              ) : (
-                storeData && handleDeliveryFee()
-              )}
+              {getAmountWithSign(delivery_charge)}
             </Grid>
           </>
         ) : null}

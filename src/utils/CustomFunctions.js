@@ -319,22 +319,22 @@ const handleTotalDiscountBasedOnModules = (
   if (getCurrentModuleType() === "food") {
     return items.reduce(
       (total, product) =>
-        (product.food_variations.length > 0
+        (product?.food_variations?.length > 0
           ? handleProductValueWithOutDiscount(product) -
             getConvertDiscount(
               restaurentDiscount,
               resDisType,
               handleProductValueWithOutDiscount(product),
-              product.store_discount
+              product?.store_discount
             )
-          : product.price -
+          : product?.price -
             getConvertDiscount(
               restaurentDiscount,
               resDisType,
-              product.price,
-              product.store_discount
+              product?.price,
+              product?.store_discount
             )) *
-          product.quantity +
+          product?.quantity +
         total,
       0
     );
@@ -409,12 +409,12 @@ export const getProductDiscount = (items, storeData) => {
 
       let purchasedAmount = items.reduce(
         (total, product) =>
-          ((product?.food_variations.length > 0
+          ((product?.food_variations?.length > 0
             ? handleProductValueWithOutDiscount(product)
             : product?.price) +
             (product?.selectedAddons?.length > 0
               ? product?.selectedAddons?.reduce(
-                  (total, addOn) => addOn.price * addOn.quantity + total,
+                  (total, addOn) => addOn?.price * addOn?.quantity + total,
                   0
                 )
               : 0)) *

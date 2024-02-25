@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Grid, Paper, Typography, useMediaQuery } from "@mui/material";
 import CustomImageContainer from "../CustomImageContainer";
@@ -53,7 +53,6 @@ import {
   getTotalVariationsPrice,
   handleTotalAmountWithAddons,
 } from "../../utils/CustomFunctions";
-
 const CartContent = (props) => {
   const { cartItem, imageBaseUrl } = props;
   const { configData } = useSelector((state) => state.configData);
@@ -64,55 +63,21 @@ const CartContent = (props) => {
   const guestId = localStorage.getItem("guest_id");
   const { mutate, isLoading: removeIsLoading } = useDeleteCartItem();
   const { mutate: updateMutate, isLoading } = useCartItemUpdate();
-
+  const { wishLists } = useSelector((state) => state.wishList);
+  const [isWishlisted, setIsWishlisted] = useState(false);
   const cartUpdateHandleSuccess = (res) => {
     if (res) {
       dispatch(setCartDetailsPrice(res));
       dispatch(setCartList(res?.carts));
-      // res?.carts?.forEach((item) => {
-      //   if (cartItem?.cartItemId === item?.id) {
-      //     const product = {
-      //       ...item?.item,
-      //       cartItemId: item?.id,
-      //       totalPrice: item?.price,
-      //       quantity: item?.quantity,
-      //       food_variations: item?.item?.food_variations,
-      //       selectedAddons: item?.item?.addons,
-      //       itemBasePrice: item?.item?.price,
-      //       selectedOption: item?.variation,
-      //       unit_price: item?.unit_price,
-      //     };
-
-      //     dispatch(setIncrementToCartItem(product)); // Dispatch the single product
-      //   }
-      // });
     }
   };
 
-  // console.log(cartItem);
   const cartUpdateHandleSuccessDecrement = (res) => {
     if (res) {
       dispatch(setCartDetailsPrice(res));
       dispatch(setCartList(res?.carts));
-    //   res?.carts?.forEach((item) => {
-    //     if (cartItem?.cartItemId === item?.id) {
-    //       const product = {
-    //         ...item?.item,
-    //         cartItemId: item?.id,
-    //         totalPrice: item?.price,
-    //         quantity: item?.quantity,
-    //         food_variations: item?.item?.food_variations,
-    //         selectedAddons: item?.item?.addons,
-    //         itemBasePrice: item?.item?.price,
-    //         selectedOption: item?.variation,
-    //         unit_price: item?.unit_price,
-    //       };
-    //       dispatch(setDecrementToCartItem(product));
-    //     }
-    //   });
-    // }
+    }
   };
-}
   const handleIncrement = (cartItem) => {
     const updateQuantity = cartItem?.quantity + 1;
     const price =
@@ -238,6 +203,17 @@ const CartContent = (props) => {
     }
   };
 
+  const wishlistItemExistHandler = () => {
+    if (wishLists?.item?.find((wishItem) => wishItem?.id === cartItem?.item?.id)) {
+      setIsWishlisted(true);
+    } else {
+      setIsWishlisted(false);
+    }
+  };
+  useEffect(() => {
+    wishlistItemExistHandler();
+  }, [wishLists]);
+
   return (
     <>
       <CustomStackFullWidth
@@ -269,7 +245,6 @@ const CartContent = (props) => {
           {/*  variation */}
           <VariationContent cartItem={cartItem} />
           <Typography fontWeight="500" fontSize={{ xs: "13px", md: "16px" }}>
-           
             {getAmountWithSign(cartItem?.price)}
           </Typography>
         </Stack>
@@ -331,24 +306,27 @@ const CartContent = (props) => {
       <Stack paddingLeft="1rem">
         <CustomDivider paddingTop={isSmall ? ".5rem" : "1rem"} border="2px" />
       </Stack>
-      {updateModalOpen && cartItem?.module_type === "food" ? (
+      {updateModalOpen && cartItem?.item?.module_type === "food" ? (
         <FoodDetailModal
           open={updateModalOpen}
           product={{
             ...cartItem,
-            cart_id: cartItem?.cartItemId,
-            add_ons: cartItem?.addons,
+            ...cartItem?.item,
+            cart_id: cartItem?.id,
+            add_ons: cartItem?.item?.addons,
+            
           }}
           handleModalClose={() => setUpdateModalOpen(false)}
           imageBaseUrl={imageBaseUrl}
           productUpdate
+          isWishlisted={isWishlisted}
         />
       ) : (
         <ModuleModal
           open={updateModalOpen}
           handleModalClose={() => setUpdateModalOpen(false)}
           configData={configData}
-          productDetailsData={{ ...cartItem, cart_id: cartItem?.cartItemId }}
+          productDetailsData={{ ...cartItem, cart_id: cartItem?.id }}
         />
       )}
     </>

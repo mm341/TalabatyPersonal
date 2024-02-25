@@ -16,6 +16,12 @@ const initialState = {
   item_price: 0,
   total: 0,
   variation_price: 0,
+  delivery_charge: 0,
+  tips: 0,
+  tax: 0,
+  coupon_discount_amount: 0,
+  sub_total:0,
+  variation_price:0,
 };
 
 export const cartSlice = createSlice({
@@ -30,6 +36,12 @@ export const cartSlice = createSlice({
       state.discount = action.payload?.discount;
       state.item_price = action.payload?.item_price;
       state.total = action.payload?.total;
+      state.variation_price = action.payload?.variation_price;
+      state.delivery_charge = action.payload?.delivery_charge;
+      state.tips = action.payload?.tips;
+      state.tax = action.payload?.tax;
+      state.coupon_discount_amount = action.payload?.coupon_discount_amount;
+      state.sub_total = action.payload?.sub_total;
       state.variation_price = action.payload?.variation_price;
     },
 

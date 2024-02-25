@@ -257,7 +257,7 @@ const ProductCard = (props) => {
     wishlistItemExistHandler();
   }, [wishLists]);
   const wishlistItemExistHandler = () => {
-    if (wishLists?.item?.find((wishItem) => wishItem.id === item?.id)) {
+    if (wishLists?.item?.find((wishItem) => wishItem?.id === item?.id)) {
       setIsWishlisted(true);
     } else {
       setIsWishlisted(false);
@@ -344,16 +344,7 @@ const ProductCard = (props) => {
     //  console.log(res)
     if (res) {
     
-      // let product = {};
-      // res?.forEach((item) => {
-      //   product = {
-      //     ...item?.item,
-      //     cartItemId: item?.id,
-      //     quantity: item?.quantity,
-      //     totalPrice: item?.price,
-      //     selectedOption: [],
-      //   };
-      // });
+     
       reduxDispatch(setCartList(res?.carts));
       reduxDispatch(setCartDetailsPrice(res));
       toast.success(t("Item added to cart"));

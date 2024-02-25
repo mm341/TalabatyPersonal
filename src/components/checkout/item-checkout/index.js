@@ -43,6 +43,8 @@ import PlaceOrder from "./PlaceOrder";
 import { baseUrl } from "../../../api-manage/MainApi";
 import { cod_exceeds_message } from "../../../utils/toasterMessages";
 import {
+  setCartDetailsPrice,
+  setCartList,
   setClearCart,
   setRemoveItemFromCart,
 } from "../../../redux/slices/cart";
@@ -64,7 +66,11 @@ import ItemSelectWithChip from "../../ItemSelectWithChip";
 import { deliveryInstructions, productUnavailableData } from "./demoData";
 import { handleValuesFromCartItems } from "../../product-details/product-details-section/helperFunction";
 import useGetOfflinePaymentOptions from "../../../api-manage/hooks/react-query/offlinePayment/useGetOfflinePaymentOptions";
-import { getGuestId, getToken } from "../../../helper-functions/getToken";
+import {
+  getCoupon,
+  getGuestId,
+  getToken,
+} from "../../../helper-functions/getToken";
 import OfflineForm from "./offline-payment/OfflineForm";
 import { useOfflinePayment } from "../../../api-manage/hooks/react-query/offlinePayment/useOfflinePayment";
 import {
@@ -75,6 +81,7 @@ import {
 
 import CustomImageContainer from "../../CustomImageContainer";
 import thunderstorm from "../assets/thunderstorm.svg";
+import { useGetCheckoutData } from "../../../api-manage/hooks/react-query/useGetCheckOutData";
 
 const ItemCheckout = (props) => {
   const { configData, router, page, cartList, campaignItemList, totalAmount } =
@@ -91,8 +98,7 @@ const ItemCheckout = (props) => {
   const [offlinePayments, setOfflinePayments] = useState("");
   const [scheduleAt, setScheduleAt] = useState("now");
   const [orderSuccess, setOrderSuccess] = useState(false);
-  const [taxAmount, setTaxAmount] = useState(0);
-  const [total_order_amount, setTotalOrderAmount] = useState(0);
+
   const [enabled, setEnabled] = useState(cartList?.length ? true : false);
   const [deliveryTip, setDeliveryTip] = useState(0);
   const [deliveryFee, setDeliveryFee] = useState(0);
@@ -116,6 +122,7 @@ const ItemCheckout = (props) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const guest_id = getGuestId();
+  const coupon = getCoupon();
   const { method } = router.query;
   const currentModuleType = getCurrentModuleType();
   const storeId =
@@ -131,6 +138,70 @@ const ItemCheckout = (props) => {
     refetch: refetchOfflinePaymentOptions,
     isLoading: offlineIsLoading,
   } = useGetOfflinePaymentOptions();
+
+  //  get token
+  //  get checkout Data for cart list
+  const { mutate, isLoading, error } = useGetCheckoutData();
+  let order_type = orderType;
+
+  const handelCheckoutDetails = () => {
+    if (guestUserInfo?.address && !token) {
+      if (orderType === "schedule_order") {
+        order_type = "delivery";
+      }
+      let data = {
+        order_type: order_type,
+        latitude: guestUserInfo?.latitude,
+        longitude: guestUserInfo?.longitude,
+        guest_id: guest_id,
+        tips: Number(deliveryTip),
+        schedule_at: scheduleAt === "now" ? null : scheduleAt,
+      };
+      mutate(data, {
+        onSuccess: (response) => {
+          dispatch(setCartList(response?.carts));
+          dispatch(setCartDetailsPrice(response));
+          // toast.success(response?.message);
+        },
+        onError: onErrorResponse,
+      });
+    } else {
+      if (orderType === "schedule_order") {
+        order_type = "delivery";
+      }
+
+      let data = {
+        order_type: order_type,
+        latitude: address?.latitude,
+        longitude: address?.longitude,
+        // guest_id: guest_id,
+        coupon_code: coupon,
+        tips: Number(deliveryTip),
+        schedule_at: scheduleAt === "now" ? null : scheduleAt,
+      };
+      mutate(data, {
+        onSuccess: (response) => {
+          dispatch(setCartList(response?.carts));
+          dispatch(setCartDetailsPrice(response));
+          // toast.success(response?.message);
+        },
+        onError: onErrorResponse,
+      });
+    }
+  };
+  useEffect(() => {
+    handelCheckoutDetails();
+  }, [
+    orderType,
+    deliveryTip,
+    guestUserInfo,
+    order_type,
+    scheduleAt,
+    token,
+    address,
+    coupon,
+  ]);
+
   useEffect(() => {
     refetchOfflinePaymentOptions();
   }, []);
@@ -163,46 +234,6 @@ const ItemCheckout = (props) => {
     }
   );
 
-  // useEffect(() => {
-  //   if (typeof window !== "undefined") {
-  //     if (zoneData) {
-  //       localStorage.setItem("zoneid", zoneData?.data?.zone_id);
-  //       const isCOD = zoneData?.data?.zone_data?.some(
-  //         (item) => item.cash_on_delivery
-  //       );
-  //       if (isCOD) {
-  //         setPaymentMethod("cash_on_delivery");
-  //       } else {
-  //         setPaymentMethod("digital_payment");
-  //       }
-  //     }
-  //   }
-  // }, [zoneData]);
-
-  const { data: distanceData, refetch: refetchDistance } = useQuery(
-    ["get-distance", storeData, address],
-    () => GoogleApi.distanceApi(storeData, address),
-    {
-      enabled: false,
-      onError: onErrorResponse,
-    }
-  );
-  const tempDistance = handleDistance(
-    distanceData?.data?.rows?.[0]?.elements,
-    { latitude: storeData?.latitude, longitude: storeData?.longitude },
-    address
-  );
-
-  const {
-    data: extraCharge,
-    isLoading: extraChargeLoading,
-    refetch: extraChargeRefetch,
-  } = useGetVehicleCharge({ tempDistance });
-  useEffect(() => {
-    if (distanceData) {
-      extraChargeRefetch();
-    }
-  }, [distanceData]);
   const handleChange = (event) => {
     setDayNumber(event.target.value);
   };
@@ -237,28 +268,6 @@ const ItemCheckout = (props) => {
     });
     refetch();
   }, []);
-  useEffect(() => {
-    storeData && address && refetchDistance();
-  }, [storeData, address]);
-
-  useEffect(() => {
-    const taxAmount = getTaxableTotalPrice(
-      cartList,
-      couponDiscount,
-      storeData?.tax,
-      storeData
-    );
-    setTaxAmount(taxAmount);
-  }, [cartList, couponDiscount, storeData]);
-  useEffect(() => {
-    const total_order_amount = getFinalTotalPrice(
-      cartList,
-      couponDiscount,
-      taxAmount,
-      storeData
-    );
-    setTotalOrderAmount(total_order_amount);
-  }, [cartList, couponDiscount, taxAmount]);
 
   const handleOffineOrder = () => {
     const offlinePaymentData = {
@@ -381,14 +390,14 @@ const ItemCheckout = (props) => {
       formData.append("coupon_discount_title", couponDiscount?.title);
 
       formData.append("discount_amount", getProductDiscount(productList));
-      formData.append(
-        "distance",
-        handleDistance(
-          distanceData?.data?.rows?.[0]?.elements,
-          originData,
-          address
-        )
-      );
+      // formData.append(
+      //   "distance",
+      //   handleDistance(
+      //     distanceData?.data?.rows?.[0]?.elements,
+      //     originData,
+      //     address
+      //   )
+      // );
       formData.append("order_amount", totalAmount);
       formData.append("dm_tips", deliveryTip);
 
@@ -431,14 +440,14 @@ const ItemCheckout = (props) => {
         order_type: orderType === "schedule_order" ? "delivery" : orderType,
         store_id: storeData?.id,
         coupon_code: couponDiscount?.code,
-        coupon_discount_amount: couponDiscount?.discount,
-        coupon_discount_title: couponDiscount?.title,
-        discount_amount: getProductDiscount(productList),
-        distance: handleDistance(
-          distanceData?.data?.rows?.[0]?.elements,
-          originData,
-          address
-        ),
+        // coupon_discount_amount: couponDiscount?.discount,
+        // coupon_discount_title: couponDiscount?.title,
+        // discount_amount: getProductDiscount(productList),
+        // distance: handleDistance(
+        //   distanceData?.data?.rows?.[0]?.elements,
+        //   originData,
+        //   address
+        // ),
         order_amount: totalAmount,
         dm_tips: deliveryTip,
         cutlery: cutlery,
@@ -824,11 +833,12 @@ const ItemCheckout = (props) => {
       }
     }
   };
+
   return (
     <>
       {method === "offline" ? (
         <Grid container mb="2rem" paddingTop={{ xs: "1.5rem", md: "2.5rem" }}>
-          <Grid item xs={12} md={12}>
+          {/* <Grid item xs={12} md={12}>
             <CheckoutStepper />
             <CustomStackFullWidth
               marginTop={{ xs: "1.5rem", md: "2.5rem" }}
@@ -839,14 +849,14 @@ const ItemCheckout = (props) => {
               >
                 <OfflineForm
                   offlinePaymentOptions={offlinePaymentOptions}
-                  total_order_amount={payableAmount}
+                  
                   placeOrder={placeOrder}
                   offlinePaymentLoading={offlinePaymentLoading || orderLoading}
                   usePartialPayment={usePartialPayment}
                 />
               </CustomPaperBigCard>
             </CustomStackFullWidth>
-          </Grid>
+          </Grid> */}
         </Grid>
       ) : (
         <Grid
@@ -989,41 +999,35 @@ const ItemCheckout = (props) => {
                     data={deliveryInstructions}
                     handleChange={handleDeliveryInstructionNote}
                   />
-                  {distanceData && storeData ? (
-                    <OrderCalculation
-                      usePartialPayment={usePartialPayment}
-                      cartList={
-                        page === "campaign" ? campaignItemList : cartList
-                      }
-                      storeData={storeData}
-                      couponDiscount={couponDiscount}
-                      taxAmount={taxAmount}
-                      distanceData={distanceData}
-                      total_order_amount={total_order_amount}
-                      configData={configData}
-                      couponInfo={couponInfo}
-                      orderType={orderType}
-                      deliveryTip={deliveryTip}
-                      origin={{
-                        latitude: storeData?.latitude,
-                        longitude: storeData?.longitude,
-                      }}
-                      destination={address}
-                      zoneData={zoneData}
-                      extraCharge={extraCharge && extraCharge}
-                      setDeliveryFee={setDeliveryFee}
-                      extraChargeLoading={extraChargeLoading}
-                      walletBalance={customerData?.data?.wallet_balance}
-                      setPayableAmount={setPayableAmount}
-                      additionalCharge={
-                        configData?.additional_charge_status === 1 &&
-                        configData?.additional_charge
-                      }
-                      payableAmount={payableAmount}
-                    />
-                  ) : (
+                  {/* {distanceData && storeData ? ( */}
+
+                  <OrderCalculation
+                    usePartialPayment={usePartialPayment}
+                    cartList={page === "campaign" ? campaignItemList : cartList}
+                    storeData={storeData}
+                    couponDiscount={couponDiscount}
+                    configData={configData}
+                    couponInfo={couponInfo}
+                    orderType={orderType}
+                    deliveryTip={deliveryTip}
+                    origin={{
+                      latitude: storeData?.latitude,
+                      longitude: storeData?.longitude,
+                    }}
+                    destination={address}
+                    zoneData={zoneData}
+                    setDeliveryFee={setDeliveryFee}
+                    walletBalance={customerData?.data?.wallet_balance}
+                    // setPayableAmount={setPayableAmount}
+                    additionalCharge={
+                      configData?.additional_charge_status === 1 &&
+                      configData?.additional_charge
+                    }
+                    payableAmount={payableAmount}
+                  />
+                  {/* ) : (
                     extraChargeLoading && <OrderCalculationShimmer />
-                  )}
+                  )} */}
                   <PlaceOrder
                     placeOrder={placeOrder}
                     orderLoading={orderLoading}

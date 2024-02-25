@@ -156,33 +156,6 @@ const SecondNavBar = ({ configData }) => {
     cartListRefetch();
   }, [moduleType]);
 
-  // const setItemIntoCart = () => {
-  //   dispatch(setCartDetailsPrice(data));
-
-  //   return data?.carts?.map((item) => ({
-  //     ...item?.item,
-  //     cartItemId: item?.id,
-  //     totalPrice:
-  //       handleProductValueWithOutDiscount({
-  //         ...item?.item,
-  //         selectedOption:
-  //           getModule()?.module_type !== "food"
-  //             ? getOtherModuleVariation(item?.item?.variations, item?.variation)
-  //             : [],
-  //       }) * item?.quantity,
-  //       unit_price:item?.unit_price,
-  //     selectedAddons: item?.item?.addons,
-  //     quantity: item?.quantity,
-  //     food_variations: item?.item?.food_variations,
-  //     itemBasePrice: item?.item?.price,
-  //     unit_price:item?.unit_price,
-  //     selectedOption:
-  //       getModule()?.module_type !== "food"
-  //         ? getOtherModuleVariation(item?.item?.variations, item?.variation)
-  //         : getSelectedVariations(item?.item?.food_variations),
-  //   }));
-  // };
-
   useEffect(() => {
     dispatch(setCartList(data?.carts));
     dispatch(setCartDetailsPrice(data));
