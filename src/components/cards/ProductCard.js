@@ -194,6 +194,7 @@ export const CustomCardButton = styled(CustomButtonPrimary)(
 );
 
 const ProductCard = (props) => {
+  //  props
   const {
     loveItem,
     item,
@@ -212,6 +213,7 @@ const ProductCard = (props) => {
     stock,
   } = props;
 
+  //  hooks
   const [state, dispatch] = useReducer(reducer, initialState);
   const [openModal, setOpenModal] = React.useState(false);
   const { selectedModule } = useSelector((state) => state.utilsData);

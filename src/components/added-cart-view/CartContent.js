@@ -326,7 +326,7 @@ const CartContent = (props) => {
           open={updateModalOpen}
           handleModalClose={() => setUpdateModalOpen(false)}
           configData={configData}
-          productDetailsData={{ ...cartItem, cart_id: cartItem?.id }}
+          productDetailsData={{ ...cartItem, ...cartItem?.item, cart_id: cartItem?.id }}
         />
       )}
     </>

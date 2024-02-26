@@ -57,6 +57,7 @@ const ProductDetailsSection = ({
   isWishlisted,
 }) => {
   const { t } = useTranslation();
+  
   const productImage = productDetailsData?.image;
   const productThumbImage = productDetailsData?.images;
   const imageBaseUrl = productDetailsData?.isCampaignItem

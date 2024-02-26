@@ -66,12 +66,13 @@ const ProductInformationBottomSection = ({
 
   const isInCart = (id) => {
     if (cartList?.length > 0) {
-      const isInCart = cartList?.find(
-        (item) =>
-          item?.id === id &&
-          JSON.stringify(item?.selectedOption) ===
-            JSON.stringify(productDetailsData?.selectedOption)
-      );
+      // const isInCart = cartList?.find(
+      //   (item) =>
+      //     item?.id === id &&
+      //     JSON.stringify(item?.selectedOption) ===
+      //       JSON.stringify(productDetailsData?.selectedOption)
+      // );
+      const isInCart = cartList?.find((item) => item?.item.id === id);
       if (isInCart) {
         return true;
       } else {
@@ -195,7 +196,7 @@ const ProductInformationBottomSection = ({
 
   const actionsHandler = () => (
     <BottomStack direction="row" width="100%" gap={2.5}>
-      {productDetailsData?.stock > 0 && isVariationAvailable() ? (
+      {/* {productDetailsData?.stock > 0 && isVariationAvailable() ? (
         <PrimaryButton
           onClick={() => handleRedirectToCheckoutClick()}
           sx={{
@@ -230,7 +231,7 @@ const ProductInformationBottomSection = ({
             {t("Out of Stock")}
           </Typography>
         </PrimaryButton>
-      )}
+      )} */}
       {!productDetailsData?.isCampaignItem && (
         <>
           {!isInCart(productDetailsData?.id) &&

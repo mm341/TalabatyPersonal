@@ -19,6 +19,7 @@ import "slick-carousel/slick/slick.css";
 import { loveItemSettings } from "./loveItemSettings";
 
 const LoveItem = (props) => {
+  //  hooks
   const [menu, setMenu] = useState([]);
   const [selectedMenuIndex, setSelectedMenuIndex] = useState(0);
   const [filteredData, setFilteredData] = useState([]);
