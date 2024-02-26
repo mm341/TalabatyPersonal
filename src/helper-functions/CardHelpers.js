@@ -35,12 +35,12 @@ export const getDiscountedAmount = (
   //   mainPrice = price - (storeDiscount / 100) * price;
   // }
 
-  if (discount === 0 && Number.parseInt(storeDiscount) > 0) {
-    mainPrice = price * q;
+  if (discount === 0 && Number(storeDiscount) > 0) {
+    // mainPrice = price * q;
 
-    return mainPrice - (price * Number.parseInt(storeDiscount)) / 100;
+    return (mainPrice - (mainPrice * Number(storeDiscount)) / 100).toFixed(2);
   }
-  return mainPrice;
+  return mainPrice.toFixed(2);
 };
 export const getSelectedAddOn = (add_ons) => {
   let add_on = "";

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FoodTitleTypography } from "../food-card/FoodCard.style";
 import FormControl from "@mui/material/FormControl";
 import RadioGroup from "@mui/material/RadioGroup";
-import { Checkbox, FormControlLabel } from "@mui/material";
+import { Checkbox, FormControlLabel, Typography } from "@mui/material";
 import Radio from "@mui/material/Radio";
 
 import VariationRequiredWarningAlert from "./VariationRequiredWarningAlert";
@@ -123,22 +123,18 @@ export const ChoiceValues = (props) => {
 
                       onChange={(e) => {
                         handleRadioData(
-                            e,
-                            option,
-                            index,
-                            choiceIndex,
-                            choice.required,
-                            choice?.type
-                        )
-                    }}
+                          e,
+                          option,
+                          index,
+                          choiceIndex,
+                          choice.required,
+                          choice?.type
+                        );
+                      }}
                     />
                   ) : (
                     <Checkbox
-                    checked={radioCheckHandler(
-                      choiceIndex,
-                      option,
-                      index
-                  )}
+                      checked={radioCheckHandler(choiceIndex, option, index)}
                       // defaultChecked={option?.isSelected}
                       onChange={(e) =>
                         changeChoices(
@@ -158,10 +154,27 @@ export const ChoiceValues = (props) => {
                   <CustomTypographyLabel>{option.label}</CustomTypographyLabel>
                 }
               />
-              <CustomTypographyLabel>
+
+              <CustomTypographyLabel
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: "5px",
+                }}
+              >
+                {Number(option?.price_after_discount) !==
+                  Number(option?.optionPrice) && (
+                  <Typography sx={{ opacity: "0.7" }}>
+                    <del>{getAmountWithSign(option.optionPrice)}</del>
+                  </Typography>
+                )}
+
                 {option.optionPrice === "0"
                   ? "free"
-                  : `+${getAmountWithSign(option.price_after_discount)}`}
+                  : `+${getAmountWithSign(
+                      Number(option.price_after_discount)?.toFixed(2)
+                    )}`}
               </CustomTypographyLabel>
             </CustomStackFullWidth>
           ))}

@@ -560,11 +560,13 @@ const FoodDetailModal = ({
             setSelectedOptions(newSelectedOptions);
             setTotalPrice(
               (prevState) =>
-                prevState - Number.parseInt(option.price_after_discount) * quantity
+                prevState -
+                Number(option.price_after_discount) * quantity
             );
             setVarPrice(
               (prevPrice) =>
-                prevPrice - Number.parseInt(option.price_after_discount) * quantity
+                prevPrice -
+                Number(option.price_after_discount) * quantity
             );
           } else {
             const isItemExistFromSameVariation = selectedOptions.find(
@@ -589,16 +591,20 @@ const FoodDetailModal = ({
               setTotalPrice(
                 (prevState) =>
                   prevState -
-                  Number.parseInt(isItemExistFromSameVariation.price_after_discount) *
+                  Number(
+                    isItemExistFromSameVariation.price_after_discount
+                  ) *
                     quantity +
-                  Number.parseInt(option.price_after_discount) * quantity
+                  Number(option.price_after_discount) * quantity
               );
               setVarPrice(
                 (prevPrice) =>
                   prevPrice -
-                  Number.parseInt(isItemExistFromSameVariation.price_after_discount) *
+                  Number(
+                    isItemExistFromSameVariation.price_after_discount
+                  ) *
                     quantity +
-                  Number.parseInt(option.price_after_discount) * quantity
+                  Number(option.price_after_discount) * quantity
               );
             } else {
               const newObj = {
@@ -611,11 +617,13 @@ const FoodDetailModal = ({
               setSelectedOptions([...selectedOptions, newObj]);
               setTotalPrice(
                 (prevState) =>
-                  prevState + Number.parseInt(option.price_after_discount) * quantity
+                  prevState +
+                  Number(option.price_after_discount) * quantity
               );
               setVarPrice(
                 (prevPrice) =>
-                  prevPrice + Number.parseInt(option.price_after_discount) * quantity
+                  prevPrice +
+                  Number(option.price_after_discount) * quantity
               );
             }
           }
@@ -631,11 +639,13 @@ const FoodDetailModal = ({
           setSelectedOptions([newObj]);
           setTotalPrice(
             (prevState) =>
-              prevState + Number.parseInt(option.price_after_discount) * quantity
+              prevState +
+              Number(option.price_after_discount) * quantity
           );
           setVarPrice(
             (prevPrice) =>
-              prevPrice + Number.parseInt(option.price_after_discount) * quantity
+              prevPrice +
+              Number(option.price_after_discount) * quantity
           );
         }
       } else {
@@ -653,11 +663,11 @@ const FoodDetailModal = ({
 
         setTotalPrice(
           (prevState) =>
-            prevState - Number.parseInt(option.price_after_discount) * quantity
+            prevState - Number(option.price_after_discount) * quantity
         );
         setVarPrice(
           (prevPrice) =>
-            prevPrice - Number.parseInt(option.price_after_discount) * quantity
+            prevPrice - Number(option.price_after_discount) * quantity
         );
       }
     } else {
@@ -675,11 +685,11 @@ const FoodDetailModal = ({
         ]);
         setTotalPrice(
           (prevState) =>
-            prevState + Number.parseInt(option.price_after_discount) * quantity
+            prevState + Number(option.price_after_discount) * quantity
         );
         setVarPrice(
           (prevPrice) =>
-            prevPrice + Number.parseInt(option.price_after_discount) * quantity
+            prevPrice + Number(option.price_after_discount) * quantity
         );
       } else {
         const filtered = selectedOptions.filter((item) => {
@@ -694,11 +704,11 @@ const FoodDetailModal = ({
         setSelectedOptions(filtered);
         setTotalPrice(
           (prevState) =>
-            prevState - Number.parseInt(option.price_after_discount) * quantity
+            prevState - Number(option.price_after_discount) * quantity
         );
         setVarPrice(
           (prevPrice) =>
-            prevPrice - Number.parseInt(option.price_after_discount) * quantity
+            prevPrice - Number(option.price_after_discount) * quantity
         );
       }
     }
@@ -754,12 +764,12 @@ const FoodDetailModal = ({
     }
     if (selectedOptions?.length > 0) {
       selectedOptions?.forEach(
-        (item) => (price += Number.parseInt(item?.price_after_discount))
+        (item) => (price += Number(item?.price_after_discount))
       );
     }
     setTotalPrice(price * quantity);
   };
-  // console.log(selectedOptions)
+
   useEffect(() => {
     if (product) {
       handleTotalPrice();
@@ -854,9 +864,7 @@ const FoodDetailModal = ({
     });
   };
 
- 
-
- 
+  //  handel selected options   in case of product update
   useEffect(() => {
     if (productUpdate) {
       let array = [];
@@ -887,7 +895,85 @@ const FoodDetailModal = ({
       });
     }
   }, [productUpdate]);
-  
+
+
+  //  handel initial value of variation values
+  useEffect(() => {
+    const array = [];
+    const handelvariationValues = (variationValues, index) => {
+      if (
+        variationValues?.values?.length > 0 &&
+        variationValues.type === "single"
+      ) {
+        const filteredArray = variationValues?.values?.filter(
+          (e) => e?.optionPrice === "0"
+        );
+        filteredArray?.forEach((item, i) => {
+          if (item?.optionPrice === "0" && i === 0) {
+            const object = {
+              ...item,
+              isSelected: true,
+              choiceIndex: index,
+              optionIndex: i,
+              type: "required",
+            };
+
+            array?.push(object);
+          }
+        });
+      } else if (
+        variationValues?.values?.length > 0 &&
+        variationValues?.type !== "single"
+      ) {
+        variationValues?.values?.forEach((item, i) => {
+          if (item?.optionPrice === "0") {
+            const object = {
+              ...item,
+              isSelected: true,
+              choiceIndex: index,
+              optionIndex: i,
+              type: "required",
+            };
+
+            array?.push(object);
+          } else {
+            if (
+              variationValues?.required === "on" &&
+              !variationValues?.values
+                ?.map((e) => e?.optionPrice)
+                .includes("0") &&
+              i === 0
+            ) {
+              const object = {
+                ...item,
+                isSelected: true,
+                choiceIndex: index,
+                optionIndex: i,
+                type: "required",
+              };
+              array?.push(object);
+            }
+          }
+        });
+      }
+      return array;
+    };
+    const array2 = [];
+    const handelVariations = (e, i) => {
+      handelvariationValues(e, i);
+
+      array2.push(handelvariationValues(e, i));
+      // setArray2(...array2)
+      setSelectedOptions(...array2);
+    };
+
+    const modifiesSelectedOption = product?.food_variations?.map((e, i) => {
+      handelVariations(e, i);
+    });
+  }, []);
+
+  console.log(product)
+
   return (
     <>
       <Modal open={open} onClose={handleModalClose} disableAutoFocus={true}>
@@ -987,6 +1073,7 @@ const FoodDetailModal = ({
               )}
             </Stack>
           </SimpleBar>
+          {!productUpdate &&
           <Stack paddingX="1rem" pt=".5rem">
             <TotalAmountVisibility
               modalData={modalData}
@@ -999,6 +1086,7 @@ const FoodDetailModal = ({
               selectedAddOns={selectedAddons}
             />
           </Stack>
+}
           <Box sx={{ marginTop: "20px" }}>
             <Grid container direction="row" paddingX="1rem" pb="1rem">
               <Grid
