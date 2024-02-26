@@ -32,7 +32,7 @@ const Root = (props) => {
     <>
       <CssBaseline />
       {/* <DynamicFavicon configData={configData} /> */}
-      <SEO
+      <p
         image={`${configData?.base_urls?.business_logo_url}/${configData?.fav_icon}`}
         businessName={configData?.business_name}
         configData={configData}
