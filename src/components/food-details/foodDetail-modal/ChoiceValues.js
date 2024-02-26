@@ -12,6 +12,7 @@ import { getAmountWithSign } from "../../../helper-functions/CardHelpers";
 
 export const ChoiceValues = (props) => {
   const { choice, t, radioCheckHandler, choiceIndex, changeChoices } = props;
+
   const [radioData, setRadioData] = useState({ isChecked: false });
   useEffect(() => {
     radioData?.option &&
@@ -160,7 +161,7 @@ export const ChoiceValues = (props) => {
               <CustomTypographyLabel>
                 {option.optionPrice === "0"
                   ? "free"
-                  : `+${getAmountWithSign(option.optionPrice)}`}
+                  : `+${getAmountWithSign(option.price_after_discount)}`}
               </CustomTypographyLabel>
             </CustomStackFullWidth>
           ))}

@@ -47,7 +47,11 @@ import { getCurrentModuleType } from "../../helper-functions/getCurrentModuleTyp
 import { getModuleId } from "../../helper-functions/getModuleId";
 import { ModuleTypes } from "../../helper-functions/moduleTypes";
 import { addWishList, removeWishListItem } from "../../redux/slices/wishList";
-import { getConvertDiscount, getTotalVariationsPrice, isAvailable } from "../../utils/CustomFunctions";
+import {
+  getConvertDiscount,
+  getTotalVariationsPrice,
+  isAvailable,
+} from "../../utils/CustomFunctions";
 import {
   cart_item_remove,
   not_logged_in_message,
@@ -74,7 +78,8 @@ import { getLanguage } from "../../helper-functions/getLanguage";
 import CustomLinearProgressbar from "../linear-progressbar";
 import useAddCartItem from "../../api-manage/hooks/react-query/add-cart/useAddCartItem";
 import {
-  getItemDataForAddToCart, getPriceAfterQuantityChange,
+  getItemDataForAddToCart,
+  getPriceAfterQuantityChange,
   handleValuesFromCartItems,
 } from "../product-details/product-details-section/helperFunction";
 import { onErrorResponse } from "../../api-manage/api-error-response/ErrorResponses";
@@ -98,8 +103,8 @@ export const CardWrapper = styled(Card)(
       cardFor === "list-view"
         ? "100%"
         : horizontalcard === "true"
-          ? "440px"
-          : "320px",
+        ? "440px"
+        : "320px",
     width:
       cardType === "vertical-type" || cardType === "list-view"
         ? "100%"
@@ -108,10 +113,10 @@ export const CardWrapper = styled(Card)(
       wishlistcard === "true"
         ? "0rem"
         : nomargin === "true"
-          ? "0rem"
-          : cardType === "vertical-type"
-            ? "0rem"
-            : ".7rem",
+        ? "0rem"
+        : cardType === "vertical-type"
+        ? "0rem"
+        : ".7rem",
     borderRadius: "8px",
     height: cardheight ? cardheight : "220px",
     border:
@@ -139,15 +144,15 @@ export const CardWrapper = styled(Card)(
           ? cardFor === "list-view"
             ? "100%"
             : cardWidth
-              ? cardWidth
-              : "300px"
+            ? cardWidth
+            : "300px"
           : "100%",
       margin:
         wishlistcard === "true"
           ? "0rem"
           : nomargin === "true"
-            ? "0rem"
-            : ".4rem",
+          ? "0rem"
+          : ".4rem",
     },
     [theme.breakpoints.up("sm")]: {
       height: cardheight ? cardheight : "330px",
@@ -242,7 +247,7 @@ const ProductCard = (props) => {
   const { mutate: cartItemRemoveMutate } = useDeleteCartItem();
   useEffect(() => {
     const isInCart = getItemFromCartlist();
-    
+
     if (isInCart) {
       setIsProductExist(true);
       setCount(isInCart?.quantity);
@@ -266,7 +271,7 @@ const ProductCard = (props) => {
     }
   };
 
-  useEffect(() => { }, [state.clearCartModal]);
+  useEffect(() => {}, [state.clearCartModal]);
   const handleClearCartModalOpen = () =>
     dispatch({ type: ACTION.setClearCartModal, payload: true });
   const handleCloseForClearCart = (value) => {
@@ -292,26 +297,30 @@ const ProductCard = (props) => {
     }
   };
   const handleBadge = () => {
-    if (Number.parseInt(item?.store_discount) === 0) {
-      if (Number.parseInt(item?.discount) > 0) {
-        if (item?.discount_type === "percent") {
-          return <CustomBadge top={10} text={`${item?.discount}${p_off}`} />;
-        } else {
-          return (
-            <CustomBadge
-              top={10}
-              text={`${getAmountWithSign(item?.discount)}`}
-            />
-          );
-        }
+    // if (Number.parseInt(item?.store_discount) === 0) {
+    if (Number.parseInt(item?.discount) > 0) {
+      if (item?.discount_type === "percent") {
+        return <CustomBadge top={10} text={`${item?.discount}${p_off}`} />;
+      } else {
+        return (
+          <CustomBadge top={10} text={`${getAmountWithSign(item?.discount)}`} />
+        );
       }
-    } else {
+    } else if (Number.parseInt(item?.discount) === 0) {
       if (Number.parseInt(item?.store_discount) > 0) {
         return (
           <CustomBadge top={10} text={`${item?.store_discount}${p_off}`} />
         );
       }
     }
+    // }
+    //  else {
+    //   if (Number.parseInt(item?.store_discount) > 0) {
+    //     return (
+    //       <CustomBadge top={10} text={`${item?.store_discount}${p_off}`} />
+    //     );
+    //   }
+    // }
   };
   const handleClick = () => {
     if (item?.module_type === "ecommerce") {
@@ -345,8 +354,6 @@ const ProductCard = (props) => {
     // console.log(res)
     //  console.log(res)
     if (res) {
-    
-     
       reduxDispatch(setCartList(res?.carts));
       reduxDispatch(setCartDetailsPrice(res));
       toast.success(t("Item added to cart"));
@@ -416,15 +423,13 @@ const ProductCard = (props) => {
   const addToCart = (e) => {
     if (item?.module_type === "ecommerce") {
       if (item?.variations.length > 0) {
-        router.push(
-          {
-            pathname: "/product/[id]",
-            query: {
-              id: `${item?.slug ? item?.slug : item?.id}`,
-              module_id: `${getModuleId()}`,
-            },
-          }
-        );
+        router.push({
+          pathname: "/product/[id]",
+          query: {
+            id: `${item?.slug ? item?.slug : item?.id}`,
+            module_id: `${getModuleId()}`,
+          },
+        });
       } else {
         e.stopPropagation();
         addToCartHandler();
@@ -472,7 +477,6 @@ const ProductCard = (props) => {
     }
   };
   const cartUpdateHandleSuccess = (res) => {
-  
     if (res) {
       // res?.carts?.forEach((item) => {
       //   if (isInCart?.cartItemId === item?.id) {
@@ -517,7 +521,12 @@ const ProductCard = (props) => {
   const handleIncrement = () => {
     const isExisted = getItemFromCartlist();
     const updateQuantity = isInCart?.quantity + 1;
-    const itemObject = getItemDataForAddToCart(isInCart, updateQuantity, getPriceAfterQuantityChange(isInCart, updateQuantity), getGuestId());
+    const itemObject = getItemDataForAddToCart(
+      isInCart,
+      updateQuantity,
+      getPriceAfterQuantityChange(isInCart, updateQuantity),
+      getGuestId()
+    );
     if (isExisted) {
       if (getCurrentModuleType() === "food") {
         if (item?.maximum_cart_quantity) {
@@ -581,7 +590,12 @@ const ProductCard = (props) => {
         onError: onErrorResponse,
       });
     } else {
-      const itemObject = getItemDataForAddToCart(isInCart, updateQuantity, getPriceAfterQuantityChange(isInCart, updateQuantity), getGuestId());
+      const itemObject = getItemDataForAddToCart(
+        isInCart,
+        updateQuantity,
+        getPriceAfterQuantityChange(isInCart, updateQuantity),
+        getGuestId()
+      );
       updateMutate(itemObject, {
         onSuccess: cartUpdateHandleSuccessDecrement,
         onError: onErrorResponse,
@@ -873,9 +887,10 @@ const ProductCard = (props) => {
                 fontSize: { xs: "13px", sm: "18px" },
                 color: alpha(theme.palette.error.deepLight, 0.7),
               }}
-            >{t("Out of Stock")}</Typography>
+            >
+              {t("Out of Stock")}
+            </Typography>
           ) : (
-
             <AmountWithDiscountedAmount item={item} />
           )}
           <CustomStackFullWidth mt="100px" spacing={1}>
@@ -981,9 +996,22 @@ const ProductCard = (props) => {
           isWishlisted={isWishlisted}
         />
       ) : (
-        <>{cardFor === "flashSale" ? (
-          <>
-          {stock !== 0 &&
+        <>
+          {cardFor === "flashSale" ? (
+            <>
+              {stock !== 0 && (
+                <ModuleModal
+                  open={state.openModal}
+                  handleModalClose={handleClose}
+                  configData={configData}
+                  productDetailsData={item}
+                  addToWishlistHandler={addToWishlistHandler}
+                  removeFromWishlistHandler={removeFromWishlistHandler}
+                  isWishlisted={isWishlisted}
+                />
+              )}
+            </>
+          ) : (
             <ModuleModal
               open={state.openModal}
               handleModalClose={handleClose}
@@ -993,24 +1021,8 @@ const ProductCard = (props) => {
               removeFromWishlistHandler={removeFromWishlistHandler}
               isWishlisted={isWishlisted}
             />
-          }
-          
-          </>
-        ) : (
-          <ModuleModal
-            open={state.openModal}
-            handleModalClose={handleClose}
-            configData={configData}
-            productDetailsData={item}
-            addToWishlistHandler={addToWishlistHandler}
-            removeFromWishlistHandler={removeFromWishlistHandler}
-            isWishlisted={isWishlisted}
-          />
-        )
-
-        }
+          )}
         </>
-
       )}
       {wishlistcard === "true" && (
         <HeartWrapper onClick={() => setOpenModal(true)} top="5px" right="5px">
@@ -1085,7 +1097,7 @@ const ProductCard = (props) => {
               {item?.module?.module_type === "food" && (
                 <ProductsUnavailable product={item} />
               )}
-              
+
               <CustomOverLay hover={state.isTransformed} border_radius="10px">
                 <QuickView
                   quickViewHandleClick={quickViewHandleClick}

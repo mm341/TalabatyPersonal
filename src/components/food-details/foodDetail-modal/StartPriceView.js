@@ -17,6 +17,7 @@ import {
 const StartPriceView = (props) => {
   const { data, hideStartFromText, fontSize, marginFoodCard, configData } =
     props;
+
   const { t } = useTranslation();
   const theme = useTheme();
 
@@ -55,7 +56,7 @@ const StartPriceView = (props) => {
           alignItems="center"
           textAlign="right"
         >
-          {data.price === handleConvertedPrice() ? (
+          {/* {data.price === handleConvertedPrice() ? (
             <Typography
               fontSize="28px"
               display="flex"
@@ -82,6 +83,58 @@ const StartPriceView = (props) => {
                 </Typography>
               </Stack>
             </Stack>
+          )} */}
+          {data?.price_after_discount !== data?.price ? (
+            <Stack direction="row" spacing={0.2} alignItems="center">
+              <Typography
+                variant="body1"
+                marginRight="10px"
+                fontWeight="400"
+                color={theme.palette.error.main}
+                sx={{ fontSize: { xs: "13px", sm: "16px" } }}
+              >
+                <del> {data?.price > 0 && getAmountWithSign(data?.price)}</del>
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: { xs: "13px", sm: "16px" },
+                }}
+                display="flex"
+                alignItems="center"
+                fontWeight="700"
+                color={theme.palette.info.main}
+              >
+                {getAmountWithSign(data?.price_after_discount)}
+              </Typography>
+              {/* {handleDiscountedPriceView()}
+           <Stack>
+             <Typography
+               sx={{
+                 fontSize: { xs: "13px", sm: "16px" },
+               }}
+               display="flex"
+               alignItems="center"
+               fontWeight="700"
+               color={theme.palette.info.main}
+             >
+               {handleConvertedPrice()}
+             </Typography>
+           </Stack> */}
+            </Stack>
+          ) : (
+            <>
+              <Typography
+                sx={{
+                  fontSize: { xs: "13px", sm: "16px" },
+                }}
+                display="flex"
+                alignItems="center"
+                fontWeight="700"
+                color={theme.palette.info.main}
+              >
+                {getAmountWithSign(data?.price)}
+              </Typography>
+            </>
           )}
         </Stack>
       </NoSsr>

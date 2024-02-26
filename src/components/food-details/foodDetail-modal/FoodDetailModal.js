@@ -560,11 +560,11 @@ const FoodDetailModal = ({
             setSelectedOptions(newSelectedOptions);
             setTotalPrice(
               (prevState) =>
-                prevState - Number.parseInt(option.optionPrice) * quantity
+                prevState - Number.parseInt(option.price_after_discount) * quantity
             );
             setVarPrice(
               (prevPrice) =>
-                prevPrice - Number.parseInt(option.optionPrice) * quantity
+                prevPrice - Number.parseInt(option.price_after_discount) * quantity
             );
           } else {
             const isItemExistFromSameVariation = selectedOptions.find(
@@ -589,16 +589,16 @@ const FoodDetailModal = ({
               setTotalPrice(
                 (prevState) =>
                   prevState -
-                  Number.parseInt(isItemExistFromSameVariation.optionPrice) *
+                  Number.parseInt(isItemExistFromSameVariation.price_after_discount) *
                     quantity +
-                  Number.parseInt(option.optionPrice) * quantity
+                  Number.parseInt(option.price_after_discount) * quantity
               );
               setVarPrice(
                 (prevPrice) =>
                   prevPrice -
-                  Number.parseInt(isItemExistFromSameVariation.optionPrice) *
+                  Number.parseInt(isItemExistFromSameVariation.price_after_discount) *
                     quantity +
-                  Number.parseInt(option.optionPrice) * quantity
+                  Number.parseInt(option.price_after_discount) * quantity
               );
             } else {
               const newObj = {
@@ -611,11 +611,11 @@ const FoodDetailModal = ({
               setSelectedOptions([...selectedOptions, newObj]);
               setTotalPrice(
                 (prevState) =>
-                  prevState + Number.parseInt(option.optionPrice) * quantity
+                  prevState + Number.parseInt(option.price_after_discount) * quantity
               );
               setVarPrice(
                 (prevPrice) =>
-                  prevPrice + Number.parseInt(option.optionPrice) * quantity
+                  prevPrice + Number.parseInt(option.price_after_discount) * quantity
               );
             }
           }
@@ -631,11 +631,11 @@ const FoodDetailModal = ({
           setSelectedOptions([newObj]);
           setTotalPrice(
             (prevState) =>
-              prevState + Number.parseInt(option.optionPrice) * quantity
+              prevState + Number.parseInt(option.price_after_discount) * quantity
           );
           setVarPrice(
             (prevPrice) =>
-              prevPrice + Number.parseInt(option.optionPrice) * quantity
+              prevPrice + Number.parseInt(option.price_after_discount) * quantity
           );
         }
       } else {
@@ -653,11 +653,11 @@ const FoodDetailModal = ({
 
         setTotalPrice(
           (prevState) =>
-            prevState - Number.parseInt(option.optionPrice) * quantity
+            prevState - Number.parseInt(option.price_after_discount) * quantity
         );
         setVarPrice(
           (prevPrice) =>
-            prevPrice - Number.parseInt(option.optionPrice) * quantity
+            prevPrice - Number.parseInt(option.price_after_discount) * quantity
         );
       }
     } else {
@@ -675,11 +675,11 @@ const FoodDetailModal = ({
         ]);
         setTotalPrice(
           (prevState) =>
-            prevState + Number.parseInt(option.optionPrice) * quantity
+            prevState + Number.parseInt(option.price_after_discount) * quantity
         );
         setVarPrice(
           (prevPrice) =>
-            prevPrice + Number.parseInt(option.optionPrice) * quantity
+            prevPrice + Number.parseInt(option.price_after_discount) * quantity
         );
       } else {
         const filtered = selectedOptions.filter((item) => {
@@ -694,11 +694,11 @@ const FoodDetailModal = ({
         setSelectedOptions(filtered);
         setTotalPrice(
           (prevState) =>
-            prevState - Number.parseInt(option.optionPrice) * quantity
+            prevState - Number.parseInt(option.price_after_discount) * quantity
         );
         setVarPrice(
           (prevPrice) =>
-            prevPrice - Number.parseInt(option.optionPrice) * quantity
+            prevPrice - Number.parseInt(option.price_after_discount) * quantity
         );
       }
     }
@@ -747,18 +747,19 @@ const FoodDetailModal = ({
     let price;
     if (productUpdate) {
       if (modalData.length > 0) {
-        price = modalData?.[0]?.price;
+        price = modalData?.[0]?.price_after_discount;
       }
     } else {
-      price = product?.price;
+      price = product?.price_after_discount;
     }
     if (selectedOptions?.length > 0) {
       selectedOptions?.forEach(
-        (item) => (price += Number.parseInt(item?.optionPrice))
+        (item) => (price += Number.parseInt(item?.price_after_discount))
       );
     }
     setTotalPrice(price * quantity);
   };
+  // console.log(selectedOptions)
   useEffect(() => {
     if (product) {
       handleTotalPrice();
@@ -853,32 +854,9 @@ const FoodDetailModal = ({
     });
   };
 
-  console.log(selectedOptions);
+ 
 
-  // choiceIndex
-  // :
-  // 0
-  // isSelected
-  // :
-  // true
-  // label
-  // :
-  // "small"
-  // label_ar
-  // :
-  // "صغير"
-  // label_en
-  // :
-  // "small"
-  // optionIndex
-  // :
-  // 0
-  // optionPrice
-  // :
-  // "0"
-  // type
-  // :
-  // "required"
+ 
   useEffect(() => {
     if (productUpdate) {
       let array = [];
@@ -909,6 +887,7 @@ const FoodDetailModal = ({
       });
     }
   }, [productUpdate]);
+  
   return (
     <>
       <Modal open={open} onClose={handleModalClose} disableAutoFocus={true}>

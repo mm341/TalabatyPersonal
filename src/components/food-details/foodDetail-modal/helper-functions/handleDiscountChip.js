@@ -4,38 +4,60 @@ import React from "react";
 import { getAmountWithSign } from "../../../../helper-functions/CardHelpers";
 
 export const handleDiscountChip = (product, t) => {
-  if (product?.restaurant_discount > 0) {
-    if (product?.restaurant_discount === "percent") {
+  // if (product?.restaurant_discount > 0) {
+  //   if (product?.restaurant_discount === "percent") {
+  //     return (
+  //       <OfferTypography>
+  //         {product?.restaurant_discount}% {t("OFF")}
+  //       </OfferTypography>
+  //     );
+  //   } else {
+  //     return (
+  //       <OfferTypography>
+  //         {getAmountWithSign(product?.restaurant_discount)}
+  //       </OfferTypography>
+  //     );
+  //   }
+  // } else {
+  // if (product?.store_discount === 0) {
+  //   if (product?.discount > 0) {
+  //     if (product?.discount_type === "percent") {
+  //       return (
+  //         <OfferTypography>
+  //           {product?.discount}% {t("OFF")}
+  //         </OfferTypography>
+  //       );
+  //     } else {
+  //       return (
+  //         <OfferTypography>
+  //           {getAmountWithSign(product?.discount)} {t("OFF")}
+  //         </OfferTypography>
+  //       );
+  //     }
+  //   }
+  // } else {
+  //   return (
+  //     <OfferTypography>
+  //       {product?.store_discount}% {t("OFF")}
+  //     </OfferTypography>
+  //   );
+  // }
+  if (product?.discount > 0) {
+    if (product?.discount_type === "percent") {
       return (
         <OfferTypography>
-          {product?.restaurant_discount}% {t("OFF")}
+          {product?.discount}% {t("OFF")}
         </OfferTypography>
       );
     } else {
       return (
         <OfferTypography>
-          {getAmountWithSign(product?.restaurant_discount)}
+          {getAmountWithSign(product?.discount)} {t("OFF")}
         </OfferTypography>
       );
     }
-  } else {
-    if (product?.store_discount === 0) {
-      if (product?.discount > 0) {
-        if (product?.discount_type === "percent") {
-          return (
-            <OfferTypography>
-              {product?.discount}% {t("OFF")}
-            </OfferTypography>
-          );
-        } else {
-          return (
-            <OfferTypography>
-              {getAmountWithSign(product?.discount)} {t("OFF")}
-            </OfferTypography>
-          );
-        }
-      }
-    } else {
+  } else if (product?.discount === 0) {
+    if (product?.store_discount > 0) {
       return (
         <OfferTypography>
           {product?.store_discount}% {t("OFF")}
@@ -44,3 +66,4 @@ export const handleDiscountChip = (product, t) => {
     }
   }
 };
+// };

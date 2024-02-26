@@ -8,16 +8,6 @@ import { getCurrentModuleType } from "../helper-functions/getCurrentModuleType";
 import { ModuleTypes } from "../helper-functions/moduleTypes";
 
 const AmountWithDiscountedAmount = ({ item, noPrimaryColor }) => {
-  // const item = {
-  //   price: 100,
-  //   discount: 20,
-  //   discount_type: "amount",
-  //   store_discount: 0,
-  //   quantity: 1,
-  // };
-  if (item?.id === 372) {
-  }
-
   const moduleWiseLayout = () => {
     if (getCurrentModuleType() === ModuleTypes.FOOD) {
       return (
@@ -36,7 +26,7 @@ const AmountWithDiscountedAmount = ({ item, noPrimaryColor }) => {
                 : theme.palette.primary.main,
           }}
         >
-          {getDiscountedAmount(
+          {/* {getDiscountedAmount(
             item?.price,
             item?.discount,
             item?.discount_type,
@@ -71,6 +61,35 @@ const AmountWithDiscountedAmount = ({ item, noPrimaryColor }) => {
                 )
               )}
             </>
+          )} */}
+
+          {item?.price_after_discount !== item?.price ? (
+            <>
+              <Typography
+                fontWeight="400"
+                color="text.secondary"
+                sx={{ fontSize: { xs: "12px", sm: "13px" } }}
+              >
+                <del>{getAmountWithSign(item?.price)}</del>
+              </Typography>
+
+              <Typography
+                fontWeight="500"
+                // color="text.secondary"
+                // sx={{ fontSize: { xs: "12px", sm: "13px" } }}
+              >
+                {getAmountWithSign(item?.price_after_discount)}
+              </Typography>
+            </>
+          ) : (
+            <Typography
+              fontWeight="500"
+              // fontWeight="400"
+              // color="text.secondary"
+              // sx={{ fontSize: { xs: "12px", sm: "13px" } }}
+            >
+              {getAmountWithSign(item?.price)}
+            </Typography>
           )}
         </Typography>
       );
@@ -88,7 +107,7 @@ const AmountWithDiscountedAmount = ({ item, noPrimaryColor }) => {
               noPrimaryColor ? "inherit" : theme.palette.primary.main,
           }}
         >
-          {getDiscountedAmount(
+          {/* {getDiscountedAmount(
             item?.price,
             item?.discount,
             item?.discount_type,
@@ -123,6 +142,34 @@ const AmountWithDiscountedAmount = ({ item, noPrimaryColor }) => {
                 <del>{getAmountWithSign(item?.price)}</del>
               </Typography>
             </>
+          )} */}
+          {item?.price_after_discount !== item?.price ? (
+            <>
+              <Typography
+                fontWeight="400"
+                color="text.secondary"
+                sx={{ fontSize: { xs: "12px", sm: "13px" } }}
+              >
+                <del>{getAmountWithSign(item?.price)}</del>
+              </Typography>
+
+              <Typography
+                fontWeight="500"
+                // color="text.secondary"
+                // sx={{ fontSize: { xs: "12px", sm: "13px" } }}
+              >
+                {getAmountWithSign(item?.price_after_discount)}
+              </Typography>
+            </>
+          ) : (
+            <Typography
+              fontWeight="500"
+              // fontWeight="400"
+              // color="text.secondary"
+              // sx={{ fontSize: { xs: "12px", sm: "13px" } }}
+            >
+              {getAmountWithSign(item?.price)}
+            </Typography>
           )}
         </Typography>
       );

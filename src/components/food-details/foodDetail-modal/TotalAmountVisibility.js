@@ -64,7 +64,7 @@ const TotalAmountVisibility = (props) => {
         </Box>
       </FoodTitleTypography>
 
-      {modalData.length > 0 &&
+      {/* {modalData.length > 0 &&
       (productDiscount || productRestaurantDiscount === 1) ? (
         <CustomTypographyGray
           nodefaultfont="true"
@@ -76,7 +76,7 @@ const TotalAmountVisibility = (props) => {
           )}
           )
         </CustomTypographyGray>
-      ) : null}
+      ) : null} */}
     </Stack>
   );
 };

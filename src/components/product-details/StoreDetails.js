@@ -41,6 +41,7 @@ const CustomWrapper = styled(Paper)(({ theme }) => ({
 }));
 
 const StoreDetails = ({ storeDetails, storeImageBaseUrl }) => {
+  //  hooks
   const { t } = useTranslation();
   const theme = useTheme();
   const router = useRouter();
