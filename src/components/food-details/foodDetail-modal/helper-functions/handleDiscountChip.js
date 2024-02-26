@@ -56,14 +56,15 @@ export const handleDiscountChip = (product, t) => {
         </OfferTypography>
       );
     }
-  } else if (product?.discount === 0) {
-    if (product?.store_discount > 0) {
-      return (
-        <OfferTypography>
-          {product?.store_discount}% {t("OFF")}
-        </OfferTypography>
-      );
-    }
-  }
+  } 
+  // else if (product?.discount === 0) {
+  //   if (product?.store_discount > 0) {
+  //     return (
+  //       <OfferTypography>
+  //         {product?.store_discount}% {t("OFF")}
+  //       </OfferTypography>
+  //     );
+  //   }
+  // }
 };
 // };

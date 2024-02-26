@@ -972,7 +972,7 @@ const FoodDetailModal = ({
     });
   }, []);
 
-  console.log(product)
+ 
 
   return (
     <>

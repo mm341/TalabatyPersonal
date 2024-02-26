@@ -306,13 +306,14 @@ const ProductCard = (props) => {
           <CustomBadge top={10} text={`${getAmountWithSign(item?.discount)}`} />
         );
       }
-    } else if (Number.parseInt(item?.discount) === 0) {
-      if (Number.parseInt(item?.store_discount) > 0) {
-        return (
-          <CustomBadge top={10} text={`${item?.store_discount}${p_off}`} />
-        );
-      }
     }
+    //  else if (Number.parseInt(item?.discount) === 0) {
+    //   if (Number.parseInt(item?.store_discount) > 0) {
+    //     return (
+    //       <CustomBadge top={10} text={`${item?.store_discount}${p_off}`} />
+    //     );
+    //   }
+    // }
     // }
     //  else {
     //   if (Number.parseInt(item?.store_discount) > 0) {
@@ -650,9 +651,14 @@ const ProductCard = (props) => {
           <Typography variant={isSmall ? "body3" : "subtitle2"}>
             {t("start from")}
           </Typography>
+          <Stack direction={"row"} alignItems={"center"} gap={"10px"}>
+          {Number(item?.price_after_discount) !==Number(item?.price) &&
+          <Typography variant={isSmall ? "h7" : "h6"} sx={{opacity:"0.7"}}><del>{getAmountWithSign(item?.price)}</del></Typography>
+  }
           <Typography variant={isSmall ? "h7" : "h5"}>
-            {getAmountWithSign(item?.price)}
+            {getAmountWithSign(item?.price_after_discount)}
           </Typography>
+          </Stack>
         </Stack>
         <CustomStackFullWidth
           direction="row"
