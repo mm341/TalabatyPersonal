@@ -36,7 +36,7 @@ const FoodDetailsManager = (props) => {
     imageBaseUrl,
     handleRouteToStore,
   } = props;
-
+console.log(product?.available_date_ends)
   return (
     <Grid container direction="row">
       <Grid item xs={12} md={12} position="relative">

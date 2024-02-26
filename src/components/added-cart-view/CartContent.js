@@ -29,6 +29,7 @@ import { toast } from "react-hot-toast";
 import { t } from "i18next";
 import {
   cart_item_remove,
+  not_logged_in_message,
   out_of_limits,
   out_of_stock,
 } from "../../utils/toasterMessages";
@@ -40,7 +41,11 @@ import CustomDivider from "../CustomDivider";
 import { useTheme } from "@emotion/react";
 import useDeleteCartItem from "../../api-manage/hooks/react-query/add-cart/useDeleteCartItem";
 import { onErrorResponse } from "../../api-manage/api-error-response/ErrorResponses";
-import { removeWishListStore } from "../../redux/slices/wishList";
+import {
+  addWishList,
+  removeWishListItem,
+  removeWishListStore,
+} from "../../redux/slices/wishList";
 import useCartItemUpdate from "../../api-manage/hooks/react-query/add-cart/useCartItemUpdate";
 import {
   getItemDataForAddToCart,
@@ -53,6 +58,8 @@ import {
   getTotalVariationsPrice,
   handleTotalAmountWithAddons,
 } from "../../utils/CustomFunctions";
+import { useWishListDelete } from "../../api-manage/hooks/react-query/wish-list/useWishListDelete";
+import { useAddToWishlist } from "../../api-manage/hooks/react-query/wish-list/useAddWishList";
 const CartContent = (props) => {
   const { cartItem, imageBaseUrl } = props;
   const { configData } = useSelector((state) => state.configData);
@@ -65,6 +72,8 @@ const CartContent = (props) => {
   const { mutate: updateMutate, isLoading } = useCartItemUpdate();
   const { wishLists } = useSelector((state) => state.wishList);
   const [isWishlisted, setIsWishlisted] = useState(false);
+  const { mutate: addFavoriteMutation } = useAddToWishlist();
+  const { mutate: RemovewishListItem } = useWishListDelete();
   const cartUpdateHandleSuccess = (res) => {
     if (res) {
       dispatch(setCartDetailsPrice(res));
@@ -202,9 +211,11 @@ const CartContent = (props) => {
       return cartItem?.totalPrice;
     }
   };
-
+  console.log(wishLists);
   const wishlistItemExistHandler = () => {
-    if (wishLists?.item?.find((wishItem) => wishItem?.id === cartItem?.item?.id)) {
+    if (
+      wishLists?.item?.find((wishItem) => wishItem?.id === cartItem?.item?.id)
+    ) {
       setIsWishlisted(true);
     } else {
       setIsWishlisted(false);
@@ -213,6 +224,49 @@ const CartContent = (props) => {
   useEffect(() => {
     wishlistItemExistHandler();
   }, [wishLists]);
+
+  const addToWishlistHandler = (e) => {
+    e.stopPropagation();
+    let token = undefined;
+    if (typeof window !== "undefined") {
+      token = localStorage.getItem("token");
+    }
+    if (token) {
+      addFavoriteMutation(cartItem?.item?.id, {
+        onSuccess: (response) => {
+          if (response) {
+            dispatch(
+              addWishList({
+                ...cartItem,
+                ...cartItem?.item,
+              })
+            );
+            setIsWishlisted(true);
+            toast.success(response?.message);
+          }
+        },
+        onError: (error) => {
+          toast.error(error.response.data.message);
+        },
+      });
+    } else toast.error(t(not_logged_in_message));
+  };
+  const removeFromWishlistHandler = (e) => {
+    e.stopPropagation();
+    const onSuccessHandlerForDelete = (res) => {
+      dispatch(removeWishListItem(cartItem?.item?.id));
+      setIsWishlisted(false);
+      toast.success(res.message, {
+        id: "wishlist",
+      });
+    };
+    RemovewishListItem(cartItem?.item?.id, {
+      onSuccess: onSuccessHandlerForDelete,
+      onError: (error) => {
+        toast.error(error.response.data.message);
+      },
+    });
+  };
 
   return (
     <>
@@ -314,19 +368,26 @@ const CartContent = (props) => {
             ...cartItem?.item,
             cart_id: cartItem?.id,
             add_ons: cartItem?.item?.addons,
-            
           }}
           handleModalClose={() => setUpdateModalOpen(false)}
           imageBaseUrl={imageBaseUrl}
           productUpdate
           isWishlisted={isWishlisted}
+          addToWishlistHandler={addToWishlistHandler}
+          removeFromWishlistHandler={removeFromWishlistHandler}
         />
       ) : (
         <ModuleModal
           open={updateModalOpen}
           handleModalClose={() => setUpdateModalOpen(false)}
           configData={configData}
-          productDetailsData={{ ...cartItem, ...cartItem?.item, cart_id: cartItem?.id }}
+          productDetailsData={{
+            ...cartItem,
+            ...cartItem?.item,
+            cart_id: cartItem?.id,
+          }}
+          addToWishlistHandler={addToWishlistHandler}
+          removeFromWishlistHandler={removeFromWishlistHandler}
         />
       )}
     </>

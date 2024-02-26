@@ -4,17 +4,14 @@ import CustomImageContainer from "../CustomImageContainer";
 import { Stack } from "@mui/system";
 import { IconButton, Typography } from "@mui/material";
 import deleteIcon from "../../assets/delete.png";
-import {
-  getAmountWithSign,
-  getDiscountedAmount,
-} from "../../helper-functions/CardHelpers";
+
 import CartIcon from "../added-cart-view/assets/CartIcon";
 import { useTheme } from "@emotion/react";
 import { CustomIconButton } from "../../styled-components/CustomButtons.style";
 import CustomDivider from "../CustomDivider";
 import { useDispatch, useSelector } from "react-redux";
 import { getCartListModuleWise } from "../../helper-functions/getCartListModuleWise";
-import { setCart } from "../../redux/slices/cart";
+import { setCart, setCartDetailsPrice, setCartList } from "../../redux/slices/cart";
 import toast from "react-hot-toast";
 import {
   ACTION,
@@ -41,6 +38,7 @@ import useAddCartItem from "../../api-manage/hooks/react-query/add-cart/useAddCa
 import Loading from "../custom-loading/Loading";
 
 const WishListCard = ({ item }) => {
+  //  hooks
   const theme = useTheme();
   const [isWishlisted, setIsWishlisted] = useState(false);
   const reduxDispatch = useDispatch();
@@ -55,7 +53,7 @@ const WishListCard = ({ item }) => {
   const { wishLists } = useSelector((state) => state.wishList);
   const { mutate } = useWishListDelete();
   const router = useRouter();
-  const isInCart = cartList?.find((things) => things.id === item?.id);
+  
   const { mutate: addToMutate, isLoading } = useAddCartItem();
   const handleClose = () => {
     setOpenItemModal(false);
@@ -94,23 +92,25 @@ const WishListCard = ({ item }) => {
   }, [item]);
   const handleSuccess = (res) => {
     if (res) {
-      let product = {};
-      res?.forEach((item) => {
-        product = {
-          ...item?.item,
-          cartItemId: item?.id,
-          quantity: item?.quantity,
-          totalPrice: item?.price,
-          selectedOption: [],
-        };
-      });
-      reduxDispatch(setCart(product));
+      // let product = {};
+      // res?.forEach((item) => {
+      //   product = {
+      //     ...item?.item,
+      //     cartItemId: item?.id,
+      //     quantity: item?.quantity,
+      //     totalPrice: item?.price,
+      //     selectedOption: [],
+      //   };
+      // });
+      
+      dispatch(setCartList(res?.carts));
+      dispatch(setCartDetailsPrice(res));
       toast.success(t("Item added to cart"));
-      dispatch({ type: ACTION.setClearCartModal, payload: false });
+      // dispatch({ type: ACTION.setClearCartModal, payload: false });
     }
   };
   const addToCartHandler = () => {
-    if (cartList.length > 0) {
+    if (cartList?.length > 0) {
       const isStoreExist = cartList.find(
           (item) => item?.store_id === state?.modalData[0]?.store_id
       );

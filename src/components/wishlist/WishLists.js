@@ -1,33 +1,26 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
+import React from "react";
+
 import {
-  CustomPaperBigCard,
+
   CustomStackFullWidth,
 } from "../../styled-components/CustomStyles.style";
 import TabsTypeOne from "../custom-tabs/TabsTypeOne";
-import { Grid, Typography, useMediaQuery } from "@mui/material";
-import H1 from "../typographies/H1";
-import ProductCard from "../cards/ProductCard";
-import { useDispatch, useSelector } from "react-redux";
-import { useWishListDelete } from "../../api-manage/hooks/react-query/wish-list/useWishListDelete";
-import {
-  removeWishListItem,
-  removeWishListStore,
-} from "../../redux/slices/wishList";
-import StoresInfoCard from "../home/stores-with-filter/cards-grid/StoresInfoCard";
+import {  Typography } from "@mui/material";
+
+import { useSelector } from "react-redux";
+
 import { Stack } from "@mui/system";
 import CustomEmptyResult from "../custom-empty-result";
 import nodataimage from "../../../public/static/newnoitem.png";
-import PushNotificationLayout from "../PushNotificationLayout";
+
 import { getItemsOrFoods } from "../../helper-functions/getItemsOrFoods";
 import { getStoresOrRestaurants } from "../../helper-functions/getStoresOrRestaurants";
-import { useTheme } from "@mui/material/styles";
+
 import WishListCard from "./WishListCard";
 import { CustomOverFlowStack } from "../custom-tabs/tabs.style";
-import WishListSideBarAction from "./WishListSideBarAction";
+
 import StoreWishCard from "./StoreWishCard";
-import toast from "react-hot-toast";
-import { useWishListStoreDelete } from "../../api-manage/hooks/react-query/wish-list/useWishListStoreDelete";
+
 
 const WishLists = (props) => {
   const { configData, t, setSideDrawerOpen } = props;
@@ -43,11 +36,7 @@ const WishLists = (props) => {
   ];
   const { currentTab } = useSelector((state) => state.utilsData);
   const { wishLists } = useSelector((state) => state.wishList);
-  const theme = useTheme();
-  const matches = useMediaQuery("(max-width:1100px)");
-  const dispatch = useDispatch();
-  const moduleId = JSON.parse(window.localStorage.getItem("module"))?.id;
-  const store_image_url = `${configData?.base_urls?.store_image_url}`;
+  
 
   const empty_items_text = `No favourite ${getItemsOrFoods()} found`;
   const empty_stores_text = `No favourite ${getStoresOrRestaurants()} found`;
