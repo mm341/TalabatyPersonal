@@ -39,7 +39,7 @@ export const CustomBadgeWrapepr = styled(Badge)(
 
 const CustomBadge = (props) => {
   const { text, top } = props;
-  return <CustomBadgeWrapepr top={top}> - {text}</CustomBadgeWrapepr>;
+  return <CustomBadgeWrapepr top={top}>  {text}</CustomBadgeWrapepr>;
 };
 
 CustomBadge.propTypes = {
