@@ -109,20 +109,36 @@ export const ChoiceValues = (props) => {
                   choice?.type === "single" ? (
                     <Radio
                       checked={radioCheckHandler(choiceIndex, option, index)}
-                      onClick={(e) =>
+                      // onClick={(e) =>
+                      //   handleRadioData(
+                      //     e,
+                      //     option,
+                      //     index,
+                      //     choiceIndex,
+                      //     choice.required,
+                      //     choice?.type
+                      //   )
+                      // }
+
+                      onChange={(e) => {
                         handleRadioData(
-                          e,
-                          option,
-                          index,
-                          choiceIndex,
-                          choice.required,
-                          choice?.type
+                            e,
+                            option,
+                            index,
+                            choiceIndex,
+                            choice.required,
+                            choice?.type
                         )
-                      }
+                    }}
                     />
                   ) : (
                     <Checkbox
-                      defaultChecked={option?.isSelected}
+                    checked={radioCheckHandler(
+                      choiceIndex,
+                      option,
+                      index
+                  )}
+                      // defaultChecked={option?.isSelected}
                       onChange={(e) =>
                         changeChoices(
                           e,

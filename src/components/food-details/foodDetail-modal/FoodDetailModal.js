@@ -86,6 +86,7 @@ const FoodDetailModal = ({
   // const { token } = useSelector((state) => state.configDataSettings);
   const { wishLists } = useSelector((state) => state.wishList);
   const [modalData, setModalData] = useState([]);
+  const [arrayTest, setArrayTest] = useState([]);
   //const guestId = localStorage.getItem("guest_id");
   const { mutate: updateMutate, updateIsLoading } = useCartItemUpdate();
   const { mutate, isLoading } = useAddCartItem();
@@ -639,9 +640,9 @@ const FoodDetailModal = ({
         }
       } else {
         // uncheck or unselect variation handle
-        const filtered = selectedOptions.filter((item) => {
-          if (item.choiceIndex === choiceIndex) {
-            if (item.label !== option.label) {
+        const filtered = selectedOptions?.filter((item) => {
+          if (item?.choiceIndex === choiceIndex) {
+            if (item?.label !== option?.label) {
               return item;
             }
           } else {
@@ -713,6 +714,7 @@ const FoodDetailModal = ({
     },
     [selectedOptions]
   );
+
   const changeAddOns = (addOn) => {
     // console.log(addOn)
     if (addOn?.isChecked && addOn?.quantity > 0) {
@@ -735,6 +737,12 @@ const FoodDetailModal = ({
     }
   };
 
+  //  handel add initial value of addons in case of update cart prodcuts
+  useEffect(() => {
+    if (productUpdate) {
+      setSelectedAddOns(product?.addons?.filter((e) => e?.isChecked));
+    }
+  }, [productUpdate]);
   const handleTotalPrice = () => {
     let price;
     if (productUpdate) {
@@ -774,7 +782,6 @@ const FoodDetailModal = ({
   const { mutate: addFavoriteMutation } = useAddToWishlist();
 
   const isInCart = (id) => {
-
     if (productUpdate) {
       const isInCart = cartList?.filter((item) => item?.item.id === id);
       if (isInCart?.length > 0) {
@@ -846,6 +853,62 @@ const FoodDetailModal = ({
     });
   };
 
+  console.log(selectedOptions);
+
+  // choiceIndex
+  // :
+  // 0
+  // isSelected
+  // :
+  // true
+  // label
+  // :
+  // "small"
+  // label_ar
+  // :
+  // "صغير"
+  // label_en
+  // :
+  // "small"
+  // optionIndex
+  // :
+  // 0
+  // optionPrice
+  // :
+  // "0"
+  // type
+  // :
+  // "required"
+  useEffect(() => {
+    if (productUpdate) {
+      let array = [];
+
+      const handeVariationsValues = (el, index, i, choice) => {
+        if (el?.isSelected) {
+          const obj = {
+            choiceIndex: index,
+            ...el,
+
+            optionIndex: i,
+            isSelected: true,
+          };
+          array.push(obj);
+        }
+        // setArrayTest([...array])
+        setSelectedOptions([...array]);
+      };
+      const handelVariations = (choice, index) => {
+        // choice?.map((e, i) => {
+        choice?.values?.map((el, i) => {
+          handeVariationsValues(el, index, i, choice);
+        });
+        // })
+      };
+      const handelUpdateing = product?.food_variations?.map((e, i) => {
+        handelVariations(e, i);
+      });
+    }
+  }, [productUpdate]);
   return (
     <>
       <Modal open={open} onClose={handleModalClose} disableAutoFocus={true}>
@@ -934,7 +997,7 @@ const FoodDetailModal = ({
                     changeChoices={changeChoices}
                   />
                 )}
-             
+
               {modalData.length > 0 && modalData[0].add_ons?.length > 0 && (
                 <AddOnsManager
                   t={t}

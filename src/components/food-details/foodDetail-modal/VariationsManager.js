@@ -7,7 +7,7 @@ const VariationsManager = (props) => {
   const { t, modalData, radioCheckHandler, changeChoices } = props;
   return (
     <>
-      {modalData.length > 0 && modalData[0].food_variations?.length > 0 ? (
+      {modalData?.length > 0 && modalData[0]?.food_variations?.length > 0 ? (
         modalData[0].food_variations?.map((choice, choiceIndex) => (
           <ChoiceValues
             key={choiceIndex}
