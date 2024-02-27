@@ -23,7 +23,7 @@ const AddOnsManager = (props) => {
         {t("Add Ons (Optional)")}
       </FoodTitleTypography>
       <FormGroup sx={{ marginLeft: "20px" }}>
-        {modalData?.length > 0 &&
+        {modalData?.length > 0 &&modalData[0]?.add_ons?.length>0&&
           modalData[0]?.add_ons?.map((item) => (
             <IncDecAddOn
               key={item?.id}

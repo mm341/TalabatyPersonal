@@ -84,8 +84,10 @@ const ProductInformation = ({
   const handleClearCartModalOpen = () => setClearCartModal(true);
 
   const handleClose = (value) => {
+   
     if (value === "add-item") {
       const itemObject = getItemObject(state?.modalData[0]);
+     
       mutate(itemObject, {
         onSuccess: handleSuccess,
         onError: onErrorResponse,
@@ -170,6 +172,7 @@ const ProductInformation = ({
     }
   };
   const handleSuccess = (res) => {
+    
     if (res) {
       // let product = {};
       // res?.carts?.forEach((item) => {
@@ -468,6 +471,7 @@ const ProductInformation = ({
             isLoading={isLoading}
             addToCartMutate={mutate}
             updateIsLoading={updateIsLoading}
+            productUpdate={productUpdate}
           />
           {!isSmall && (
             <CustomStackFullWidth sx={{ mt: ".5rem" }}>
@@ -482,6 +486,8 @@ const ProductInformation = ({
             <CartClearModal
               handleClose={handleClose}
               dispatchRedux={dispatchRedux}
+              handleAddToCartOnDispatch={addToCard}
+              handleCloseFoodModel={()=>handleModalClose()}
             />
           </CustomModal>
         </CustomStackFullWidth>

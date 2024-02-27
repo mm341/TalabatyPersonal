@@ -92,20 +92,12 @@ const WishListCard = ({ item }) => {
   }, [item]);
   const handleSuccess = (res) => {
     if (res) {
-      // let product = {};
-      // res?.forEach((item) => {
-      //   product = {
-      //     ...item?.item,
-      //     cartItemId: item?.id,
-      //     quantity: item?.quantity,
-      //     totalPrice: item?.price,
-      //     selectedOption: [],
-      //   };
-      // });
       
       dispatch(setCartList(res?.carts));
       dispatch(setCartDetailsPrice(res));
       toast.success(t("Item added to cart"));
+      setOpenItemModal(false)
+      console.log("what")
       // dispatch({ type: ACTION.setClearCartModal, payload: false });
     }
   };
@@ -114,14 +106,6 @@ const WishListCard = ({ item }) => {
       const isStoreExist = cartList.find(
           (item) => item?.store_id === state?.modalData[0]?.store_id
       );
-
-      // getDiscountedAmount(
-      //     state?.modalData[0]?.price,
-      //     state?.modalData[0]?.discount,
-      //     state?.modalData[0]?.discount_type,
-      //     state?.modalData[0]?.store_discount,
-      //     state?.modalData[0]?.quantity
-      // )
       if (isStoreExist) {
         const itemObject = {
           guest_id: getGuestId(),
@@ -140,7 +124,7 @@ const WishListCard = ({ item }) => {
           onError: onErrorResponse,
         });
       } else {
-        if (cartList.length !== 0) {
+        if (cartList?.length !== 0) {
           handleClearCartModalOpen();
         }
       }
@@ -182,7 +166,7 @@ const WishListCard = ({ item }) => {
         addToCartHandler();
       }
     } else {
-      if (item?.food_variations.length > 0 || item?.variations.length > 0) {
+      if (item?.food_variations?.length > 0 || item?.variations.length > 0) {
         setOpenItemModal(true);
       } else {
         e.stopPropagation();
@@ -306,13 +290,15 @@ const WishListCard = ({ item }) => {
           imageBaseUrl={imageBaseUrl}
           open={openItemModal}
           handleModalClose={handleClose}
-          //setOpen={openItemModal}
+          
+          setOpen={setOpenItemModal}
           addToWishlistHandler={addToWishlistHandler}
           removeFromWishlistHandler={removeFromWishlistHandler}
           isWishlisted={isWishlisted}
         />
       ) : (
         <ModuleModal
+        setOpen={setOpenItemModal}
           open={openItemModal}
           handleModalClose={handleClose}
           configData={configData}

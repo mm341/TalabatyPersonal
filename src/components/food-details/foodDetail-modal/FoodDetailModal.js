@@ -95,7 +95,7 @@ const FoodDetailModal = ({
   if (typeof window !== "undefined") {
     token = localStorage.getItem("token");
   }
- 
+
   useEffect(() => {
     //initially setting these states to use further
     handleInitialTotalPriceVarPriceQuantitySet(
@@ -176,9 +176,10 @@ const FoodDetailModal = ({
     ),
   });
   const handleSuccess = (res) => {
+  
     if (res) {
       dispatch(setCartDetailsPrice(res));
-      let product = {};
+   
       // res?.carts?.forEach((item) => {
       //   product = {
       //     ...item?.item,
@@ -195,6 +196,8 @@ const FoodDetailModal = ({
       // dispatch(setCart(product));
       dispatch(setCartList(res?.carts));
       handleClose();
+      toast.success(t("Item added to cart"));
+      console.log("what")
       //dispatch()
     }
   };
@@ -501,9 +504,10 @@ const FoodDetailModal = ({
     let checkingFor = status ? status : "cart";
     if (cartList?.length > 0) {
       //checking same restaurant items already exist or not
-      const isRestaurantExist = cartList.find(
+      const isRestaurantExist = cartList?.find(
         (item) => item.store_id === product.store_id
       );
+
       if (isRestaurantExist) {
         if (productUpdate) {
           handleAddToCartOnDispatch(checkingFor);
@@ -512,7 +516,7 @@ const FoodDetailModal = ({
           handleAddToCartOnDispatch(checkingFor);
         }
       } else {
-        if (cartList.length !== 0) {
+        if (cartList?.length !== 0) {
           handleClearCartModalOpen();
         }
       }
@@ -561,13 +565,11 @@ const FoodDetailModal = ({
             setSelectedOptions(newSelectedOptions);
             setTotalPrice(
               (prevState) =>
-                prevState -
-                Number(option.price_after_discount) * quantity
+                prevState - Number(option.price_after_discount) * quantity
             );
             setVarPrice(
               (prevPrice) =>
-                prevPrice -
-                Number(option.price_after_discount) * quantity
+                prevPrice - Number(option.price_after_discount) * quantity
             );
           } else {
             const isItemExistFromSameVariation = selectedOptions.find(
@@ -592,18 +594,14 @@ const FoodDetailModal = ({
               setTotalPrice(
                 (prevState) =>
                   prevState -
-                  Number(
-                    isItemExistFromSameVariation.price_after_discount
-                  ) *
+                  Number(isItemExistFromSameVariation.price_after_discount) *
                     quantity +
                   Number(option.price_after_discount) * quantity
               );
               setVarPrice(
                 (prevPrice) =>
                   prevPrice -
-                  Number(
-                    isItemExistFromSameVariation.price_after_discount
-                  ) *
+                  Number(isItemExistFromSameVariation.price_after_discount) *
                     quantity +
                   Number(option.price_after_discount) * quantity
               );
@@ -618,13 +616,11 @@ const FoodDetailModal = ({
               setSelectedOptions([...selectedOptions, newObj]);
               setTotalPrice(
                 (prevState) =>
-                  prevState +
-                  Number(option.price_after_discount) * quantity
+                  prevState + Number(option.price_after_discount) * quantity
               );
               setVarPrice(
                 (prevPrice) =>
-                  prevPrice +
-                  Number(option.price_after_discount) * quantity
+                  prevPrice + Number(option.price_after_discount) * quantity
               );
             }
           }
@@ -640,13 +636,11 @@ const FoodDetailModal = ({
           setSelectedOptions([newObj]);
           setTotalPrice(
             (prevState) =>
-              prevState +
-              Number(option.price_after_discount) * quantity
+              prevState + Number(option.price_after_discount) * quantity
           );
           setVarPrice(
             (prevPrice) =>
-              prevPrice +
-              Number(option.price_after_discount) * quantity
+              prevPrice + Number(option.price_after_discount) * quantity
           );
         }
       } else {
@@ -832,8 +826,12 @@ const FoodDetailModal = ({
   //   router.push(`/checkout?page=campaign`, undefined, { shallow: true });
   // };
   const [selectedChoice, setChoices] = useState([]);
-  const cartResetHandler = () => {
-    setClearCartModal(false);
+  const cartResetHandler = (value) => {
+    if (value === "add-item") {
+      addOrUpdateToCartByDispatch();
+    } else {
+      setClearCartModal(false);
+    }
   };
 
   const handleChoices = (option, choice) => {
@@ -897,56 +895,20 @@ const FoodDetailModal = ({
     }
   }, [productUpdate]);
 
-
   //  handel initial value of variation values
   useEffect(() => {
-
-    if(!productUpdate){
-    const array = [];
-    const handelvariationValues = (variationValues, index) => {
-      if (
-        variationValues?.values?.length > 0 &&
-        variationValues.type === "single"
-      ) {
-        const filteredArray = variationValues?.values?.filter(
-          (e) => e?.optionPrice === "0"
-        );
-        filteredArray?.forEach((item, i) => {
-          if (item?.optionPrice === "0" && i === 0) {
-            const object = {
-              ...item,
-              isSelected: true,
-              choiceIndex: index,
-              optionIndex: i,
-              type: "required",
-            };
-
-            array?.push(object);
-          }
-        });
-      } else if (
-        variationValues?.values?.length > 0 &&
-        variationValues?.type !== "single"
-      ) {
-        variationValues?.values?.forEach((item, i) => {
-          if (item?.optionPrice === "0") {
-            const object = {
-              ...item,
-              isSelected: true,
-              choiceIndex: index,
-              optionIndex: i,
-              type: "required",
-            };
-
-            array?.push(object);
-          } else {
-            if (
-              variationValues?.required === "on" &&
-              !variationValues?.values
-                ?.map((e) => e?.optionPrice)
-                .includes("0") &&
-              i === 0
-            ) {
+    if (!productUpdate) {
+      const array = [];
+      const handelvariationValues = (variationValues, index) => {
+        if (
+          variationValues?.values?.length > 0 &&
+          variationValues.type === "single"
+        ) {
+          const filteredArray = variationValues?.values?.filter(
+            (e) => e?.optionPrice === "0"
+          );
+          filteredArray?.forEach((item, i) => {
+            if (item?.optionPrice === "0" && i === 0) {
               const object = {
                 ...item,
                 isSelected: true,
@@ -954,29 +916,61 @@ const FoodDetailModal = ({
                 optionIndex: i,
                 type: "required",
               };
+
               array?.push(object);
             }
-          }
-        });
-      }
-      return array;
-    };
-    const array2 = [];
-    const handelVariations = (e, i) => {
-      handelvariationValues(e, i);
+          });
+        } else if (
+          variationValues?.values?.length > 0 &&
+          variationValues?.type !== "single"
+        ) {
+          variationValues?.values?.forEach((item, i) => {
+            if (item?.optionPrice === "0") {
+              const object = {
+                ...item,
+                isSelected: true,
+                choiceIndex: index,
+                optionIndex: i,
+                type: "required",
+              };
 
-      array2.push(handelvariationValues(e, i));
-      // setArray2(...array2)
-      setSelectedOptions(...array2);
-    };
+              array?.push(object);
+            } else {
+              if (
+                variationValues?.required === "on" &&
+                !variationValues?.values
+                  ?.map((e) => e?.optionPrice)
+                  .includes("0") &&
+                i === 0
+              ) {
+                const object = {
+                  ...item,
+                  isSelected: true,
+                  choiceIndex: index,
+                  optionIndex: i,
+                  type: "required",
+                };
+                array?.push(object);
+              }
+            }
+          });
+        }
+        return array;
+      };
+      const array2 = [];
+      const handelVariations = (e, i) => {
+        handelvariationValues(e, i);
 
-    const modifiesSelectedOption = product?.food_variations?.map((e, i) => {
-      handelVariations(e, i);
-    });
-  }
+        array2.push(handelvariationValues(e, i));
+        // setArray2(...array2)
+        setSelectedOptions(...array2);
+      };
+
+      const modifiesSelectedOption = product?.food_variations?.map((e, i) => {
+        handelVariations(e, i);
+      });
+    }
   }, [productUpdate]);
-
- 
 
   return (
     <>
@@ -1077,20 +1071,20 @@ const FoodDetailModal = ({
               )}
             </Stack>
           </SimpleBar>
-          {!productUpdate &&
-          <Stack paddingX="1rem" pt=".5rem">
-            <TotalAmountVisibility
-              modalData={modalData}
-              totalPrice={totalPrice}
-              t={t}
-              productDiscount={product?.discount}
-              productDiscountType={product?.discount_type}
-              productRestaurantDiscount={product?.store_discount}
-              productQuantity={quantity}
-              selectedAddOns={selectedAddons}
-            />
-          </Stack>
-}
+          {!productUpdate && (
+            <Stack paddingX="1rem" pt=".5rem">
+              <TotalAmountVisibility
+                modalData={modalData}
+                totalPrice={totalPrice}
+                t={t}
+                productDiscount={product?.discount}
+                productDiscountType={product?.discount_type}
+                productRestaurantDiscount={product?.store_discount}
+                productQuantity={quantity}
+                selectedAddOns={selectedAddons}
+              />
+            </Stack>
+          )}
           <Box sx={{ marginTop: "20px" }}>
             <Grid container direction="row" paddingX="1rem" pb="1rem">
               <Grid
@@ -1167,11 +1161,12 @@ const FoodDetailModal = ({
           {clearCartModal && (
             <CustomModal
               openModal={clearCartModal}
-              handleClose={() => cartResetHandler()}
+              handleClose={cartResetHandler}
             >
               <CartClearModal
-                handleClose={() => cartResetHandler()}
+                handleClose={cartResetHandler}
                 dispatchRedux={dispatch}
+                handleAddToCartOnDispatch={addToCard}
               />
             </CustomModal>
           )}

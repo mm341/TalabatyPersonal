@@ -17,7 +17,7 @@ import {
   CustomColouredTypography,
   CustomStackFullWidth,
 } from "../../../styled-components/CustomStyles.style";
-import { setClearCart } from "../../../redux/slices/cart";
+import { setCartList, setClearCart } from "../../../redux/slices/cart";
 import {
   cart_clear_description,
   cart_clear_header,
@@ -28,6 +28,7 @@ import toast from "react-hot-toast";
 import useDeleteAllCartItem from "../../../api-manage/hooks/react-query/add-cart/useDeleteAllCartItem";
 import { onErrorResponse } from "../../../api-manage/api-error-response/ErrorResponses";
 import { getToken } from "../../../helper-functions/getToken";
+import { useDispatch } from "react-redux";
 
 const CustomStyledBox = styled(Paper)(({ theme }) => ({
   padding: "1.5rem",
@@ -36,20 +37,32 @@ const CustomStyledBox = styled(Paper)(({ theme }) => ({
   },
 }));
 
-const CartClearModal = ({ handleClose, dispatchRedux }) => {
+const CartClearModal = ({
+  handleClose,
+  handleAddToCartOnDispatch,
+  handleCloseFoodModel,
+}) => {
   const { t } = useTranslation();
   const theme = useTheme();
   const isXSmall = useMediaQuery(theme.breakpoints.down("sm"));
   const guestId = localStorage.getItem("guest_id");
   const { mutate } = useDeleteAllCartItem();
-  const handleClearCart = () => {
-    mutate(guestId, {
-      //onSuccess: handleSuccess,
-      onError: onErrorResponse,
-    });
-    dispatchRedux(setClearCart());
+  const disptach = useDispatch();
+  const handelSuccess = (res) => {
+    // handleAddToCartOnDispatch();
+    disptach(setCartList([]));
     toast.success(t(cart_clear_success_message), { duration: 5000 });
     handleClose?.("add-item");
+    // handleCloseFoodModel();
+  
+  };
+  const handleClearCart = () => {
+    
+    mutate(guestId, {
+      onSuccess: handelSuccess,
+      onError: onErrorResponse,
+    });
+    // dispatchRedux(setClearCart());
   };
 
   return (

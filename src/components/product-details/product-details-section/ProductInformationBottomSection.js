@@ -51,6 +51,7 @@ const ProductInformationBottomSection = ({
   t,
   addToCartMutate,
   updateIsLoading,
+  productUpdate
 }) => {
   const theme = useTheme();
   const { cartList } = useSelector((state) => state.cart);
@@ -232,7 +233,7 @@ const ProductInformationBottomSection = ({
       )} */}
       {!productDetailsData?.isCampaignItem && (
         <>
-          {!isInCart(productDetailsData?.id) &&
+          {!productUpdate &&
             productDetailsData?.stock > 0 &&
             isVariationAvailable() && (
               <PrimaryButton
@@ -243,7 +244,7 @@ const ProductInformationBottomSection = ({
                 {isLoading ? <Loading /> : t("Add to Cart")}
               </PrimaryButton>
             )}
-          {!isInCart(productDetailsData?.id) &&
+          {!productUpdate &&
             (productDetailsData?.stock === 0 || !isVariationAvailable()) && (
               <PrimaryButton
                 sx={{
@@ -258,7 +259,7 @@ const ProductInformationBottomSection = ({
                 {isLoading ? <Loading /> : t("Out of Stock")}
               </PrimaryButton>
             )}
-          {isInCart(productDetailsData?.id) && (
+          { productUpdate&& (
             <PrimaryButton
               onClick={() =>
                 handleVariationAvailability(
