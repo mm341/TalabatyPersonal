@@ -191,7 +191,7 @@ const ProductInformationBottomSection = ({
       )}
     </>
   );
-
+  console.log(productDetailsData);
   const actionsHandler = () => (
     <BottomStack direction="row" width="100%" gap={2.5}>
       {/* {productDetailsData?.stock > 0 && isVariationAvailable() ? (
@@ -241,6 +241,21 @@ const ProductInformationBottomSection = ({
                 disabled={productDetailsData?.stock === 0}
               >
                 {isLoading ? <Loading /> : t("Add to Cart")}
+              </PrimaryButton>
+            )}
+          {!isInCart(productDetailsData?.id) &&
+            (productDetailsData?.stock === 0 || !isVariationAvailable()) && (
+              <PrimaryButton
+                sx={{
+                  backgroundColor: theme.palette.customColor.buyButton,
+                  color: "black",
+                  width: "100%",
+                }}
+                disabled={
+                  productDetailsData?.stock === 0 || !isVariationAvailable()
+                }
+              >
+                {isLoading ? <Loading /> : t("Out of Stock")}
               </PrimaryButton>
             )}
           {isInCart(productDetailsData?.id) && (

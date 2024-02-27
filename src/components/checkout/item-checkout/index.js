@@ -143,28 +143,31 @@ const ItemCheckout = (props) => {
   //  get checkout Data for cart list
   const { mutate, isLoading, error } = useGetCheckoutData();
   let order_type = orderType;
-
+ 
   const handelCheckoutDetails = () => {
-    if (guestUserInfo?.address && !token) {
+    if (!token) {
       if (orderType === "schedule_order") {
         order_type = "delivery";
       }
       let data = {
         order_type: order_type,
-        latitude: guestUserInfo?.latitude,
-        longitude: guestUserInfo?.longitude,
+        latitude: guestUserInfo?.latitude ?? address?.latitude,
+        longitude: guestUserInfo?.longitude ?? address?.longitude,
         guest_id: guest_id,
         tips: Number(deliveryTip),
         schedule_at: scheduleAt === "now" ? null : scheduleAt,
       };
-      mutate(data, {
-        onSuccess: (response) => {
-          dispatch(setCartList(response?.carts));
-          dispatch(setCartDetailsPrice(response));
-          // toast.success(response?.message);
-        },
-        onError: onErrorResponse,
-      });
+
+      if (guestUserInfo?.address || address) {
+        mutate(data, {
+          onSuccess: (response) => {
+            dispatch(setCartList(response?.carts));
+            dispatch(setCartDetailsPrice(response));
+            // toast.success(response?.message);
+          },
+          onError: onErrorResponse,
+        });
+      }
     } else {
       if (orderType === "schedule_order") {
         order_type = "delivery";

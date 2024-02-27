@@ -9,7 +9,7 @@ import { Stack } from "@mui/system";
 
 const PricePreviewWithStock = (props) => {
   const { state, theme, productDetailsData } = props;
-
+  console.log(productDetailsData);
   const priceWithOrWithoutDiscount = (price) => {
     return (
       <Typography
@@ -59,7 +59,6 @@ const PricePreviewWithStock = (props) => {
     );
   };
   const handlePriceRange = (priceOne, priceTwo) => {
-
     return (
       <Typography
         marginTop="5px !important"
@@ -73,73 +72,81 @@ const PricePreviewWithStock = (props) => {
       >
         {state?.modalData?.[0]?.discount === 0 ? (
           <>
-            {priceOne > priceTwo ?(<>
-              {`${getAmountWithSign(
+            {priceOne > priceTwo ? (
+              <>
+                {`${getAmountWithSign(
                   getDiscountedAmount(
-                      priceOne,
-                      state.modalData[0]?.discount,
-                      state.modalData[0]?.discount_type,
-                      state.modalData[0]?.store_discount
-                  )
-              )} - ${getAmountWithSign(
-                  getDiscountedAmount(
-                      priceTwo,
-                      state.modalData[0]?.discount,
-                      state.modalData[0]?.discount_type,
-                      state.modalData[0]?.store_discount
-                  )
-              )} `}
-            </>):(<>
-              {`  ${getAmountWithSign(
-                  getDiscountedAmount(
-                      priceTwo,
-                      state.modalData[0]?.discount,
-                      state.modalData[0]?.discount_type,
-                      state.modalData[0]?.store_discount
-                  )
-              )}-${getAmountWithSign(
-                  getDiscountedAmount(
-                      priceOne,
-                      state.modalData[0]?.discount,
-                      state.modalData[0]?.discount_type,
-                      state.modalData[0]?.store_discount
-                  )
-              )} `}
-            </>)}
-          </>
-        ) : (
-          <>
-            {priceOne < priceTwo ? (<>{`${getAmountWithSign(
-                getDiscountedAmount(
                     priceOne,
                     state.modalData[0]?.discount,
                     state.modalData[0]?.discount_type,
                     state.modalData[0]?.store_discount
-                )
-            )} - ${getAmountWithSign(
-                getDiscountedAmount(
+                  )
+                )} - ${getAmountWithSign(
+                  getDiscountedAmount(
                     priceTwo,
                     state.modalData[0]?.discount,
                     state.modalData[0]?.discount_type,
                     state.modalData[0]?.store_discount
+                  )
+                )} `}
+              </>
+            ) : (
+              <>
+                {`  ${getAmountWithSign(
+                  getDiscountedAmount(
+                    priceTwo,
+                    state.modalData[0]?.discount,
+                    state.modalData[0]?.discount_type,
+                    state.modalData[0]?.store_discount
+                  )
+                )}-${getAmountWithSign(
+                  getDiscountedAmount(
+                    priceOne,
+                    state.modalData[0]?.discount,
+                    state.modalData[0]?.discount_type,
+                    state.modalData[0]?.store_discount
+                  )
+                )} `}
+              </>
+            )}
+          </>
+        ) : (
+          <>
+            {priceOne < priceTwo ? (
+              <>{`${getAmountWithSign(
+                getDiscountedAmount(
+                  priceOne,
+                  state.modalData[0]?.discount,
+                  state.modalData[0]?.discount_type,
+                  state.modalData[0]?.store_discount
                 )
-            )} `}</>):(<>
-              {` ${getAmountWithSign(
+              )} - ${getAmountWithSign(
+                getDiscountedAmount(
+                  priceTwo,
+                  state.modalData[0]?.discount,
+                  state.modalData[0]?.discount_type,
+                  state.modalData[0]?.store_discount
+                )
+              )} `}</>
+            ) : (
+              <>
+                {` ${getAmountWithSign(
                   getDiscountedAmount(
-                      priceTwo,
-                      state.modalData[0]?.discount,
-                      state.modalData[0]?.discount_type,
-                      state.modalData[0]?.store_discount
+                    priceTwo,
+                    state.modalData[0]?.discount,
+                    state.modalData[0]?.discount_type,
+                    state.modalData[0]?.store_discount
                   )
-              )} -${getAmountWithSign(
+                )} -${getAmountWithSign(
                   getDiscountedAmount(
-                      priceOne,
-                      state.modalData[0]?.discount,
-                      state.modalData[0]?.discount_type,
-                      state.modalData[0]?.store_discount
+                    priceOne,
+                    state.modalData[0]?.discount,
+                    state.modalData[0]?.discount_type,
+                    state.modalData[0]?.store_discount
                   )
-              )}`}
-            </>)}
+                )}`}
+              </>
+            )}
 
             <Typography
               variant="body1"
@@ -149,12 +156,22 @@ const PricePreviewWithStock = (props) => {
               sx={{ fontSize: { xs: "13px", sm: "16px" } }}
             >
               <del>
-                {priceOne <priceTwo ?(<> {`${getAmountWithSign(priceOne)} - ${getAmountWithSign(
-                    priceTwo
-                )}`}</>):(<> {` ${getAmountWithSign(
-                    priceTwo
-                )}-${getAmountWithSign(priceOne)} `}</>)}
-               </del>
+                {priceOne < priceTwo ? (
+                  <>
+                    {" "}
+                    {`${getAmountWithSign(priceOne)} - ${getAmountWithSign(
+                      priceTwo
+                    )}`}
+                  </>
+                ) : (
+                  <>
+                    {" "}
+                    {` ${getAmountWithSign(priceTwo)}-${getAmountWithSign(
+                      priceOne
+                    )} `}
+                  </>
+                )}
+              </del>
             </Typography>
           </>
         )}
@@ -162,36 +179,76 @@ const PricePreviewWithStock = (props) => {
     );
   };
   const handlePrice = () => {
-    if (state?.modalData[0]?.variations?.length > 0) {
-      if (
-        Number.parseInt(state?.modalData[0]?.variations?.[0]?.price) ===
-        Number.parseInt(
-          state?.modalData[0]?.variations?.[
-            state?.modalData[0]?.variations?.length - 1
-          ]?.price
-        )
-      ) {
-        return (
-          <>
-            {priceWithOrWithoutDiscount(
-              state?.modalData[0]?.variations?.[0]?.price
-            )}
-          </>
-        );
-      } else {
-        return (
-          <Stack direction="row" alignItems="center">
-            {handlePriceRange(
-              state?.modalData[0]?.variations?.[0]?.price,
-              state?.modalData[0]?.variations?.[
-                state?.modalData[0]?.variations?.length - 1
-              ]?.price
-            )}
-          </Stack>
-        );
-      }
+    // if (state?.modalData[0]?.variations?.length > 0) {
+    //   if (
+    //     Number(state?.modalData[0]?.variations?.[0]?.price) ===
+    //     Number(
+    //       state?.modalData[0]?.variations?.[
+    //         state?.modalData[0]?.variations?.length - 1
+    //       ]?.price
+    //     )
+    //   ) {
+    //     return (
+    //       <>
+    //         {priceWithOrWithoutDiscount(
+    //           state?.modalData[0]?.variations?.[0]?.price
+    //         )}
+    //       </>
+    //     );
+    //   } else {
+    //     return (
+    //       <Stack direction="row" alignItems="center">
+    //         {handlePriceRange(
+    //           state?.modalData[0]?.variations?.[0]?.price,
+    //           state?.modalData[0]?.variations?.[
+    //             state?.modalData[0]?.variations?.length - 1
+    //           ]?.price
+    //         )}
+    //       </Stack>
+    //     );
+    //   }
+    // } else {
+    //   return <>{priceWithOrWithoutDiscount(state?.modalData[0]?.price)}</>;
+    // }
+
+    if (
+      productDetailsData?.price !== productDetailsData?.price_after_discount
+    ) {
+      return (
+        <Stack direction={"row"} alignItems={"center"} gap={"10px"}>
+          <Typography
+            fontWeight="700"
+            color={theme.palette.primary.main}
+            sx={{
+              fontSize: { xs: "15px", sm: "24px" },
+            }}
+          >
+            {productDetailsData?.price_after_discount}
+          </Typography>
+          <Typography
+            fontWeight="500"
+            color={theme.palette.customColor.textGray}
+            sx={{ fontSize: { xs: "13px", sm: "16px" } }}
+          >
+            <del>{productDetailsData?.price}</del>
+          </Typography>
+          
+        </Stack>
+      );
     } else {
-      return <>{priceWithOrWithoutDiscount(state?.modalData[0]?.price)}</>;
+      return (
+        <Stack direction={"row"} alignItems={"center"} gap={"10px"}>
+          <Typography
+            fontWeight="700"
+            color={theme.palette.primary.main}
+            sx={{
+              fontSize: { xs: "15px", sm: "24px" },
+            }}
+          >
+            {productDetailsData?.price_after_discount}
+          </Typography>
+        </Stack>
+      );
     }
   };
 

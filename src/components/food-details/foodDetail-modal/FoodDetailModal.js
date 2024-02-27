@@ -95,6 +95,7 @@ const FoodDetailModal = ({
   if (typeof window !== "undefined") {
     token = localStorage.getItem("token");
   }
+ 
   useEffect(() => {
     //initially setting these states to use further
     handleInitialTotalPriceVarPriceQuantitySet(

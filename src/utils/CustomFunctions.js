@@ -35,9 +35,11 @@ export const handleTotalAmountWithAddons = (
     selectedAddOns?.forEach(
       (item) => (selectedAddonsTotalPrice += item?.price * item?.quantity)
     );
-    return mainTotalAmount + selectedAddonsTotalPrice;
+    return (Number(mainTotalAmount) + Number(selectedAddonsTotalPrice)).toFixed(
+      2
+    );
   } else {
-    return mainTotalAmount;
+    return Number(mainTotalAmount).toFixed(2);
   }
 };
 
@@ -97,7 +99,7 @@ export const getDayNumber = (day) => {
 };
 const handleVariationValuesSum = (productVariations) => {
   let sum = 0;
-  
+
   if (productVariations?.length > 0) {
     productVariations?.forEach((pVal) => {
       pVal?.values?.forEach((cVal) => {
@@ -118,7 +120,6 @@ const handleValuesSum = (productVariations) => {
 };
 
 export const handleProductValueWithOutDiscount = (product) => {
- 
   let productPrice = product?.price;
   if (getCurrentModuleType() === "food") {
     if (product?.food_variations?.length > 0) {
@@ -708,7 +709,7 @@ const getDeliveryFeeByBadWeather = (
 export const getDeliveryFees = (
   storeData,
   configData,
-  
+
   distance,
   couponDiscount,
   couponType,
