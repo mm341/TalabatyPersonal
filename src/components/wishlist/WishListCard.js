@@ -258,6 +258,8 @@ const WishListCard = ({ item }) => {
     e.stopPropagation();
     setOpenModal(true);
   };
+
+  console.log(item)
   return (
     <>
       <CustomStackFullWidth

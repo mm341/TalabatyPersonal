@@ -900,6 +900,8 @@ const FoodDetailModal = ({
 
   //  handel initial value of variation values
   useEffect(() => {
+
+    if(!productUpdate){
     const array = [];
     const handelvariationValues = (variationValues, index) => {
       if (
@@ -971,7 +973,8 @@ const FoodDetailModal = ({
     const modifiesSelectedOption = product?.food_variations?.map((e, i) => {
       handelVariations(e, i);
     });
-  }, []);
+  }
+  }, [productUpdate]);
 
  
 

@@ -10,6 +10,7 @@ export const handleInitialTotalPriceVarPriceQuantitySet = (
   selectedOptions,
   modalData
 ) => {
+  console.log(productDetailsData)
   if (productDetailsData) {
     if (productDetailsData?.selectedOption?.length > 0) {
       dispatch({

@@ -652,12 +652,13 @@ const ProductCard = (props) => {
             {t("start from")}
           </Typography>
           <Stack direction={"row"} alignItems={"center"} gap={"10px"}>
-          {Number(item?.price_after_discount) !==Number(item?.price) &&
-          <Typography variant={isSmall ? "h7" : "h6"} sx={{opacity:"0.7"}}><del>{getAmountWithSign(item?.price)}</del></Typography>
-  }
           <Typography variant={isSmall ? "h7" : "h5"}>
             {getAmountWithSign(item?.price_after_discount)}
           </Typography>
+          {Number(item?.price_after_discount) !==Number(item?.price) &&
+          <Typography variant={isSmall ? "h7" : "h6"} sx={{opacity:"0.7"}}><del>{getAmountWithSign(item?.price)}</del></Typography>
+  }
+          
           </Stack>
         </Stack>
         <CustomStackFullWidth

@@ -85,16 +85,7 @@ const StartPriceView = (props) => {
             </Stack>
           )} */}
           {data?.price_after_discount !== data?.price ? (
-            <Stack direction="row" spacing={0.2} alignItems="center">
-              <Typography
-                variant="body1"
-                marginRight="10px"
-                fontWeight="400"
-                color={theme.palette.error.main}
-                sx={{ fontSize: { xs: "13px", sm: "16px" } }}
-              >
-                <del> {data?.price > 0 && getAmountWithSign(data?.price)}</del>
-              </Typography>
+            <Stack direction="row" spacing={1} alignItems="center">
               <Typography
                 sx={{
                   fontSize: { xs: "13px", sm: "16px" },
@@ -106,6 +97,16 @@ const StartPriceView = (props) => {
               >
                 {getAmountWithSign(data?.price_after_discount)}
               </Typography>
+              <Typography
+                variant="body1"
+                marginRight="10px"
+                fontWeight="400"
+                color={theme.palette.error.main}
+                sx={{ fontSize: { xs: "13px", sm: "16px" } }}
+              >
+                <del> {data?.price > 0 && getAmountWithSign(data?.price)}</del>
+              </Typography>
+              
               {/* {handleDiscountedPriceView()}
            <Stack>
              <Typography

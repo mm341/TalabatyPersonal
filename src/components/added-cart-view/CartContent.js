@@ -211,7 +211,7 @@ const CartContent = (props) => {
       return cartItem?.totalPrice;
     }
   };
-  console.log(wishLists);
+  
   const wishlistItemExistHandler = () => {
     if (
       wishLists?.item?.find((wishItem) => wishItem?.id === cartItem?.item?.id)

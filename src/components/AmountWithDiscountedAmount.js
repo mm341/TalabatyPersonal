@@ -65,6 +65,13 @@ const AmountWithDiscountedAmount = ({ item, noPrimaryColor }) => {
 
           {item?.price_after_discount !== item?.price ? (
             <>
+            <Typography
+                fontWeight="500"
+                // color="text.secondary"
+                // sx={{ fontSize: { xs: "12px", sm: "13px" } }}
+              >
+                {getAmountWithSign(item?.price_after_discount)}
+              </Typography>
               <Typography
                 fontWeight="400"
                 color="text.secondary"
@@ -73,13 +80,7 @@ const AmountWithDiscountedAmount = ({ item, noPrimaryColor }) => {
                 <del>{getAmountWithSign(item?.price)}</del>
               </Typography>
 
-              <Typography
-                fontWeight="500"
-                // color="text.secondary"
-                // sx={{ fontSize: { xs: "12px", sm: "13px" } }}
-              >
-                {getAmountWithSign(item?.price_after_discount)}
-              </Typography>
+              
             </>
           ) : (
             <Typography
@@ -146,6 +147,13 @@ const AmountWithDiscountedAmount = ({ item, noPrimaryColor }) => {
           {item?.price_after_discount !== item?.price ? (
             <>
               <Typography
+                fontWeight="500"
+                // color="text.secondary"
+                // sx={{ fontSize: { xs: "12px", sm: "13px" } }}
+              >
+                {getAmountWithSign(item?.price_after_discount)}
+              </Typography>
+              <Typography
                 fontWeight="400"
                 color="text.secondary"
                 sx={{ fontSize: { xs: "12px", sm: "13px" } }}
@@ -153,13 +161,7 @@ const AmountWithDiscountedAmount = ({ item, noPrimaryColor }) => {
                 <del>{getAmountWithSign(item?.price)}</del>
               </Typography>
 
-              <Typography
-                fontWeight="500"
-                // color="text.secondary"
-                // sx={{ fontSize: { xs: "12px", sm: "13px" } }}
-              >
-                {getAmountWithSign(item?.price_after_discount)}
-              </Typography>
+            
             </>
           ) : (
             <Typography

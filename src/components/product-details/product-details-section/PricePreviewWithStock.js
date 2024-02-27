@@ -9,7 +9,6 @@ import { Stack } from "@mui/system";
 
 const PricePreviewWithStock = (props) => {
   const { state, theme, productDetailsData } = props;
-  console.log(productDetailsData);
   const priceWithOrWithoutDiscount = (price) => {
     return (
       <Typography
