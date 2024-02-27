@@ -50,6 +50,7 @@ const Index = ({ configData, landingPageData }) => {
             // console.error('Token is missing.')
         }
     }, [token])
+
   return (
     <>
       <CssBaseline />

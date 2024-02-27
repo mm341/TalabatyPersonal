@@ -259,7 +259,7 @@ const BasicInformationForm = ({
               touched={profileFormik.touched.l_name && "true"}
             />
           </Grid>
-          <Grid item md={6} xs={12}>
+          {/* <Grid item md={6} xs={12}>
             <TextField
               sx={{ width: "100%" }}
               InputProps={{
@@ -284,7 +284,7 @@ const BasicInformationForm = ({
               }
               touched={profileFormik.touched.email && "true"}
             />
-          </Grid>
+          </Grid> */}
           <Grid item md={6} xs={12}>
             <TextField
               label={
@@ -317,7 +317,7 @@ const BasicInformationForm = ({
             </Stack>
           ) : (
             <>
-              <Grid item md={6} xs={12}>
+              {/* <Grid item md={6} xs={12}>
                 <TextField
                   required
                   sx={{ width: "100%" }}
@@ -401,7 +401,7 @@ const BasicInformationForm = ({
                     },
                   }}
                 />
-              </Grid>
+              </Grid> */}
             </>
           )}
 

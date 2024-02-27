@@ -148,25 +148,32 @@ const SecondNavBar = ({ configData }) => {
   const guestId = getGuestId();
 
   const { data: guestData, refetch: guestRefetch } = useGetGuest();
-  
-  useEffect(() => {
-    if ((!token||token===undefined) && (guestId === "undefined"||guestId===null)) {
-      guestRefetch();
-    }
-  }, [guestId,token]);
 
   useEffect(() => {
-    if ((!token||token===undefined) && (guestId === "undefined"||guestId===null)&&guestData) {
+    if (
+      (!token || token === undefined) &&
+      (guestId === "undefined" || guestId === null)
+    ) {
+      guestRefetch();
+    }
+  }, [guestId, token]);
+
+  useEffect(() => {
+    if (
+      (!token || token === undefined) &&
+      (guestId === "undefined" || guestId === null) &&
+      guestData
+    ) {
       localStorage.setItem("guest_id", guestData?.guest_id);
     }
-  }, [guestId,token,guestData]);
+  }, [guestId, token, guestData]);
 
   const {
     data,
     refetch: cartListRefetch,
     isLoading,
   } = useGetAllCartList(guestId);
- 
+
   useEffect(() => {
     cartListRefetch();
   }, [moduleType, guestId]);

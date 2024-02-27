@@ -12,8 +12,9 @@ export const GoogleApi = {
     return MainApi.get(`/api/v1/config/place-api-details?placeid=${placeId}`);
   },
   getZoneId: (location) => {
+    console.log(location)
     return MainApi.get(
-      `/api/v1/config/get-zone-id?lat=${location.lat}&lng=${location.lng}`
+      `/api/v1/config/get-zone-id?lat=${location?.lat}&lng=${location?.lng}`
     );
   },
   distanceApi: (origin, destination) => {
