@@ -38,6 +38,7 @@ import { getGuestId } from "../../../helper-functions/getToken";
 import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined";
 import { getModule } from "../../../helper-functions/getLanguage";
 import { handleProductValueWithOutDiscount } from "../../../utils/CustomFunctions";
+import useGetGuest from "../../../api-manage/hooks/react-query/guest/useGetGuest";
 
 const Cart = ({ isLoading }) => {
   const [sideDrawerOpen, setSideDrawerOpen] = useState(false);
@@ -146,15 +147,29 @@ const SecondNavBar = ({ configData }) => {
   let zoneId;
   const guestId = getGuestId();
 
+  const { data: guestData, refetch: guestRefetch } = useGetGuest();
+  
+  useEffect(() => {
+    if ((!token||token===undefined) && (guestId === "undefined"||guestId===null)) {
+      guestRefetch();
+    }
+  }, [guestId,token]);
+
+  useEffect(() => {
+    if ((!token||token===undefined) && (guestId === "undefined"||guestId===null)&&guestData) {
+      localStorage.setItem("guest_id", guestData?.guest_id);
+    }
+  }, [guestId,token,guestData]);
+
   const {
     data,
     refetch: cartListRefetch,
     isLoading,
   } = useGetAllCartList(guestId);
-
+ 
   useEffect(() => {
     cartListRefetch();
-  }, [moduleType]);
+  }, [moduleType, guestId]);
 
   useEffect(() => {
     dispatch(setCartList(data?.carts));

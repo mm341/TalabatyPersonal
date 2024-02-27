@@ -58,13 +58,13 @@ const LandingPage = ({ configData, landingPageData }) => {
   if (typeof window !== "undefined") {
     token = localStorage.getItem("token");
   }
-  const { data: guestData, refetch: guestRefetch, isLoading } = useGetGuest();
-  useEffect(() => {
-    if (!token) {
-      guestRefetch();
-    }
-  }, []);
-  localStorage.setItem("guest_id", guestData?.guest_id);
+  // const { data: guestData, refetch: guestRefetch, isLoading } = useGetGuest();
+  // useEffect(() => {
+  //   if (!token) {
+  //     guestRefetch();
+  //   }
+  // }, []);
+  // localStorage.setItem("guest_id", guestData?.guest_id);
 
   return (
     <>
