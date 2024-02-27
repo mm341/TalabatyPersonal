@@ -31,7 +31,7 @@ const StoreDetails = ({ storeDetails, configData }) => {
     setRerender((prev) => !prev);
     refetch();
   }, [storeDetails?.id]);
-console.log(storeDetails)
+
   const layoutHandler = () => {
     if (isSmall) {
       return (

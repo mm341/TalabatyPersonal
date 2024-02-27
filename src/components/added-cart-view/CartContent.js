@@ -386,6 +386,7 @@ const CartContent = (props) => {
             ...cartItem?.item,
             cart_id: cartItem?.id,
           }}
+          productUpdate
           addToWishlistHandler={addToWishlistHandler}
           removeFromWishlistHandler={removeFromWishlistHandler}
         />

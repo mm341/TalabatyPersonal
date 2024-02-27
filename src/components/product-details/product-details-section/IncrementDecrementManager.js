@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { alpha, Stack, Typography } from "@mui/material";
 
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -14,16 +13,16 @@ import {
   getAmountWithSign,
   getDiscountedAmount,
 } from "../../../helper-functions/CardHelpers";
-import { Box } from "@mui/system";
 
 const IncrementDecrementManager = (props) => {
+  //  props
   const { decrementQuantity, incrementQuantity, modalData, productUpdate } =
     props;
+    //  hooks
   const theme = useTheme();
   const getModule = () => {
     return JSON.parse(window.localStorage.getItem("module"));
   };
-
   return (
     <CustomStackFullWidth spacing={2}>
       <Stack direction="row" spacing={1} alignItems="center">
@@ -148,28 +147,30 @@ const IncrementDecrementManager = (props) => {
             </CustomFab>
           </Stack>
         </Stack>
-        <Stack
-          direction="row"
-          witdh="100%"
-          spacing={1}
-          paddingLeft={productUpdate ? "none" : { sm: "0px", md: "45px" }}
-        >
-          <Typography fontWeight="500" fontSize={{ xs: "12px", md: "14px" }}>
-            {t("Total Price")}:
-          </Typography>
-          <Typography fontWeight="500" fontSize={{ xs: "12px", md: "14px" }}>
-            {modalData &&
-              getAmountWithSign(
-                getDiscountedAmount(
-                  modalData?.totalPrice,
-                  modalData?.discount,
-                  modalData?.discount_type,
-                  modalData?.store_discount,
-                  modalData?.quantity
-                )
-              )}
-          </Typography>
-        </Stack>
+        {!productUpdate && (
+          <Stack
+            direction="row"
+            witdh="100%"
+            spacing={1}
+            paddingLeft={productUpdate ? "none" : { sm: "0px", md: "45px" }}
+          >
+            <Typography fontWeight="500" fontSize={{ xs: "12px", md: "14px" }}>
+              {t("Total Price")}:
+            </Typography>
+            <Typography fontWeight="500" fontSize={{ xs: "12px", md: "14px" }}>
+              {modalData &&
+                getAmountWithSign(
+                  getDiscountedAmount(
+                    modalData?.totalPrice,
+                    modalData?.discount,
+                    modalData?.discount_type,
+                    modalData?.store_discount,
+                    modalData?.quantity
+                  )
+                )}
+            </Typography>
+          </Stack>
+        )}
       </CustomStackFullWidth>
     </CustomStackFullWidth>
   );

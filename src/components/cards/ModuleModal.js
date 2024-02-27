@@ -18,6 +18,7 @@ const ModuleModal = (props) => {
     addToWishlistHandler,
     removeFromWishlistHandler,
     isWishlisted,
+    productUpdate,
   } = props;
   return (
     <>
@@ -57,6 +58,7 @@ const ModuleModal = (props) => {
                 addToWishlistHandler={addToWishlistHandler}
                 removeFromWishlistHandler={removeFromWishlistHandler}
                 isWishlisted={isWishlisted}
+                productUpdate={productUpdate}
               />
             </Scrollbar>
           </FoodDetailModalStyle>

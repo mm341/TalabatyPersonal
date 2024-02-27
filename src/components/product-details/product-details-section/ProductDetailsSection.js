@@ -29,6 +29,7 @@ export const handleDiscountChip = (product, t) => {
   //     );
   //   }
   // } else {
+    
   if (product?.discount !== 0) {
     if (product?.discount_type === "percent") {
       return (

@@ -106,8 +106,10 @@ const ProductInformation = ({
     );
   }, [productDetailsData]);
 
+
+  //  handel choices of variations
   const handleChoices = (option, choice) => {
-    if (cartList.length > 0) {
+    if (cartList?.length > 0) {
       const itemIsInCart = cartList.find(
         (item) =>
           item?.id === productDetailsData?.id &&
@@ -127,8 +129,8 @@ const ProductInformation = ({
             ...productDetailsData,
             selectedOption: [option],
             quantity: 1,
-            price: option.price,
-            totalPrice: option.price,
+            price: option.price_after_discount,
+            totalPrice: option.price_after_discount,
           },
         });
       }
@@ -138,8 +140,8 @@ const ProductInformation = ({
         payload: {
           ...state.modalData[0],
           selectedOption: [option],
-          price: option?.price,
-          totalPrice: option?.price,
+          price: option?.price_after_discount,
+          totalPrice: option?.price_after_discount,
           quantity: 1,
         },
       });
@@ -269,14 +271,13 @@ const ProductInformation = ({
         icon: "⚠️",
       });
     } else {
-      const itemIsInCart = cartList.find(
+      const itemIsInCart = cartList?.find(
         (item) =>
-          item?.id === productDetailsData?.id &&
-          JSON.stringify(item?.selectedOption?.[0]) ===
-            JSON.stringify(state.modalData[0]?.selectedOption?.[0])
+          item?.item?.id === productDetailsData?.item?.id 
       );
+    
       const cartItemObject = {
-        cart_id: itemIsInCart?.cartItemId,
+        cart_id: itemIsInCart?.id,
         guest_id: getGuestId(),
         model: state.modalData[0]?.available_date_starts
           ? "ItemCampaign"
@@ -294,9 +295,9 @@ const ProductInformation = ({
         onSuccess: updateCartSuccessHandler,
         onError: onErrorResponse,
       });
-      if (productUpdate) {
-        handleModalClose?.();
-      }
+      // if (productUpdate) {
+      //   handleModalClose?.();
+      // }
     }
   };
 

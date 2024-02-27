@@ -298,7 +298,7 @@ const ProductCard = (props) => {
   };
   const handleBadge = () => {
     // if (Number.parseInt(item?.store_discount) === 0) {
-    if (Number.parseInt(item?.discount) > 0) {
+    if (Number(item?.discount) > 0) {
       if (item?.discount_type === "percent") {
         return <CustomBadge top={10} text={`${item?.discount}${p_off}`} />;
       } else {

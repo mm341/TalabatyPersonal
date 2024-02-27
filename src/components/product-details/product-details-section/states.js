@@ -33,7 +33,7 @@ export const reducer = (state, action) => {
                 modalData: [
                     {
                         ...state.modalData[0],
-                        totalPrice: (state.modalData[0]?.selectedOption?.length > 0 ? state.modalData[0]?.selectedOption?.[0]?.price : state.modalData[0].price ) * (state.modalData[0].quantity + 1),
+                        totalPrice: (state.modalData[0]?.selectedOption?.length > 0 ? state.modalData[0]?.selectedOption?.[0]?.price_after_discount : state.modalData[0].price_after_discount ) * (state.modalData[0].quantity + 1),
                         quantity: state.modalData[0].quantity + 1,
                     },
                 ],
@@ -45,7 +45,7 @@ export const reducer = (state, action) => {
                     {
                         ...state.modalData[0],
                         totalPrice:
-                            (state.modalData[0]?.selectedOption?.length > 0 ? state.modalData[0]?.selectedOption?.[0]?.price : state.modalData[0].price ) * (state.modalData[0].quantity - 1),
+                            (state.modalData[0]?.selectedOption?.length > 0 ? state.modalData[0]?.selectedOption?.[0]?.price_after_discount : state.modalData[0].price_after_discount ) * (state.modalData[0].quantity - 1),
                         quantity: state.modalData[0].quantity - 1,
                     },
                 ],

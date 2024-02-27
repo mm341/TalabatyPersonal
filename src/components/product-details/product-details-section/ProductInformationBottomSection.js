@@ -72,7 +72,7 @@ const ProductInformationBottomSection = ({
       //     JSON.stringify(item?.selectedOption) ===
       //       JSON.stringify(productDetailsData?.selectedOption)
       // );
-      const isInCart = cartList?.find((item) => item?.item.id === id);
+      const isInCart = cartList?.find((item) => item?.item?.id === id);
       if (isInCart) {
         return true;
       } else {
@@ -191,7 +191,7 @@ const ProductInformationBottomSection = ({
       )}
     </>
   );
-  console.log(productDetailsData);
+
   const actionsHandler = () => (
     <BottomStack direction="row" width="100%" gap={2.5}>
       {/* {productDetailsData?.stock > 0 && isVariationAvailable() ? (

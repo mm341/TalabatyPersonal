@@ -10,7 +10,7 @@ export const handleInitialTotalPriceVarPriceQuantitySet = (
   selectedOptions,
   modalData
 ) => {
-  console.log(productDetailsData)
+
   if (productDetailsData) {
     if (productDetailsData?.selectedOption?.length > 0) {
       dispatch({
@@ -22,7 +22,7 @@ export const handleInitialTotalPriceVarPriceQuantitySet = (
             : 1,
           totalPrice: productDetailsData?.totalPrice
             ? productDetailsData?.totalPrice
-            : productDetailsData?.selectedOption[0]?.price,
+            : productDetailsData?.selectedOption[0]?.price_after_discount,
         },
       });
     } else {
@@ -37,7 +37,7 @@ export const handleInitialTotalPriceVarPriceQuantitySet = (
               : 1,
             totalPrice: productDetailsData?.totalPrice
               ? productDetailsData?.totalPrice
-              : productDetailsData?.variations?.[0]?.price,
+              : productDetailsData?.variations?.[0]?.price_after_discount,
           },
         });
       } else {
@@ -50,7 +50,7 @@ export const handleInitialTotalPriceVarPriceQuantitySet = (
               : 1,
             totalPrice: productDetailsData?.totalPrice
               ? productDetailsData?.totalPrice
-              : productDetailsData?.price,
+              : productDetailsData?.price_after_discount,
             selectedOption: [],
           },
         });

@@ -17,8 +17,8 @@ const getSelectedIndex = (options, selectedOptions) => {
   return index;
 };
 const VariationsManager = ({ productDetailsData, handleChoices }) => {
-  const theme = useTheme();
-  const borderColor = theme.palette.primary.main;
+//   hooks
+
   const [choice, setChoice] = useState(null);
   const [value, setValue] = useState(
     productDetailsData?.choice_options?.map((i) => ({
@@ -27,7 +27,8 @@ const VariationsManager = ({ productDetailsData, handleChoices }) => {
         i?.options[
           getSelectedIndex(i?.options, productDetailsData?.selectedOption?.[0])
         ],
-    }))
+    })
+    )
   );
   const handleClick = (values, index, choice) => {
     setValue((prev) => {
