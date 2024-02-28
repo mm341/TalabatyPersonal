@@ -124,7 +124,7 @@ const AddNewAddress = (props) => {
     if (typeof window !== "undefined") {
       if (zoneData) {
         // dispatch(setZoneData(zoneData?.data?.zone_data));
-        localStorage.setItem("zoneid", zoneData?.zone_id);
+        // localStorage.setItem("zoneid", zoneData?.zone_id);
       }
     }
   }, [zoneData]);
