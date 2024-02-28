@@ -40,7 +40,7 @@ export const getDiscountedAmount = (
 
     return (mainPrice - (mainPrice * Number(storeDiscount)) / 100).toFixed(2);
   }
-  return mainPrice.toFixed(2);
+  return mainPrice?.toFixed(2);
 };
 export const getSelectedAddOn = (add_ons) => {
   let add_on = "";

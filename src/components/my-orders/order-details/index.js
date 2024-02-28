@@ -7,14 +7,13 @@ import { getGuestId } from "../../../helper-functions/getToken";
 import {useSelector} from "react-redux";
 
 const OrderDetails = ({ configData, id }) => {
-  const router = useRouter();
+  
   const guestId = getGuestId();
   const { guestUserInfo } = useSelector((state) => state.guestUserInfo);
   const phone=guestUserInfo?.contact_person_number
   const {
     refetch,
     data,
-    isRefetching,
     isLoading: dataIsLoading,
   } = useGetOrderDetails(id, guestId);
   const { refetch: refetchTrackOrder, data: trackOrderData } =

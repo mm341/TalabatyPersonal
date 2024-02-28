@@ -23,6 +23,7 @@ const Index = ({ configData, landingPageData }) => {
         title={configData ? `Terms And Conditions` : "Loading..."}
         image={`${configData?.base_urls?.business_logo_url}/${configData?.fav_icon}`}
         businessName={configData?.business_name}
+        configData={configData}
       />
       <MainLayout configData={configData} landingPageData={landingPageData}>
         <PolicyPage

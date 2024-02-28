@@ -4,6 +4,7 @@ import Head from "next/head";
 import { useSelector } from "react-redux";
 const DynamicFavicon = ({configData}) => {
   //const { configData } = useSelector((state) => state.configData);
+ 
   const businessLogo = configData?.base_urls?.business_logo_url;
 
   return (
