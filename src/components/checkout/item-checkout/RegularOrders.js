@@ -46,7 +46,7 @@ const RegularOrders = (props) => {
  
   return (
     <>
-      {cartList.length > 0 ? (
+      {cartList?.length > 0 ? (
         cartList.map((item, index) => (
           <CustomStackFullWidth
             key={index}
@@ -78,7 +78,7 @@ const RegularOrders = (props) => {
                 </OrderFoodSubtitle>
 
                 <Stack>
-                  <OrderFoodName>{item?.name}</OrderFoodName>
+                  <OrderFoodName>{item?.item?.name}</OrderFoodName>
                   <VariationContent cartItem={item} />
                 </Stack>
               </Stack>
