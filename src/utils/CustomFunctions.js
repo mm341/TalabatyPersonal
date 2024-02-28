@@ -24,6 +24,7 @@ export const isAvailable = (start, end) => {
   const startTime = moment(start, "HH:mm:ss");
   const endTime = moment(end, "HH:mm:ss");
   let currentTime = moment();
+
   return moment(currentTime).isBetween(startTime, endTime);
 };
 export const handleTotalAmountWithAddons = (
