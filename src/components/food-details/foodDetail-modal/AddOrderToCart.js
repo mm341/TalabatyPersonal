@@ -84,8 +84,7 @@ const AddOrderToCart = (props) => {
     });
   };
   useEffect(() => {}, [wishListCount]);
-console.log(isScheduled)
-console.log(updateIsLoading)
+
   return (
     <>
       {isScheduled ? (
@@ -95,7 +94,7 @@ console.log(updateIsLoading)
               {isInCart(product?.id) && (
                 <PrimaryButton
                   loading={updateIsLoading}
-                  disabled={updateIsLoading}
+                 
                   onClick={() => addToCard()}
                 >
                   {updateIsLoading ? (
@@ -116,7 +115,7 @@ console.log(updateIsLoading)
                 <PrimaryButton
                   onClick={() => addToCard()}
                   loading={isLoading}
-                  disabled={updateIsLoading}
+                 
                 >
                   {t("Add to Cart")}
                 </PrimaryButton>
@@ -170,7 +169,7 @@ console.log(updateIsLoading)
             {isInCart(product?.id) && (
               <PrimaryButton
               loading={updateIsLoading}
-              disabled={updateIsLoading}
+           
                 onClick={() => addToCard()}
                 sx={{ fontSize: { xs: "12px", md: "14px" } }}
               >
@@ -191,7 +190,7 @@ console.log(updateIsLoading)
             {!isInCart(product?.id) && (
               <PrimaryButton
                 onClick={() => addToCard()}
-                disabled={isLoading}
+               
                 loading={isLoading}
                 sx={{ fontSize: { xs: "12px", md: "14px" } }}
               >
