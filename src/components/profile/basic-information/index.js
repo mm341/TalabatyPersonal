@@ -160,7 +160,7 @@ const BasicInformation = (props) => {
                             {data?.phone}
                           </Typography>
                         </Typography>
-                        <Typography
+                        {/* <Typography
                           fontWeight="500"
                           fontSize={{ xs: "12px", md: "14px" }}
                         >
@@ -172,7 +172,7 @@ const BasicInformation = (props) => {
                           >
                             {data?.email}
                           </Typography>
-                        </Typography>
+                        </Typography> */}
                       </>
                     ) : (
                       <Stack>
