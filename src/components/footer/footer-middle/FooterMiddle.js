@@ -121,6 +121,7 @@ const FooterMiddle = (props) => {
                     title="Send us mails"
                     info={configData?.email}
                     t={t}
+                    email
                   />
                 </Grid>
                 <Grid

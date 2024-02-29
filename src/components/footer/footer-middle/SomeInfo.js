@@ -10,7 +10,7 @@ import ClickToCall from "../../header/top-navbar/ClickToCall";
 import SendMail from "../../SendMail";
 
 const SomeInfo = (props) => {
-  const { image, alt, title, info, t, phone } = props;
+  const { image, alt, title, info, t, phone,email } = props;
   const theme = useTheme();
   const handleClick = () => {};
   return (
@@ -48,7 +48,7 @@ const SomeInfo = (props) => {
         >
           {t(title)}
         </CustomTypographyBold>
-        {phone ? (
+        {phone && (
           <ClickToCall phone={info}>
             <Typography
               variant="body2"
@@ -60,7 +60,9 @@ const SomeInfo = (props) => {
               {info}
             </Typography>
           </ClickToCall>
-        ) : (
+        )}  
+
+        {email &&
           <SendMail email={info}>
             <Typography
               variant="body2"
@@ -71,7 +73,21 @@ const SomeInfo = (props) => {
               {info}
             </Typography>
           </SendMail>
-        )}
+}
+
+{!email&& !phone &&
+          // <SendMail email={info}>
+            <Typography
+              variant="body2"
+              sx={{
+                textAlign: "center",
+              }}
+            >
+              {info}
+            </Typography>
+          // </SendMail>
+}
+        
       </CustomStackFullWidth>
     </CustomStackFullWidth>
   );
