@@ -17,6 +17,7 @@ const Index = ({ configData, landingPageData }) => {
         title={configData ? `Rate and Review` : "Loading..."}
         image={`${configData?.base_urls?.business_logo_url}/${configData?.fav_icon}`}
         businessName={configData?.business_name}
+        configData={configData}
       />
       <CssBaseline />
       <AuthGuard from={router.pathname.replace("/", "")}>
@@ -28,20 +29,7 @@ const Index = ({ configData, landingPageData }) => {
       </AuthGuard>
     </>
   );
-  return (
-    <>
-      <CssBaseline />
-      <SEO
-        image={`${configData?.base_urls?.business_logo_url}/${configData?.fav_icon}`}
-        businessName={configData?.business_name}
-      />
-      <AuthGuard from={router.pathname.replace("/", "")}>
-        <MainLayout configData={configData} landingPageData={landingPageData}>
-          <RateAndReview />
-        </MainLayout>
-      </AuthGuard>
-    </>
-  );
+ 
 };
 
 export default Index;

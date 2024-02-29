@@ -61,6 +61,7 @@ const Index = ({ configData }) => {
         title={configData ? atob(router?.query?.name) : "Loading..."}
         image={`${configData?.base_urls?.business_logo_url}/${configData?.fav_icon}`}
         businessName={configData?.business_name}
+        configData={configData}
       />
       <MainLayout configData={configData}>
         <CustomStackFullWidth mt="1rem">

@@ -354,8 +354,6 @@ const MiddleSection = (props) => {
     dispatch({ type: ACTION.setIsSidebarOpen, payload: false });
   };
 
-  console.log(offset)
-
   useEffect(() => {
     if (state.searchKey && state.searchKey !== "") {
       if (offset === 1) {

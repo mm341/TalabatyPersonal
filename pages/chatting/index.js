@@ -18,6 +18,7 @@ const Index = ({ configData, landingPageData }) => {
             title={configData ? `Chat` : "Loading..."}
             image={`${configData?.base_urls?.business_logo_url}/${configData?.fav_icon}`}
             businessName={configData?.business_name}
+            configData={configData}
         />
       <MainLayout configData={configData} landingPageData={landingPageData}>
         <AuthGuard from={router.pathname.replace("/", "")}>

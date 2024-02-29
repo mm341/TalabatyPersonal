@@ -19,6 +19,7 @@ const Index = ({ configData, landingPageData }) => {
         title={configData ? `${t("Popular store")}` : "Loading..."}
         image={`${configData?.base_urls?.business_logo_url}/${configData?.fav_icon}`}
         businessName={configData?.business_name}
+        configData={configData}
       />
       <MainLayout configData={configData} landingPageData={landingPageData}>
         <PageDetailsWrapper>

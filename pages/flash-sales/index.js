@@ -14,6 +14,7 @@ const FlashSalesPage = ({ configData, landingPageData }) => {
                 title={configData ? `Flash Sale` : "Loading..."}
                 image={`${configData?.base_urls?.business_logo_url}/${configData?.fav_icon}`}
                 businessName={configData?.business_name}
+                configData={configData}
             />
             <MainLayout configData={configData} landingPageData={landingPageData}>
                 <FlashSales />
