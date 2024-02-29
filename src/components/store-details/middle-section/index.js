@@ -149,6 +149,7 @@ const MiddleSection = (props) => {
   const limit = 12;
   const { ref, inView } = useInView();
   const [offset, setOffset] = useState(1);
+  const [categoryAction, setCategoryAction] = useState(true);
   const pageParams = {
     storeId: storeId,
     categoryId: state.categoryId,
@@ -332,8 +333,10 @@ const MiddleSection = (props) => {
     }
   }, [inView]);
 
+
+
   const handleCategoryId = (id) => {
-    console.log(id)
+    
     setOffset(1);
     if (id?.checked) {
       const newIds = [...state.categoryId, id?.id];
@@ -350,7 +353,9 @@ const MiddleSection = (props) => {
     }
     dispatch({ type: ACTION.setIsSidebarOpen, payload: false });
   };
-console.log(offset)
+
+  console.log(offset)
+
   useEffect(() => {
     if (state.searchKey && state.searchKey !== "") {
       if (offset === 1) {

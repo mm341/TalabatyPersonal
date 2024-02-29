@@ -67,10 +67,10 @@ export default function useGetStoresCategoriesItem(pageParams, handleSuccess) {
     // onSuccess: handleSuccess,
     // onError: onErrorResponse,
     getNextPageParam: (lastPage, allPages) => {
-      const nextPage = allPages.length + 1;
+      const nextPage = allPages?.length + 1;
       return lastPage?.products?.length > 0 ? nextPage : undefined;
     },
-    getPreviousPageParam: (firstPage, allPages) => firstPage.prevCursor,
+    getPreviousPageParam: (firstPage, allPages) => firstPage?.prevCursor,
     retry: 3,
     enabled: false,
     onError: onSingleErrorResponse,
