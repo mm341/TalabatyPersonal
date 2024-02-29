@@ -132,19 +132,20 @@ const AddAddressComponent = ({
     setAddressType(name);
     setEditAddress({ ...editAddress, address_type: null });
   };
-  const editLocation = {
-    lat: editAddress?.latitude,
-    lng: editAddress?.longitude,
-  };
 
   useEffect(() => {
-    if (coords) {
-        setLocation({
-            lat: coords?.latitude,
-            lng: coords?.longitude,
-        })
+    if (editAddress?.latitude) {
+      setLocation({
+        lat: editAddress?.latitude,
+        lng: editAddress?.longitude,
+      });
+    } else if (coords) {
+      setLocation({
+        lat: coords?.latitude,
+        lng: coords?.longitude,
+      });
     }
-}, [coords])
+  }, [coords, editAddress]);
 
   const handleChangeForSearchs = (event) => {
     if (event.target.value) {
