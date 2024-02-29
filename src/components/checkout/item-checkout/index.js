@@ -118,6 +118,7 @@ const ItemCheckout = (props) => {
   const { offlineInfoStep, offlinePaymentInfo } = useSelector(
     (state) => state.offlinePayment
   );
+  const { total } = useSelector((state) => state.cart);
   const token = getToken();
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -143,7 +144,7 @@ const ItemCheckout = (props) => {
   //  get checkout Data for cart list
   const { mutate, isLoading, error } = useGetCheckoutData();
   let order_type = orderType;
- 
+
   const handelCheckoutDetails = () => {
     if (!token) {
       if (orderType === "schedule_order") {
@@ -393,15 +394,11 @@ const ItemCheckout = (props) => {
       formData.append("coupon_discount_title", couponDiscount?.title);
 
       formData.append("discount_amount", getProductDiscount(productList));
-      // formData.append(
-      //   "distance",
-      //   handleDistance(
-      //     distanceData?.data?.rows?.[0]?.elements,
-      //     originData,
-      //     address
-      //   )
-      // );
-      formData.append("order_amount", totalAmount);
+      //  handel order AMOUNT BE FIXED TO MAKE FAKE ORDER
+      formData.append("distance", 10);
+
+      //  handel order AMOUNT BE FIXED TO MAKE FAKE ORDER
+      formData.append("order_amount", total);
       formData.append("dm_tips", deliveryTip);
 
       formData.append("address", address?.address);
@@ -446,12 +443,9 @@ const ItemCheckout = (props) => {
         // coupon_discount_amount: couponDiscount?.discount,
         // coupon_discount_title: couponDiscount?.title,
         // discount_amount: getProductDiscount(productList),
-        // distance: handleDistance(
-        //   distanceData?.data?.rows?.[0]?.elements,
-        //   originData,
-        //   address
-        // ),
-        order_amount: totalAmount,
+        distance: 10,
+
+        order_amount: total,
         dm_tips: deliveryTip,
         cutlery: cutlery,
         unavailable_item_note: unavailable_item_note,
@@ -475,11 +469,8 @@ const ItemCheckout = (props) => {
       const walletAmount = customerData?.data?.wallet_balance;
       let productList = page === "campaign" ? campaignItemList : cartList;
       if (paymentMethod === "wallet") {
-        if (Number(walletAmount) < Number(totalAmount)) {
-          toast.error(t("Wallet balance is below total amount."), {
-            id: "wallet",
-            position: "bottom-right",
-          });
+        if (Number(walletAmount) < Number(total)) {
+          toast.error(t("Wallet balance is below total amount."));
         } else {
           let totalQty = 0;
           let carts = handleProductList(productList, totalQty);
@@ -552,12 +543,16 @@ const ItemCheckout = (props) => {
               dispatch(setClearCart());
               Router.push(url, undefined, { shallow: true });
             } else if (paymentMethod === "offline_payment") {
-              setOrderId(response?.data?.order_id);
-              setOrderSuccess(true);
-              setOfflineCheck(true);
+              if (response?.data?.order_id) {
+                setOrderId(response?.data?.order_id);
+                setOrderSuccess(true);
+                setOfflineCheck(true);
+              }
             } else {
-              setOrderId(response?.data?.order_id);
-              setOrderSuccess(true);
+              if (response?.data?.order_id) {
+                setOrderId(response?.data?.order_id);
+                setOrderSuccess(true);
+              }
             }
           }
         };
@@ -567,9 +562,7 @@ const ItemCheckout = (props) => {
             onSuccess: handleSuccess,
             onError: (error) => {
               error?.response?.data?.errors?.forEach((item) =>
-                toast.error(item.message, {
-                  position: "bottom-right",
-                })
+                toast.error(item.message)
               );
             },
           });

@@ -919,12 +919,13 @@ export const getCalculatedTotal = (
 };
 
 export const isFoodAvailableBySchedule = (cart, selectedTime) => {
+ 
   if (selectedTime === "now") {
     let currentTime = moment();
-    if (cart.length > 0) {
+    if (cart?.length > 0) {
       let isAvailable = cart.every((item) => {
-        const startTime = moment(item.available_time_starts, "HH:mm:ss");
-        const endTime = moment(item.available_time_ends, "HH:mm:ss");
+        const startTime = moment(item?.item?.available_time_starts, "HH:mm:ss");
+        const endTime = moment(item?.item?.available_time_ends, "HH:mm:ss");
         return moment(currentTime).isBetween(startTime, endTime);
       });
       return !!isAvailable;
