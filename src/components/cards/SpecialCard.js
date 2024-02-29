@@ -21,6 +21,7 @@ import H4 from "../typographies/H4";
 import AddWithIncrementDecrement from "./AddWithIncrementDecrement";
 import { CustomOverLay } from "./Card.style";
 import QuickView from "./QuickView";
+import ProductsUnavailable from "./ProductsUnavailable";
 
 const VegNonVegFlag = styled(Box)(({ theme, veg }) => ({
   height: "14px",
@@ -110,6 +111,7 @@ const SpecialCard = (props) => {
         {!isHover && <RecommendTag status={item?.recommended} top="90px" />}
         {!isHover && <OrganicTag status={item?.organic} top="50px" />}
         {!isHover && handleBadge()}
+        
         <Box borderRadius="8px" overflow="hidden">
           <CustomImageContainer
             src={`${imageBaseUrl}/${item?.image}`}
@@ -118,6 +120,9 @@ const SpecialCard = (props) => {
             width="100%"
             objectfit="cover"
           />
+          {/* {item?.module?.module_type === "food" && (
+                <ProductsUnavailable product={item} />
+              )} */}
         </Box>
         <CustomOverLay hover={isHover}>
           <QuickView

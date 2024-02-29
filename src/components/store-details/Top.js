@@ -403,7 +403,7 @@ const Top = (props) => {
                       },
                     }}
                   >
-                    {storeDetails?.positive_rating}
+                   {storeDetails?.positive_rating?.toFixed(2)}%
                   </Typography>
                   <Stack direction="row" alignItems="center" spacing={0.3}>
                     <Typography
@@ -610,7 +610,7 @@ const Top = (props) => {
                         },
                       }}
                     >
-                      {storeDetails?.positive_rating}%
+                      {storeDetails?.positive_rating?.toFixed(2)}%
                     </Typography>
                     <Stack direction="row" alignItems="center" spacing={0.3}>
                       <Typography>{t("Positive Review")}</Typography>

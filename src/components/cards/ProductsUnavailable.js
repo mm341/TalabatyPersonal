@@ -39,6 +39,8 @@ const ProductsUnavailable = (props) => {
   const thisText = t("This");
   const endText = t("is not available right now. You can order it later.");
   const endText1 = t("is not available right now.");
+
+  console.log(product)
   return (
     <>
       {!isAvailable(
