@@ -197,7 +197,7 @@ const FoodDetailModal = ({
       dispatch(setCartList(res?.carts));
       handleClose();
       toast.success(t("Item added to cart"));
-      console.log("what")
+     
       //dispatch()
     }
   };
@@ -721,7 +721,7 @@ const FoodDetailModal = ({
   );
 
   const changeAddOns = (addOn) => {
-    // console.log(addOn)
+   
     if (addOn?.isChecked && addOn?.quantity > 0) {
       let newArray = [];
       if (selectedAddons?.length > 0) {
@@ -762,6 +762,7 @@ const FoodDetailModal = ({
         (item) => (price += Number(item?.price_after_discount))
       );
     }
+   
     setTotalPrice(price * quantity);
   };
 
@@ -864,6 +865,7 @@ const FoodDetailModal = ({
   };
 
   //  handel selected options   in case of product update
+  //  handel initial value of variation values
   useEffect(() => {
     if (productUpdate) {
       let array = [];
@@ -892,13 +894,8 @@ const FoodDetailModal = ({
       const handelUpdateing = product?.food_variations?.map((e, i) => {
         handelVariations(e, i);
       });
-    }
-  }, [productUpdate]);
-
-  //  handel initial value of variation values
-  useEffect(() => {
-    if (!productUpdate) {
-      const array = [];
+    }else{
+      let array = [];
       const handelvariationValues = (variationValues, index) => {
         if (
           variationValues?.values?.length > 0 &&
@@ -909,6 +906,7 @@ const FoodDetailModal = ({
           );
           filteredArray?.forEach((item, i) => {
             if (item?.optionPrice === "0" && i === 0) {
+             
               const object = {
                 ...item,
                 isSelected: true,
@@ -926,6 +924,7 @@ const FoodDetailModal = ({
         ) {
           variationValues?.values?.forEach((item, i) => {
             if (item?.optionPrice === "0") {
+              
               const object = {
                 ...item,
                 isSelected: true,
@@ -936,13 +935,20 @@ const FoodDetailModal = ({
 
               array?.push(object);
             } else {
+             
               if (
                 variationValues?.required === "on" &&
                 !variationValues?.values
-                  ?.map((e) => e?.optionPrice)
-                  .includes("0") &&
+                  ?.map((e) => e?.price_after_discount)
+                  .includes(0) &&
                 i === 0
               ) {
+
+                //  here i changed array to empty array
+
+                //  29/2/2024
+                array=[]
+               
                 const object = {
                   ...item,
                   isSelected: true,
@@ -950,8 +956,10 @@ const FoodDetailModal = ({
                   optionIndex: i,
                   type: "required",
                 };
+               
                 array?.push(object);
               }
+             
             }
           });
         }
@@ -971,6 +979,9 @@ const FoodDetailModal = ({
       });
     }
   }, [productUpdate]);
+
+  
+ 
 
   return (
     <>

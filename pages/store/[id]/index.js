@@ -10,6 +10,7 @@ import {
   store_details_api,
 } from "../../../src/api-manage/ApiRoutes";
 import SEO from "../../../src/components/seo";
+import { NoSsr } from "@mui/material";
 
 const Index = ({ configData, storeDetails, landingPageData }) => {
   const dispatch = useDispatch();
@@ -76,7 +77,10 @@ const Index = ({ configData, storeDetails, landingPageData }) => {
         {/*  <meta name="description" content={storeDetails?.meta_description} />*/}
         {/*</Head>*/}
         <MainLayout configData={configData} landingPageData={landingPageData}>
+        <NoSsr>
           <StoreDetails storeDetails={storeDetails} configData={configData} />
+        
+        </NoSsr>
         </MainLayout>
       </>
     </>

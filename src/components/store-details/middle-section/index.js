@@ -253,6 +253,7 @@ const MiddleSection = (props) => {
           if (initialHigh2LowSortedData?.length > 0) {
             const newArray = [...initialHigh2LowSortedData];
             const withoutDuplicacy = removeDuplicates(newArray, "id");
+            
             dispatch({
               type: ACTION.setData,
               payload: {
@@ -280,6 +281,8 @@ const MiddleSection = (props) => {
         }
         dispatch({ type: ACTION.setIsSidebarOpen, payload: false });
       }
+
+      //  here i removed un comment        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       // dispatch({
       //   type: ACTION.setData,
       //   payload: {
@@ -330,6 +333,7 @@ const MiddleSection = (props) => {
   }, [inView]);
 
   const handleCategoryId = (id) => {
+    console.log(id)
     setOffset(1);
     if (id?.checked) {
       const newIds = [...state.categoryId, id?.id];
@@ -346,7 +350,7 @@ const MiddleSection = (props) => {
     }
     dispatch({ type: ACTION.setIsSidebarOpen, payload: false });
   };
-
+console.log(offset)
   useEffect(() => {
     if (state.searchKey && state.searchKey !== "") {
       if (offset === 1) {
@@ -477,7 +481,6 @@ const MiddleSection = (props) => {
   const handleOpenSerach = () => {
     setOpen(!open);
   };
-
   return (
     <CustomBoxFullWidth>
       {moduleId && (

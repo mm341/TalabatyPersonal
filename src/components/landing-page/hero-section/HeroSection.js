@@ -23,6 +23,7 @@ const DynamicModuleSelection = dynamic(() =>
 	import("./module-selection/ModuleSelectionRaw")
 );
 const HeroSection = ({ configData, landingPageData, handleOrderNow }) => {
+	//  hooks
 	const theme = useTheme();
 	const isXSmall = useMediaQuery(theme.breakpoints.down("sm"));
 	const { t } = useTranslation();
@@ -32,7 +33,7 @@ const HeroSection = ({ configData, landingPageData, handleOrderNow }) => {
 			setCurrentLocation(window.localStorage.getItem("location"));
 		}
 	}, []);
-
+console.log(landingPageData)
 	return (
 		<CustomContainer>
 			<CustomBoxFullWidth

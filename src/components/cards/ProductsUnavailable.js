@@ -31,8 +31,9 @@ const OverLay = ({ isScheduled, theme, t, thisText, endText, endText1 }) => (
 );
 
 const ProductsUnavailable = (props) => {
-  const { borderRadius, product } = props;
-  console.log(product)
+  //  props
+  const { product } = props;
+  //  hooks
   const theme = useTheme();
   const { t } = useTranslation();
   const thisText = t("This");

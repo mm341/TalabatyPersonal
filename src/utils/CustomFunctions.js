@@ -36,6 +36,8 @@ export const handleTotalAmountWithAddons = (
     selectedAddOns?.forEach(
       (item) => (selectedAddonsTotalPrice += item?.price * item?.quantity)
     );
+
+    
     return (Number(mainTotalAmount) + Number(selectedAddonsTotalPrice)).toFixed(
       2
     );
@@ -47,7 +49,7 @@ export const handleTotalAmountWithAddons = (
 export const getIndexFromArrayByComparision = (arrayOfObjects, object) => {
   return arrayOfObjects.findIndex(
     (item) =>
-      _.isEqual(item.food_variations, object.food_variations) &&
+      _.isEqual(item?.food_variations, object?.food_variations) &&
       item.id === object.id
   );
 };
