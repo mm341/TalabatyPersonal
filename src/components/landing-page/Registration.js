@@ -124,7 +124,10 @@ const Card = ({
         </Grid>
         <Grid item xs={3.5} align="center">
           {buttonText && redirectLink && (
-            <CustomButtonPrimary onClick={redirectHandler}>
+            <a href={redirectLink} target="_blank">
+
+            
+            <CustomButtonPrimary >
               <Typography
                 variant={isSmall ? "body3" : "body1"}
                 fontWeight="bold"
@@ -133,6 +136,7 @@ const Card = ({
                 {buttonText ? buttonText : ""}
               </Typography>
             </CustomButtonPrimary>
+            </a>
           )}
         </Grid>
       </Grid>

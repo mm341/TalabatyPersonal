@@ -94,12 +94,12 @@ const LandingPage = ({ configData, landingPageData }) => {
           landingPageData?.earning_dm_sub_title) && (
           <Registration data={landingPageData} isSmall={isSmall} />
         )}
-        {/* {landingPageData?.fixed_promotional_banner && (
+        {landingPageData?.fixed_promotional_banner && (
           <DiscountBanner
             bannerImage={`${landingPageData?.base_urls?.promotional_banner_url}/${landingPageData?.fixed_promotional_banner}`}
             isSmall={isSmall}
           />
-        )} */}
+        )}
         {(landingPageData?.business_title ||
           landingPageData?.business_sub_title ||
           landingPageData?.business_image) && (
