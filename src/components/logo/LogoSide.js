@@ -13,7 +13,9 @@ const LogoSide = ({ configData, width, height, objectFit }) => {
     >
       <CustomLogo
         atlText="logo"
-        logoImg={`${businessLogo}/${configData?.logo}`}
+        logoImg={
+          "https://talabateedashboard.talabatee.net/storage/app/public/business/2024-01-16-65a63c2f298ad.png"
+        }
         //height="1.5rem"
         width={width}
         height={height}
