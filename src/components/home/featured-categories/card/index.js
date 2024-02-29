@@ -69,6 +69,7 @@ const FeaturedItemCard = (props) => {
           <Skeleton width="70px" variant="text" />
         </Stack>
       ) : (
+       
         <Link
           href={{
             pathname: "/home",

@@ -50,7 +50,7 @@ const NavPopover = ({
   } = useGetCategories();
   const dispatch = useDispatch();
   useEffect(() => {
-    if (categories.length === 0) {
+    if (categories?.length === 0) {
       refetch();
     }
   }, []);

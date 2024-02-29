@@ -33,12 +33,13 @@ const FoodCategoryCard = (props) => {
 			pathname: "/home",
 			query: {
 				search: "category",
-				id: `${slug ? slug : id}`,
+				id: id,
 				module_id: `${getModuleId()}`,
 				name: btoa(name),
 			},
 		});
 	};
+	
 	return (
 		<Grid item sx={{ overflow: "hidden" }} onClick={handleClick}>
 			{onlyshimmer ? (

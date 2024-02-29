@@ -79,7 +79,7 @@ const ShopCategoryCard = (props) => {
 						pathname: "/home",
 						query: {
 							search: "category",
-							id: `${item?.slug ? item?.slug : item?.id}`,
+							id:  item?.id,
 							module_id: `${getModuleId()}`,
 							name: btoa(item?.name),
 						},
