@@ -124,7 +124,7 @@ const Card = ({
         </Grid>
         <Grid item xs={3.5} align="center">
           {buttonText && redirectLink && (
-            <a href={redirectLink} target="_blank">
+            <a href={redirectLink} rel="noreferrer" target="_blank">
 
             
             <CustomButtonPrimary >
