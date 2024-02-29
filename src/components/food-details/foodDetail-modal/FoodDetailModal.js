@@ -88,7 +88,7 @@ const FoodDetailModal = ({
   const [modalData, setModalData] = useState([]);
   const [arrayTest, setArrayTest] = useState([]);
   //const guestId = localStorage.getItem("guest_id");
-  const { mutate: updateMutate, updateIsLoading } = useCartItemUpdate();
+  const { mutate: updateMutate,isLoading:updateIsLoading } = useCartItemUpdate();
   const { mutate, isLoading } = useAddCartItem();
   const guestId = getGuestId();
   let token = undefined;
@@ -178,56 +178,19 @@ const FoodDetailModal = ({
   const handleSuccess = (res) => {
     if (res) {
       dispatch(setCartDetailsPrice(res));
-
-      // res?.carts?.forEach((item) => {
-      //   product = {
-      //     ...item?.item,
-      //     cartItemId: item?.id,
-      //     totalPrice: item?.price,
-      //     quantity: item?.quantity,
-      //     food_variations: item?.item?.food_variations,
-      //     selectedAddons: selectedAddons,
-      //     selectedOption: selectedOptions,
-      //     itemBasePrice: item?.item?.price,
-      //     unit_price: item?.unit_price,
-      //   };
-      // });
-      // dispatch(setCart(product));
       dispatch(setCartList(res?.carts));
       handleClose();
       toast.success(t("Item added to cart"));
-
-      //dispatch()
     }
   };
   const updateCartSuccessHandler = (res) => {
     const indexNumber = getIndexFromArrayByComparision(cartList, modalData[0]);
     if (res) {
       dispatch(setCartDetailsPrice(res));
-      // let product = {};
-      // res?.carts?.forEach((item) => {
-      //   product = {
-      //     ...item?.item,
-      //     cartItemId: item?.id,
-      //     totalPrice: item?.price,
-      //     quantity: item?.quantity,
-      //     food_variations: item?.item?.food_variations,
-      //     selectedAddons: selectedAddons,
-      //     selectedOption: selectedOptions,
-      //     itemBasePrice: item?.item?.price,
-      //     unit_price: item?.unit_price,
-      //   };
-      // });
-      // dispatch(
-      //   setUpdateVariationToCart({
-      //     newObj: product,
-      //     indexNumber: indexNumber,
-      //   })
-      // );
+     
       dispatch(setCartList(res?.carts));
       toast.success(t("Item updated successfully"));
       handleModalClose?.();
-      //dispatch()
     }
   };
 
@@ -1099,7 +1062,7 @@ const FoodDetailModal = ({
               ></Grid>
               <Grid item md={12} sm={12} xs={12}>
                 {/*this check is for normal food if the food is available*/}
-                {modalData.length > 0 &&
+                {modalData?.length > 0 &&
                   isAvailable(
                     modalData[0].available_time_starts,
                     modalData[0].available_time_ends

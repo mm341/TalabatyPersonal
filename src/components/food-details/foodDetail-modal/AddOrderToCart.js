@@ -38,8 +38,6 @@ const AddOrderToCart = (props) => {
   const [wishListCount, setWishListCount] = useState(
     product?.wishlist_count || 0
   );
- 
-  
 
   const { wishLists } = useSelector((state) => state.wishList);
   const dispatch = useDispatch();
@@ -86,7 +84,8 @@ const AddOrderToCart = (props) => {
     });
   };
   useEffect(() => {}, [wishListCount]);
-
+console.log(isScheduled)
+console.log(updateIsLoading)
   return (
     <>
       {isScheduled ? (
@@ -94,7 +93,11 @@ const AddOrderToCart = (props) => {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               {isInCart(product?.id) && (
-                <PrimaryButton onClick={() => addToCard()}>
+                <PrimaryButton
+                  loading={updateIsLoading}
+                  disabled={updateIsLoading}
+                  onClick={() => addToCard()}
+                >
                   {updateIsLoading ? (
                     <Stack
                       height="25px"
@@ -110,7 +113,11 @@ const AddOrderToCart = (props) => {
                 </PrimaryButton>
               )}
               {!isInCart(product?.id) && (
-                <PrimaryButton onClick={() => addToCard()} loading={isLoading}>
+                <PrimaryButton
+                  onClick={() => addToCard()}
+                  loading={isLoading}
+                  disabled={updateIsLoading}
+                >
                   {t("Add to Cart")}
                 </PrimaryButton>
               )}
@@ -162,6 +169,8 @@ const AddOrderToCart = (props) => {
           <Grid item xs={12}>
             {isInCart(product?.id) && (
               <PrimaryButton
+              loading={updateIsLoading}
+              disabled={updateIsLoading}
                 onClick={() => addToCard()}
                 sx={{ fontSize: { xs: "12px", md: "14px" } }}
               >
@@ -182,6 +191,7 @@ const AddOrderToCart = (props) => {
             {!isInCart(product?.id) && (
               <PrimaryButton
                 onClick={() => addToCard()}
+                disabled={isLoading}
                 loading={isLoading}
                 sx={{ fontSize: { xs: "12px", md: "14px" } }}
               >

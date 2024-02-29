@@ -31,7 +31,6 @@ const Root = (props) => {
   return (
     <>
       <CssBaseline />
-      {/* <DynamicFavicon configData={configData} /> */}
       <SEO
         image={`${configData?.base_urls?.business_logo_url}/${configData?.fav_icon}`}
         businessName={configData?.business_name}
