@@ -67,6 +67,7 @@ export const handleInitialTotalPriceVarPriceQuantitySet = (
       setSelectedOptions(selectedOption);
     }
   } else {
+    setQuantity(product?.quantity)
     if (product?.selected_variation?.length > 0) {
       product?.selected_variation?.forEach((item) => {
         if (item?.values?.length > 0) {

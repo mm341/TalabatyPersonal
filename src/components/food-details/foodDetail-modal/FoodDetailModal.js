@@ -176,10 +176,9 @@ const FoodDetailModal = ({
     ),
   });
   const handleSuccess = (res) => {
-  
     if (res) {
       dispatch(setCartDetailsPrice(res));
-   
+
       // res?.carts?.forEach((item) => {
       //   product = {
       //     ...item?.item,
@@ -197,7 +196,7 @@ const FoodDetailModal = ({
       dispatch(setCartList(res?.carts));
       handleClose();
       toast.success(t("Item added to cart"));
-     
+
       //dispatch()
     }
   };
@@ -721,7 +720,6 @@ const FoodDetailModal = ({
   );
 
   const changeAddOns = (addOn) => {
-   
     if (addOn?.isChecked && addOn?.quantity > 0) {
       let newArray = [];
       if (selectedAddons?.length > 0) {
@@ -762,7 +760,7 @@ const FoodDetailModal = ({
         (item) => (price += Number(item?.price_after_discount))
       );
     }
-   
+
     setTotalPrice(price * quantity);
   };
 
@@ -894,7 +892,7 @@ const FoodDetailModal = ({
       const handelUpdateing = product?.food_variations?.map((e, i) => {
         handelVariations(e, i);
       });
-    }else{
+    } else {
       let array = [];
       const handelvariationValues = (variationValues, index) => {
         if (
@@ -906,7 +904,6 @@ const FoodDetailModal = ({
           );
           filteredArray?.forEach((item, i) => {
             if (item?.optionPrice === "0" && i === 0) {
-             
               const object = {
                 ...item,
                 isSelected: true,
@@ -924,7 +921,6 @@ const FoodDetailModal = ({
         ) {
           variationValues?.values?.forEach((item, i) => {
             if (item?.optionPrice === "0") {
-              
               const object = {
                 ...item,
                 isSelected: true,
@@ -935,7 +931,6 @@ const FoodDetailModal = ({
 
               array?.push(object);
             } else {
-             
               if (
                 variationValues?.required === "on" &&
                 !variationValues?.values
@@ -943,12 +938,11 @@ const FoodDetailModal = ({
                   .includes(0) &&
                 i === 0
               ) {
-
                 //  here i changed array to empty array
 
                 //  29/2/2024
-                array=[]
-               
+                array = [];
+
                 const object = {
                   ...item,
                   isSelected: true,
@@ -956,10 +950,9 @@ const FoodDetailModal = ({
                   optionIndex: i,
                   type: "required",
                 };
-               
+
                 array?.push(object);
               }
-             
             }
           });
         }
@@ -979,9 +972,6 @@ const FoodDetailModal = ({
       });
     }
   }, [productUpdate]);
-
-  
- 
 
   return (
     <>
