@@ -9,7 +9,7 @@ import CustomCheckbox from "../../CustomCheckbox";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 const CheckboxWithChild = (props) => {
-  const { item, checkHandler, selectedItems } = props;
+  const { item, checkHandler, selectedItems, setOffset, cat } = props;
   const [open, setOpen] = useState(true);
   const clickHandler = () => {
     setOpen((prev) => !prev);
@@ -49,6 +49,8 @@ const CheckboxWithChild = (props) => {
           {item?.childes?.map((childItem, childIndex) => (
             <CustomStackFullWidth key={childIndex} sx={{ padding: "0px 16px" }}>
               <CustomCheckbox
+              setOffset={setOffset}
+              cat={cat}
                 item={childItem}
                 checkHandler={checkHandler}
                 isChecked={() => isCheckedHandler(childItem?.id)}

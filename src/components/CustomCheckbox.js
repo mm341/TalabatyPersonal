@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import { Checkbox, FormControlLabel, Typography } from "@mui/material";
 import { StyleCheckBox } from "./group-buttons/OutlinedGroupButtons";
 import { useTheme } from "@emotion/react";
-import {getModule} from "../helper-functions/getLanguage";
+import { getModule } from "../helper-functions/getLanguage";
 
 const CustomCheckbox = (props) => {
-  const { item, checkHandler, isChecked, selectedId } = props;
+  const { item, checkHandler, isChecked, selectedId, setOffset, cat } = props;
   const [checked, setChecked] = React.useState(false);
   const theme = useTheme();
   const checkboxRef = useRef(null);
@@ -25,12 +25,13 @@ const CustomCheckbox = (props) => {
     });
   };
 
-
   return (
     <FormControlLabel
+  
       ref={checkboxRef}
       control={
         <StyleCheckBox
+        
           ref={checkboxRef}
           module={getModule()?.module_type}
           value={item?.value}

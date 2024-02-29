@@ -324,14 +324,19 @@ const MiddleSection = (props) => {
       }
     }
   }, [data, searchData]);
+
+  console.log(data)
   useEffect(() => {
     if (inView) {
+      //  here i handel offset 
+      // 29/2/2024
+      if(data?.pages?.length>0&&data?.pages[0]?.products?.length>0)
       if (!isLoadingStoresCategories) {
         dispatch({ type: ACTION.setOffSet, payload: 1 });
         setOffset((prev) => prev + 1);
       }
     }
-  }, [inView]);
+  }, [inView,data]);
 
 
 
@@ -632,6 +637,8 @@ const MiddleSection = (props) => {
               handleSelection={handleSelection}
               checkState={checkState}
               setCheckState={setCheckState}
+              setOffset={setOffset}
+              cat
             />
           </Grid>
           <Grid

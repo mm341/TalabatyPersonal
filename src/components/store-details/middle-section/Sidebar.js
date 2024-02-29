@@ -151,6 +151,8 @@ const Sidebar = (props) => {
     handleSelection,
     checkState,
     setCheckState,
+    setOffset,
+    cat
   } = props;
 
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -221,6 +223,8 @@ const Sidebar = (props) => {
                 state.categories?.map((item, index) => {
                   return (
                     <CheckboxWithChild
+                    setOffset={setOffset}
+                    cat={cat}
                       key={index}
                       item={item}
                       checkHandler={categoriesCheckBoxHandler}
