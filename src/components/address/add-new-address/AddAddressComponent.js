@@ -58,19 +58,26 @@ const AddAddressComponent = ({
     editAddress ? editAddress?.address_type : ""
   );
   const [defaultLocation, setDefaultLocation] = useState({});
-  const [isDisablePickButton, setDisablePickButton] = useState(false)
-  const [locationEnabled, setLocationEnabled] = useState(false)
-  const [location, setLocation] = useState(configData?.default_location)
-  const [searchKey, setSearchKey] = useState("")
-  const [enabled, setEnabled] = useState(false)
+  const [isDisablePickButton, setDisablePickButton] = useState(false);
+  const [locationEnabled, setLocationEnabled] = useState(false);
+  const [location, setLocation] = useState({
+    lat: configData?.default_location?.lat
+      ? Number(configData?.default_location?.lat)
+      : "30.00758635247977",
+    lng: configData?.default_location?.lng
+      ? Number(configData?.default_location?.lng)
+      : "31.459522247314453",
+  });
+  const [searchKey, setSearchKey] = useState("");
+  const [enabled, setEnabled] = useState(false);
   //const [currentLocation, setCurrentLocation] = useState(locations)
   // const [locationLoading, setLocationLoading] = useState(false)
-  const [placeDetailsEnabled, setPlaceDetailsEnabled] = useState(true)
-  const [placeDescription, setPlaceDescription] = useState(undefined)
-  const [zoneId, setZoneId] = useState(undefined)
-  const [mounted, setMounted] = useState(true)
-  const [predictions, setPredictions] = useState([])
-  const [placeId, setPlaceId] = useState('')
+  const [placeDetailsEnabled, setPlaceDetailsEnabled] = useState(true);
+  const [placeDescription, setPlaceDescription] = useState(undefined);
+  const [zoneId, setZoneId] = useState(undefined);
+  const [mounted, setMounted] = useState(true);
+  const [predictions, setPredictions] = useState([]);
+  const [placeId, setPlaceId] = useState("");
 
   //useEffect calls for getting data
 
@@ -85,17 +92,17 @@ const AddAddressComponent = ({
     });
 
   const { data: places, isLoading } = useGetAutocompletePlace(
-      searchKey,
-      enabled
+    searchKey,
+    enabled
   );
 
   useEffect(() => {
     if (places) {
-      setPredictions(places?.predictions)
+      setPredictions(places?.predictions);
     }
-  }, [places])
-  const zoneIdEnabled=locationEnabled
-  const { data: zoneData } = useGetZoneId(location,zoneIdEnabled);
+  }, [places]);
+  const zoneIdEnabled = locationEnabled;
+  const { data: zoneData } = useGetZoneId(location, zoneIdEnabled);
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (zoneData) {
@@ -112,13 +119,12 @@ const AddAddressComponent = ({
 
   useEffect(() => {
     if (placeDetails) {
-      setLocation(placeDetails?.result?.geometry?.location)
-      setLocationEnabled(true)
+      setLocation(placeDetails?.result?.geometry?.location);
+      setLocationEnabled(true);
     }
-  }, [placeDetails])
-  const { data: geoCodeResults, isFetching: isFetchingGeoCode } = useGetGeoCode(
-      location
-  );
+  }, [placeDetails]);
+  const { data: geoCodeResults, isFetching: isFetchingGeoCode } =
+    useGetGeoCode(location);
 
   const theme = useTheme();
   const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
@@ -131,22 +137,28 @@ const AddAddressComponent = ({
     lng: editAddress?.longitude,
   };
 
-  const handleChangeForSearchs=(event)=>{
-    if(event.target.value){
-      setSearchKey(
-         event.target.value
-      )
-      setEnabled(true)
-      setPlaceDetailsEnabled(true)
+  useEffect(() => {
+    if (coords) {
+        setLocation({
+            lat: coords?.latitude,
+            lng: coords?.longitude,
+        })
     }
+}, [coords])
 
-  }
-  const handleChangeS=(event, value)=>{
-    if(value){
-      setPlaceId(value?.place_id)
+  const handleChangeForSearchs = (event) => {
+    if (event.target.value) {
+      setSearchKey(event.target.value);
+      setEnabled(true);
+      setPlaceDetailsEnabled(true);
     }
-    setPlaceDetailsEnabled(true)
-  }
+  };
+  const handleChangeS = (event, value) => {
+    if (value) {
+      setPlaceId(value?.place_id);
+    }
+    setPlaceDetailsEnabled(true);
+  };
   return (
     <>
       <Grid item md={12} xs={12} alignSelf="center">
@@ -180,7 +192,7 @@ const AddAddressComponent = ({
               handleChangeS(event, value, dispatch)
             }
             HandleChangeForSearch={(event) =>
-                handleChangeForSearchs(event, dispatch)
+              handleChangeForSearchs(event, dispatch)
             }
             handleAgreeLocation={() => handleAgreeLocation(coords, dispatch)}
             currentLocation={state.currentLocation}
@@ -190,23 +202,15 @@ const AddAddressComponent = ({
           />
         </AddAddressSearchBox>
         <GoogleMapComponent
-            setLocation={setLocation}
-            location={location}
-            setPlaceDetailsEnabled={
-              setPlaceDetailsEnabled
-            }
-            placeDetailsEnabled={
-              placeDetailsEnabled
-            }
-            locationEnabled={locationEnabled}
-            setPlaceDescription={
-              setPlaceDescription
-            }
-            setLocationEnabled={setLocationEnabled}
-            setDisablePickButton={
-              setDisablePickButton
-            }
-            height="350px"
+          setLocation={setLocation}
+          location={location}
+          setPlaceDetailsEnabled={setPlaceDetailsEnabled}
+          placeDetailsEnabled={placeDetailsEnabled}
+          locationEnabled={locationEnabled}
+          setPlaceDescription={setPlaceDescription}
+          setLocationEnabled={setLocationEnabled}
+          setDisablePickButton={setDisablePickButton}
+          height="350px"
         />
       </Grid>
       <Grid item xs={12} md={7}>
@@ -257,14 +261,12 @@ const AddAddressComponent = ({
           </Stack>
         </CustomStackFullWidth>
         <AddressForm
-          deliveryAddress={
-           geoCodeResults?.results[0]?.formatted_address
-          }
+          deliveryAddress={geoCodeResults?.results[0]?.formatted_address}
           atModal="false"
           addressType={addressType}
           configData={configData}
           phone={userData?.phone}
-          lat={ location?.lat || ""}
+          lat={location?.lat || ""}
           lng={location?.lng || ""}
           personName={
             editAddress
