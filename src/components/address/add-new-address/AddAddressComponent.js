@@ -133,11 +133,15 @@ const AddAddressComponent = ({
     setEditAddress({ ...editAddress, address_type: null });
   };
 
+
+  //  handel default location
+
+ 
   useEffect(() => {
     if (editAddress?.latitude) {
       setLocation({
-        lat: editAddress?.latitude,
-        lng: editAddress?.longitude,
+        lat: Number(editAddress?.latitude),
+        lng: Number(editAddress?.longitude),
       });
     } else if (coords) {
       setLocation({
