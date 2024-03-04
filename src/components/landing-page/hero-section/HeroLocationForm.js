@@ -77,9 +77,16 @@ const HeroLocationForm = () => {
     setGeoLocationEnable(false);
     setCurrentLocation(undefined);
   };
+
+
+  //  get zone data from api
+  const { data: zoneData } = useGetZoneId(location, zoneIdEnabled);
+
+  //   case of take customer current location
   const handleAgreeLocation = (e) => {
     e.stopPropagation();
     if (coords) {
+    
       setLocation({ lat: coords?.latitude, lng: coords?.longitude });
       setOpenLocation(false);
       setShowCurrentLocation(true);
@@ -132,7 +139,7 @@ const HeroLocationForm = () => {
     }
   }, [geoCodeResults, location]);
 
-  const { data: zoneData } = useGetZoneId(location, zoneIdEnabled);
+ 
 
   useEffect(() => {
     if (typeof window !== "undefined") {

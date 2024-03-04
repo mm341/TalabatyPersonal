@@ -27,7 +27,7 @@ MainApi.interceptors.request.use(function (config) {
   if (language) config.headers["X-localization"] = language;
   if (hostname) config.headers["origin"] = hostname;
   config.headers["X-software-id"] = software_id;
-  config.headers["Accept"] = 'application/json'
+  config.headers["Accept"] = "application/json";
   return config;
 });
 // MainApi.interceptors.response.use(

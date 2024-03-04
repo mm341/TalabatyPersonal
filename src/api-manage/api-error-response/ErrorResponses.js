@@ -3,6 +3,7 @@ import { t } from "i18next";
 import Router from "next/router";
 
 const handleTokenExpire = (item, status) => {
+  console.log(item)
   if (status === 401) {
     if (window?.localStorage.getItem("token")) {
       toast.error(t("Your token has been expired.please sign in again"));
