@@ -137,7 +137,6 @@ const HeroLocationForm = () => {
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (zoneData) {
-        // dispatch(setZoneData(zoneData?.data?.zone_data));
         localStorage.setItem("zoneid", zoneData?.zone_id);
       }
     }
@@ -154,8 +153,6 @@ const HeroLocationForm = () => {
       setLocation(placeDetails?.result?.geometry?.location);
     }
   }, [placeDetails]);
-
-  // const orangeColor = theme.palette.primary.main;
 
   useEffect(() => {
     if (placeDescription) {
@@ -174,29 +171,20 @@ const HeroLocationForm = () => {
   const { refetch: wishlistRefetch, isLoading: isLoadingWishlist } =
     useWishListGet(onSuccessHandler);
   const setLocationEnable = async () => {
-    // if (!currentLocation) {
-    //   toast.error(t("Location is required."), {
-    //     id: "id",
-    //   });
-    // }
+   
     setGeoLocationEnable(true);
     setZoneIdEnabled(true);
-    // console.log("ccccc", currentLocation, location);
+    
     if (currentLocation && location) {
       if (getToken()) {
         wishlistRefetch();
       }
       localStorage.setItem("location", currentLocation);
       localStorage.setItem("currentLatLng", JSON.stringify(location));
-      //handleModalClose();
 
       toast.success(t("New location has been set."));
       setOpenModuleSelection(true);
-      // if (!selectedModule) {
-      //   setOpenModuleSelection(true);
-      // } else {
-      //   router.push("/home");
-      // }
+     
     } else {
       toast.error(t("Location is required."), {
         id: "id",
@@ -213,14 +201,13 @@ const HeroLocationForm = () => {
   const excludedDivRef = useRef(null);
 
   useEffect(() => {
-    // Handle clicks outside of excludedDivRef
     const handleClickOutside = (event) => {
       if (
         excludedDivRef.current &&
         !excludedDivRef.current.contains(event.target)
       ) {
         setPickLocation(false);
-        // setClickedOutside(true);
+    
       }
     };
 

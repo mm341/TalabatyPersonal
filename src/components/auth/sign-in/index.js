@@ -211,7 +211,7 @@ const SignIn = ({ configData }) => {
   const handleError = () => {
     setIsApiCalling(false);
   };
-  const { mutate } = useSignIn(handleError);
+  const { mutate,isLoading:loadingRequest } = useSignIn(handleError);
   const formSubmitHandler = (values) => {
     setIsApiCalling(true);
     const newValues = { ...values, guest_id: guestId };
@@ -238,7 +238,7 @@ const SignIn = ({ configData }) => {
       onError: onErrorResponse,
     });
   };
-
+console.log(loadingRequest)
   const { mutate: otpVerifyMutate, isLoading: isLoadingOtpVerifyApi } =
     useVerifyPhone();
   const otpFormSubmitHandler = (values) => {
@@ -330,7 +330,7 @@ const SignIn = ({ configData }) => {
                         type="submit"
                         fullWidth
                         variant="contained"
-                        loading={isApiCalling}
+                        loading={loadingRequest}
                         sx={{ color: textColor }}
                       >
                         {t("Sign In")}

@@ -254,7 +254,7 @@ const MiddleSection = (props) => {
           if (initialHigh2LowSortedData?.length > 0) {
             const newArray = [...initialHigh2LowSortedData];
             const withoutDuplicacy = removeDuplicates(newArray, "id");
-            
+
             dispatch({
               type: ACTION.setData,
               payload: {
@@ -325,26 +325,22 @@ const MiddleSection = (props) => {
     }
   }, [data, searchData]);
 
-  console.log(data)
   useEffect(() => {
     if (inView) {
-      //  here i handel offset 
-      // 29/2/2024
-      if(data?.pages?.length>0&&data?.pages[0]?.products?.length>0)
       if (!isLoadingStoresCategories) {
         dispatch({ type: ACTION.setOffSet, payload: 1 });
         setOffset((prev) => prev + 1);
       }
     }
-  }, [inView,data]);
-
-
+  }, [inView]);
 
   const handleCategoryId = (id) => {
     
     setOffset(1);
     if (id?.checked) {
+     
       const newIds = [...state.categoryId, id?.id];
+     
       dispatch({
         type: ACTION.setCategoryId,
         payload: [...new Set(newIds)],
@@ -466,6 +462,7 @@ const MiddleSection = (props) => {
   };
 
   const minMaxWiseSorted = (products) => {
+    
     if (state.minMax[0] === 0 && state.minMax[1] === 1) {
       return products;
     } else {
@@ -474,15 +471,29 @@ const MiddleSection = (props) => {
   };
 
   const getCategoryWiseProduct = (products) => {
+   
     const isAllExist = state.categoryId?.length === 0 ? true : false;
-    if (isAllExist) {
-      return minMaxWiseSorted(products);
-    } else {
-      const filteredData = products?.filter((item) =>
-        state.categoryId.some((catId) => catId === item.category_id)
-      );
+    console.log( state.categoryId?.length)
+    console.log(isAllExist)
 
-      return minMaxWiseSorted(filteredData);
+    if (isAllExist) {
+     console.log(products)
+      return minMaxWiseSorted(products);
+
+    } else {
+     console.log(products)
+      
+
+    //   here i make some enhancement
+
+    // 4/3/2024
+      // const filteredData = products
+      
+      // ?.filter((item) =>
+      //   state.categoryId.some((catId) => catId === item.category_id)
+      // );
+// console.log(filteredData)
+      return minMaxWiseSorted(products);
     }
   };
 
