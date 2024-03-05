@@ -59,7 +59,7 @@ export const arabic = {
   Your: "لك",
   "e-Commerce !": "التجارة الإلكترونية!",
   "Venture Starts Here": "يبدأ المشروع هنا",
-  "A module has been selected.": "تم اختيار الوحدة النمطية.",
+  "A module has been selected.": "تم اختيار  الموديل.",
   "Select the type of stores for your order": "حدد نوع المتاجر لطلبك",
   "Search location here...": "موقع البحث هنا ...",
   "Login required.": "تسجيل الدخول مطلوب.",
@@ -875,7 +875,8 @@ export const arabic = {
   "Your token has been expired.please sign in again":
     "لقد انتهت صلاحية الرمز المميز. قم بتسجيل الدخول مرة أخرى",
   "New On": "جديد",
-  "Deliveryman tips": "نصائح التوصيل",
+  "Variation Price":"سعر الخيارات",
+  "Deliveryman tips": "اكراميه رجل التوصيل",
   "something went wrong.": "هناك خطأ ما.",
   "Please wait sometimes": "من فضلك انتظر في بعض الأحيان",
   "No Cuisine Restaurant Found": "لم يتم العثور على مطعم المطبخ",
