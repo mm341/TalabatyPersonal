@@ -325,7 +325,7 @@ export const arabic = {
   "More from Store": "المزيد من المتجر",
   Home: "بيت",
   "Features Catagories": "ميزات catagories",
-  Food: "طعام",
+  Food: "الطعام",
   Campaigns: "الحملات",
   "We provide best quality & fresh grocery items near your location":
     "نحن نقدم أفضل جودة ومواد بقالة جديدة بالقرب من موقعك",
@@ -365,9 +365,13 @@ export const arabic = {
   "Available Form": "النموذج المتاح",
   "Fill details": "ملء التفاصيل",
   Confirmation: "تأكيد",
+  "Item That You’ll Love":"عناصر سوف تحبها",
   "is not available right now. You can order it later.":
-    "غير متوفر الآن. يمكنك طلبها لاحقًا.",
-  Description: "وصف",
+
+    "غير متوفر الآن. يمكنك طلبه لاحقًا.",
+
+"Featured Categories":"الفئات المميزة",
+    Description: "وصف",
   "is not available right now.": "غير متوفر الآن.",
   "Add to Cart": "أضف إلى السلة",
   "Total Amount": "المبلغ الإجمالي",

@@ -11,3 +11,15 @@ export const getItemsOrFoods = () => {
     }
   }
 };
+
+export const getItemsOrFoodsNotAvailable = () => {
+  if (typeof window !== "undefined") {
+    if (
+      JSON.parse(window.localStorage.getItem("module"))?.module_type === "food"
+    ) {
+      return t("food");
+    } else {
+      return t("item");
+    }
+  }
+};

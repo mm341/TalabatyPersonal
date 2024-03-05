@@ -4,7 +4,7 @@ import { Typography, useTheme } from "@mui/material";
 import { Stack } from "@mui/system";
 import { useTranslation } from "react-i18next";
 import { isAvailable } from "../../utils/CustomFunctions";
-import { getItemsOrFoods } from "../../helper-functions/getItemsOrFoods";
+import { getItemsOrFoods, getItemsOrFoodsNotAvailable } from "../../helper-functions/getItemsOrFoods";
 
 const OverLay = ({ isScheduled, theme, t, thisText, endText, endText1 }) => (
   <Stack
@@ -22,10 +22,11 @@ const OverLay = ({ isScheduled, theme, t, thisText, endText, endText1 }) => (
       //borderRadius: borderRadius ? borderRadius : ".5rem",
     }}
   >
+    
     <Typography align="center" color={theme.palette.whiteContainer.main}>
       {isScheduled
-        ? t(`${thisText} ${getItemsOrFoods().replace("s", "")} ${endText}`)
-        : t(`${thisText} ${getItemsOrFoods().replace("s", "")} ${endText1}`)}
+        ? t(`${thisText} ${getItemsOrFoodsNotAvailable().replace("s", "")} ${endText}`)
+        : t(`${thisText} ${getItemsOrFoodsNotAvailable().replace("s", "")} ${endText1}`)}
     </Typography>
   </Stack>
 );
@@ -40,7 +41,7 @@ const ProductsUnavailable = (props) => {
   const endText = t("is not available right now. You can order it later.");
   const endText1 = t("is not available right now.");
 
-  
+  console.log(product)
   return (
     <>
       {!isAvailable(
