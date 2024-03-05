@@ -959,7 +959,7 @@ export const arabic = {
   "Visit Store": "قم بزيارة المعرض او المتجر",
   "Add to wishlist": "أضف إلى قائمة الامنيات",
   "Remove from wishlist": "إزالة من قائمة الأمنيات",
-  "Visit Again": "زورني مره اخرى",
+  "Visit Again": "زورنا مره اخرى",
   "Just For You": "فقط لك",
   "Shop Now": "تسوق الآن",
   "Item That Youâll Love": "العنصر الذي تحبه",
@@ -1042,7 +1042,7 @@ export const arabic = {
   "Need to order same medicine? donât worry just click here":
     "هل تحتاج إلى طلب نفس الطب؟ لا تقلق فقط انقر هنا",
   "Refill Request": "طلب إعادة الملء",
-  "Visit Again!": "زورني مره اخرى!",
+  "Visit Again!": "زورنا مره اخرى!",
   "Get your recent medicine from the store you recently visited":
     "احصل على دورك الأخير من المتجر الذي قمت بزيارته مؤخرًا",
   "Get your recent purchase from the shop you recently visited":
