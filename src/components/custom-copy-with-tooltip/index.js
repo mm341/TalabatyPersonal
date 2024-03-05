@@ -24,7 +24,7 @@ const CustomCopyWithTooltip = (props) => {
         ));
       })
       .catch((error) => {
-        // console.error("Failed to copy code:", error);
+        
       });
   };
   return (

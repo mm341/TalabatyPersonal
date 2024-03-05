@@ -352,8 +352,7 @@ const ProductCard = (props) => {
   }, [item]);
   const isInCart = cartList?.find((things) => things.id === item?.id);
   const handleSuccess = (res) => {
-    // console.log(res)
-    //  console.log(res)
+   
     if (res) {
       reduxDispatch(setCartList(res?.carts));
       reduxDispatch(setCartDetailsPrice(res));
@@ -479,42 +478,15 @@ const ProductCard = (props) => {
   };
   const cartUpdateHandleSuccess = (res) => {
     if (res) {
-      // res?.carts?.forEach((item) => {
-      //   if (isInCart?.cartItemId === item?.id) {
-      //     const product = {
-      //       ...item?.item,
-      //       cartItemId: item?.id,
-      //       totalPrice: item?.price,
-      //       quantity: item?.quantity,
-      //       food_variations: item?.item?.food_variations,
-      //       selectedAddons: item?.item?.addons,
-      //       itemBasePrice: item?.item?.price,
-      //       selectedOption: item?.variation,
-      //     };
-
-      //     reduxDispatch(setIncrementToCartItem(product)); // Dispatch the single product
-      //   }
-      // });
+     
       reduxDispatch(setCartDetailsPrice(res));
       reduxDispatch(setCartList(res?.carts));
     }
   };
   const cartUpdateHandleSuccessDecrement = (res) => {
-    // console.log(res)
+    
     if (res) {
-      // res?.carts?.forEach((item) => {
-      //   const product = {
-      //     ...item?.item,
-      //     cartItemId: item?.id,
-      //     totalPrice: item?.price,
-      //     quantity: item?.quantity,
-      //     food_variations: item?.item?.food_variations,
-      //     selectedAddons: item?.item?.addons,
-      //     itemBasePrice: item?.item?.price,
-      //     selectedOption: item?.variation,
-      //   };
-      //   reduxDispatch(setDecrementToCartItem(product));
-      // });
+     
       reduxDispatch(setCartDetailsPrice(res));
       reduxDispatch(setCartList(res?.carts));
     }

@@ -97,7 +97,7 @@ const WishListCard = ({ item }) => {
       dispatch(setCartDetailsPrice(res));
       toast.success(t("Item added to cart"));
       setOpenItemModal(false)
-      console.log("what")
+   
       // dispatch({ type: ACTION.setClearCartModal, payload: false });
     }
   };

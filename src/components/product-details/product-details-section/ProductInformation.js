@@ -266,7 +266,7 @@ const ProductInformation = ({
   };
 
   const handleUpdateToCart = (cartItem) => {
-    // console.log(state)
+  
     if (
       JSON.stringify(productDetailsData) === JSON.stringify(state.modalData[0])
     ) {

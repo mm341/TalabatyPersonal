@@ -137,7 +137,7 @@ const CartContent = (props) => {
         }
       }
     } else {
-      // console.log(cartItem)
+    
       if (cartItem?.item?.maximum_cart_quantity) {
         if (cartItem?.item?.maximum_cart_quantity <= cartItem?.quantity) {
           toast.error(t(out_of_limits));

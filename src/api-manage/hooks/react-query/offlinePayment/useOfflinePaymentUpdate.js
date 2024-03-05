@@ -8,11 +8,6 @@ const offlinePaymentUpdate = async (offlinePaymentData) => {
 
 export const useOfflinePaymentUpdate = () => {
   return useMutation("offline_method_update", (offlinePaymentData) => offlinePaymentUpdate(offlinePaymentData), {
-    // onError: (error) => {
-    //   console.error("API Error:", error);
-    //   // You can add more specific error handling here, e.g., displaying a message to the user.
-    // },
-    // onSuccess: onSuccessHandlerForReset,
-    // onError: onErrorResponse,
+   
   });
 };

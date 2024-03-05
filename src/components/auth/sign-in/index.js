@@ -123,7 +123,7 @@ const SignIn = ({ configData }) => {
         }
         formSubmitHandler(values);
       } catch (err) {
-        // console.log(err);
+        
       }
     },
   });
@@ -238,7 +238,7 @@ const SignIn = ({ configData }) => {
       onError: onErrorResponse,
     });
   };
-console.log(loadingRequest)
+
   const { mutate: otpVerifyMutate, isLoading: isLoadingOtpVerifyApi } =
     useVerifyPhone();
   const otpFormSubmitHandler = (values) => {

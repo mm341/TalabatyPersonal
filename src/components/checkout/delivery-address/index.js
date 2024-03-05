@@ -48,6 +48,7 @@ const DeliveryAddress = ({
   storeZoneId,
   orderType,
 }) => {
+  //  hooks
   const theme = useTheme();
   const { t } = useTranslation();
   const [allAddress, setAllAddress] = useState();
@@ -58,7 +59,7 @@ const DeliveryAddress = ({
   const [openSaveAddress, setOpenSaveAddress] = useState(false);
   const [editAddress, setEditAddress] = useState(null);
   const token = localStorage.getItem("token");
-// console.log(editAddress)
+
 
   const saveAddressModalClose = () => {
     setOpenSaveAddress(false);

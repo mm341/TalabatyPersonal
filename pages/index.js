@@ -48,7 +48,7 @@ export default Root;
 export const getServerSideProps = async (context) => {
   const { req, res } = context;
   const language = req.cookies.languageSetting;
-console.log(language)
+
   const configRes = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/config`,
     {

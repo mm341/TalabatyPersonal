@@ -473,15 +473,14 @@ const MiddleSection = (props) => {
   const getCategoryWiseProduct = (products) => {
    
     const isAllExist = state.categoryId?.length === 0 ? true : false;
-    console.log( state.categoryId?.length)
-    console.log(isAllExist)
+   
 
     if (isAllExist) {
-     console.log(products)
+     
       return minMaxWiseSorted(products);
 
     } else {
-     console.log(products)
+    
       
 
     //   here i make some enhancement
@@ -492,7 +491,7 @@ const MiddleSection = (props) => {
       // ?.filter((item) =>
       //   state.categoryId.some((catId) => catId === item.category_id)
       // );
-// console.log(filteredData)
+
       return minMaxWiseSorted(products);
     }
   };

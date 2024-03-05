@@ -19,25 +19,11 @@ export const getDiscountedAmount = (
   storeDiscount,
   quantity
 ) => {
-  // console.log(price)
   //product wise discount
   let mainPrice = price;
   let q = quantity ? quantity : 1;
-  // if (Number.parseInt(storeDiscount) === 0) {
-  //   if (discount > 0) {
-  //     if (discountType === "amount") {
-  //       mainPrice = price - discount * q;
-  //     } else if (discountType === "percent") {
-  //       mainPrice = price - (discount / 100) * price;
-  //     }
-  //   }
-  // } else {
-  //   mainPrice = price - (storeDiscount / 100) * price;
-  // }
 
   if (discount === 0 && Number(storeDiscount) > 0) {
-    // mainPrice = price * q;
-
     return (mainPrice - (mainPrice * Number(storeDiscount)) / 100).toFixed(2);
   }
   return mainPrice?.toFixed(2);

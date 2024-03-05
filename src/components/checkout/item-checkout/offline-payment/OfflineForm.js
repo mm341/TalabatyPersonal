@@ -85,7 +85,7 @@ const OfflineForm = ({
 				}
 
 			} catch (err) {
-				// console.log(error)
+				
 			}
 
 		},
