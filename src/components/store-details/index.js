@@ -101,6 +101,7 @@ const StoreDetails = ({ storeDetails, configData }) => {
       key={rerender}
       sx={{ minHeight: "100vh" }}
       spacing={3}
+      mt={"20px"}
     >
 
       {layoutHandler()}
