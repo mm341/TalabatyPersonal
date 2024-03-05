@@ -42,9 +42,9 @@ const ComponentOne = ({ landingPageData, configData, handleOrderNow }) => {
 	const theme = useTheme();
 	const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
 	const router = useRouter();
-	const handleButtonClick = () => {
-		router.push(landingPageData?.company_button_url);
-	};
+	// const handleButtonClick = () => {
+	// 	router.push(landingPageData?.company_button_url);
+	// };
 	return (
 		<>
 			<CustomContainer>
@@ -97,7 +97,7 @@ const ComponentOne = ({ landingPageData, configData, handleOrderNow }) => {
 										text={landingPageData?.company_description}
 									/>
 								</Typography>
-								<CustomStackFullWidth
+								{/* <CustomStackFullWidth
 									alignItems="flex-start"
 									justifyContent="flex-start"
 								>
@@ -113,11 +113,11 @@ const ComponentOne = ({ landingPageData, configData, handleOrderNow }) => {
 										>
 											{" "}
 											{landingPageData?.company_button_name}
-											{/*<DollarSignHighlighter theme={theme} text={landingPageData?.company_button_name} />*/}
+										
 											<ArrowRightAltIcon />
 										</Typography>
 									</CustomButton>
-								</CustomStackFullWidth>
+								</CustomStackFullWidth> */}
 							</CustomStackFullWidth>
 						</Grid>
 						<Grid

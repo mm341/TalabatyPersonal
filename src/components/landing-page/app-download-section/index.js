@@ -28,10 +28,11 @@ export const CustomButton = styled(Button)(({ theme }) => ({
   color: theme.palette.whiteContainer.main,
 }));
 
-const AppDownloadSection = ({ configData, landingPageData }) => {
+const AppDownloadSection = ({  landingPageData }) => {
+  //  hooks
   const theme = useTheme();
   const isSmall = useMediaQuery(theme.breakpoints.down("md"));
-  const primaryColor = theme.palette.primary.dark;
+
   const { t } = useTranslation();
   const goToApp = (s) => {
     window.open(s);
