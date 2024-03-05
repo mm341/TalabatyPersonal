@@ -323,7 +323,7 @@ export const arabic = {
     "تنسيق الصورة - JPG ، PONG ، ZPEG ، حجم صورة GIF - الحد الأقصى لحجم 2 ميجابايت نسبة الصورة - 1: 1",
   "Order ID": "رقم التعريف الخاص بالطلب",
   "Order Amount": "كمية الطلب",
-  "Track Order": "ترتيب المسار",
+  "Track Order": "تتبع الطلب",
   Pending: "قيد الانتظار",
   "More from Store": "المزيد من المتجر",
   Home: "الصفحه الرئيسيه",

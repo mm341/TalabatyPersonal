@@ -137,7 +137,7 @@ const FooterMiddle = (props) => {
                   <SomeInfo
                     image={phone}
                     alt="Phone"
-                    title="Contact us"
+                    title="Contact Us"
                     info={configData?.phone}
                     t={t}
                     phone
