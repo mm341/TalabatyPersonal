@@ -36,18 +36,25 @@ export const BannersWrapper = styled(Box)(({ theme }) => ({
     height: "150px",
   },
 }));
-const Banners = (props) => {
+const Banners = () => {
+
+  //  hooks
+
   const router = useRouter();
-  const { selectedModule } = useSelector((state) => state.utilsData);
-  const { banners } = useSelector((state) => state.storedData);
-  const { data, refetch: refetchBannerData, isFetching } = useGetBanners();
   const [bannersData, setBannersData] = useState([]);
   const [foodBanner, setFoodBanner] = useState();
   const [openModal, setOpenModal] = useState(false);
-  const { configData } = useSelector((state) => state.configData);
   const dispatch = useDispatch();
+  //  selectors
+  
+  const { selectedModule } = useSelector((state) => state.utilsData);
+  const { banners } = useSelector((state) => state.storedData);
+  const { data, refetch: refetchBannerData, isFetching } = useGetBanners();
+
+  const { configData } = useSelector((state) => state.configData);
+  
   useEffect(() => {
-    if (banners.banners.length === 0) {
+    if (banners?.banners?.length === 0) {
       refetchBannerData();
     }
   }, [banners]);
@@ -221,7 +228,7 @@ const Banners = (props) => {
           </Grid>
         ) : (
           <Slider {...settings}>
-            {bannersData.length > 0 &&
+            {bannersData?.length > 0 &&
               bannersData?.map((item, index) => {
                 return (
                   <BannersWrapper
