@@ -428,7 +428,7 @@ export const english = {
   delivery: "delivery",
   Today: "Today",
   Tomorrow: "Tomorrow",
-  Subtotal: "Subtotal",
+  Subtotal: "Sub Total",
   Discount: "Discount",
   "Payment Options": "Payment Options",
   "Cash on delivery": "Cash on delivery",

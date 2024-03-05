@@ -84,8 +84,10 @@ import thunderstorm from "../assets/thunderstorm.svg";
 import { useGetCheckoutData } from "../../../api-manage/hooks/react-query/useGetCheckOutData";
 
 const ItemCheckout = (props) => {
+  //  props
   const { configData, router, page, cartList, campaignItemList, totalAmount } =
     props;
+  //  hooks
   const theme = useTheme();
   const isSmall = useMediaQuery(theme.breakpoints.down("md"));
   const [orderType, setOrderType] = useState("delivery");
@@ -99,7 +101,6 @@ const ItemCheckout = (props) => {
   const [scheduleAt, setScheduleAt] = useState("now");
   const [orderSuccess, setOrderSuccess] = useState(false);
 
-  const [enabled, setEnabled] = useState(cartList?.length ? true : false);
   const [deliveryTip, setDeliveryTip] = useState(0);
   const [deliveryFee, setDeliveryFee] = useState(0);
   const [isImageSelected, setIsImageSelected] = useState([]);
@@ -113,7 +114,8 @@ const ItemCheckout = (props) => {
   const [orderId, setOrderId] = useState("");
   const [offlineCheck, setOfflineCheck] = useState(false);
   const [state, customDispatch] = useReducer(scheduleReducer, INITIAL_STATE);
-  const { profileInfo } = useSelector((state) => state.profileInfo);
+
+  //  selectors
   const { guestUserInfo } = useSelector((state) => state.guestUserInfo);
   const { offlineInfoStep, offlinePaymentInfo } = useSelector(
     (state) => state.offlinePayment
@@ -291,20 +293,6 @@ const ItemCheckout = (props) => {
       handleOffineOrder();
     }
   }, [orderId]);
-
-  // const handleValuesFromCartItems = (variationValues) => {
-  //   let value = [];
-  //   if (variationValues?.length > 0) {
-  //     variationValues?.forEach((item) => {
-  //       if (item?.isSelected) {
-  //         value.push(item.label);
-  //       }
-  //     });
-  //   } else {
-  //     value.push(variationValues[0].label);
-  //   }
-  //   return value;
-  // };
 
   const handleProductList = (productList, totalQty) => {
     return productList?.map((cart) => {
@@ -577,9 +565,6 @@ const ItemCheckout = (props) => {
     }
   };
 
-  const isStoreOpen = () => {
-    // storeData?.schedule_order
-  };
   const storeCloseToast = () =>
     toast.error(
       t(`${getStoresOrRestaurants().slice(0, -1)} is closed. Try again later.`)
@@ -632,7 +617,6 @@ const ItemCheckout = (props) => {
   };
   const placeOrder = () => {
     if (storeData?.active) {
-      //checking restaurant or shop open or not
       if (isSchedules()) {
         handlePlaceOrderBasedOnAvailability();
       } else {

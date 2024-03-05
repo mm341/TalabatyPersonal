@@ -87,7 +87,7 @@ const OrderCalculation = (props) => {
           </>
         ) : null}
         <Grid item md={8} xs={8}>
-          {t("Sub Total")}
+          {t("Subtotal")}
         </Grid>
         <Grid item md={4} xs={4} align="right">
           <Typography textTransform="capitalize" align="right">

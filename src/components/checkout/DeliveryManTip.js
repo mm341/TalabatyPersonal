@@ -6,22 +6,24 @@ import {
   CustomStackFullWidth,
   CustomTextField,
 } from "../../styled-components/CustomStyles.style";
-import { alpha, Button, Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { CouponTitle, DeliveryCaption, RoundButton } from "./CheckOut.style";
+
+import {  DeliveryCaption, RoundButton } from "./CheckOut.style";
 import { useTheme } from "@emotion/react";
 import { getAmountWithSign } from "../../helper-functions/CardHelpers";
 import { debounce } from "lodash";
 const DeliveryManTip = ({
   deliveryTip,
   setDeliveryTip,
-  orderType,
+  
   isSmall,
-  parcel,
+  
   tripsData,
-  setUsePartialPayment,
+  
 }) => {
+
+  //  hooks
   const [show, setShow] = useState(false);
   const theme = useTheme();
   const [fieldValue, setFieldValue] = useState(deliveryTip);
@@ -34,8 +36,7 @@ const DeliveryManTip = ({
 
   }, 300);
   const handleOnChange = (e) => {
-    // setFieldValue(e.target.value);
-    // debouncedSetInputValue(e.target.value);
+  
 
     if (e.target.value > -1) {
       setFieldValue(e.target.value);
@@ -64,7 +65,7 @@ const DeliveryManTip = ({
     <CustomStackFullWidth>
       <Grid container rowGap="14px" spacing={1}>
         <Grid item xs={12} md={12}>
-          <DeliveryCaption>{t(`Delivery Man Tips`)}</DeliveryCaption>
+          <DeliveryCaption>{t("Delivery Man Tips")}</DeliveryCaption>
         </Grid>
         {!show && (
           <Grid item xs={12}>
@@ -74,7 +75,7 @@ const DeliveryManTip = ({
               gap="10px"
               flexWrap="wrap"
             >
-              {deliveryTips.map((item, index) => {
+              {deliveryTips?.map((item, index) => {
                 return (
                   <Stack key={index} alignItems="flex-start">
                     <CustomBoxForTips

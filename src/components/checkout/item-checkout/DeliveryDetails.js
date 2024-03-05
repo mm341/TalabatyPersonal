@@ -1,33 +1,30 @@
-import React, { useReducer, useState } from "react";
-// import { DeliveryCaption, DeliveryTitle, StyledPaper } from "./CheckOut.style";
+import React from "react";
+
 import { useTranslation } from "react-i18next";
 
 import {
-  CustomPaperBigCard,
   CustomStackFullWidth,
 } from "../../../styled-components/CustomStyles.style";
-import { DeliveryCaption, DeliveryTitle } from "../CheckOut.style";
+import { DeliveryCaption } from "../CheckOut.style";
 import DeliveryAddress from "../delivery-address";
 import { Stack } from "@mui/system";
 import {
-  CustomButtonPrimary,
+ 
   DeliveryOptionButton,
 } from "../../../styled-components/CustomButtons.style";
 import homeImg from "../assets/image 1256.png";
 import takeaway from "../assets/takeaway.png";
 import schedule from "../assets/schedule.png";
 import CustomImageContainer from "../../CustomImageContainer";
-import { Popover, Typography, useMediaQuery } from "@mui/material";
+import {  Typography, useMediaQuery } from "@mui/material";
 import { useTheme } from "@emotion/react";
-import { handleClick, handleCloseModal } from "../../address/HelperFunctions";
-import { initialState, reducer } from "../../address/states";
-import CustomModal from "../../modal";
-import ScheduleDelivery from "./ScheduleDelivery";
-import { today, tomorrow } from "../../../utils/formatedDays";
+
 import RestaurantScheduleTime from "./RestaurantScheduleTime";
-import { getToken } from "../../../helper-functions/getToken";
+
 
 const DeliveryDetails = (props) => {
+  
+  // props
   const {
     storeData,
     setOrderType,
@@ -37,9 +34,6 @@ const DeliveryDetails = (props) => {
     configData,
     forprescription,
     setDeliveryTip,
-    customDispatch,
-    scheduleTime,
-    setDayNumber,
 
     handleChange,
     today,
@@ -47,9 +41,11 @@ const DeliveryDetails = (props) => {
     numberOfDay,
     setScheduleAt,
   } = props;
+
+  //  hooks
   const { t } = useTranslation();
   const theme = useTheme();
-  const isSmall = useMediaQuery("(max-width:490px)");
+
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {
@@ -57,11 +53,7 @@ const DeliveryDetails = (props) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
-  const open = Boolean(anchorEl);
 
   const handleOrderType = (value) => {
     if (value === "take_away") {

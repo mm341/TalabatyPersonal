@@ -36,8 +36,6 @@ import { setCartDetailsPrice, setCartList } from "../../../redux/slices/cart";
 import { clearOfflinePaymentInfo } from "../../../redux/slices/offlinePaymentData";
 import { getGuestId } from "../../../helper-functions/getToken";
 import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined";
-import { getModule } from "../../../helper-functions/getLanguage";
-import { handleProductValueWithOutDiscount } from "../../../utils/CustomFunctions";
 import useGetGuest from "../../../api-manage/hooks/react-query/guest/useGetGuest";
 
 const Cart = ({ isLoading }) => {
