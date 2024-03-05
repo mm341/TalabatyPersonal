@@ -174,22 +174,7 @@ const ProductInformation = ({
   const handleSuccess = (res) => {
     
     if (res) {
-      // let product = {};
-      // res?.carts?.forEach((item) => {
-      //   product = {
-      //     ...item?.item,
-      //     cartItemId: item?.id,
-      //     quantity: item?.quantity,
-      //     totalPrice: item?.price,
-      //     selectedOption: item?.variation,
-      //     unit_price: item?.unit_price,
-      //   };
-      // });
-      // dispatchRedux(
-      //   setCart({
-      //     ...product,
-      //   })
-      // );
+     
       dispatchRedux(
        setCartList(res?.carts)
       );
@@ -228,32 +213,9 @@ const ProductInformation = ({
   };
 
   const updateCartSuccessHandler = (res) => {
-    // dispatch(setCartDetailsPrice(data));
+    
     if (res) {
-      // const pp = res?.map((item) => {
-      //   const newItem = {
-      //     ...item?.item,
-      //     cartItemId: item?.id,
-      //     quantity: item?.quantity,
-      //     totalPrice: item?.price,
-      //     selectedOption: item?.variation,
-      //     unit_price: item?.unit_price,
-      //   };
-
-      //   return newItem;
-      // });
-      //
-      // let product = {};
-      // res?.forEach((item) => {
-      //   product = {
-      //     ...item?.item,
-      //     cartItemId: item?.id,
-      //     quantity: item?.quantity,
-      //     totalPrice: item?.price,
-      //     selectedOption: item?.variation,
-      //   };
-      // });
-      // dispatchRedux(setCartList(pp));
+     
       dispatchRedux(
         setCartList(res?.carts)
        );

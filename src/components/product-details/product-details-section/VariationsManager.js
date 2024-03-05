@@ -59,8 +59,7 @@ const VariationsManager = ({ productDetailsData, handleChoices }) => {
         <CustomStackFullWidth key={choiceIndex}>
           <Stack direction="row" spacing={0.5} alignItems="center">
             <Typography fontWeight="600">{choice?.title}</Typography>
-            {/*<Typography fontWeight="600">:</Typography>*/}
-            {/*<Typography fontWeight="400">{state.productColor}</Typography>*/}
+            
           </Stack>
           <CustomStackFullWidth direction="row" spacing={2}>
             {choice?.options?.map((item, index) => (

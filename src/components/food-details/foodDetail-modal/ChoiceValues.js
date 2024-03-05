@@ -160,7 +160,7 @@ export const ChoiceValues = (props) => {
                   display: "flex",
                   flexDirection: "row",
                   alignItems: "center",
-                  gap: "5px",
+                  gap: "7px",
                 }}
               >
                 {Number(option?.price_after_discount) !==
@@ -171,8 +171,8 @@ export const ChoiceValues = (props) => {
                 )}
 
                 {option.optionPrice === "0"
-                  ? "free"
-                  : `+${getAmountWithSign(
+                  ? t("free")
+                  : `${getAmountWithSign(
                       Number(option.price_after_discount)?.toFixed(2)
                     )}`}
               </CustomTypographyLabel>
