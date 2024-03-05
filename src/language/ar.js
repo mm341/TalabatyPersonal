@@ -3,9 +3,9 @@ export const arabic = {
   get: "يحصل",
   Sold: "مُباع",
   "Delete your account": "حذف حسابك",
-  "Track Your Order": "أتبع طلبك",
+  "Track Your Order": "تتبع طلبك",
   "Enter your order id": "أدخل معرف الطلب الخاص بك",
-  "Search Order": "أمر البحث",
+  "Search Order": "بحث",
   Available: "متاح",
   "Your order is": "طلبك",
   "Your total price must be more then coupon amount":
