@@ -16,13 +16,9 @@ import { IsSmallScreen } from "../../../../utils/CommonValues";
 import CustomImageContainer from "../../../CustomImageContainer";
 import { settings } from "./sliderSettings";
 
-const CardWrapper = styled(Stack)(({ theme, bg_change }) => ({
-  // backgroundColor:
-  //   bg_change === "true"
-  //     ? theme.palette.primary.main
-  //     : theme.palette.background.paper,
+const CardWrapper = styled(Stack)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
-  //color: bg_change === "true" ? theme.palette.whiteContainer.main : "inherit",
+
   color: "inherit",
   minWidth: "163px",
   minHeight: "80px",
@@ -30,7 +26,6 @@ const CardWrapper = styled(Stack)(({ theme, bg_change }) => ({
   border: `1px solid ${alpha(theme.palette.neutral[400], 0.2)}`,
   borderRadius: "10px",
   cursor: "pointer",
-  // transition: "background-color 0.3s, color 0.3s", // Add smooth transition for background-color and color
   transition: "all ease 0.5s",
   position: "relative",
   zIndex: "99",
@@ -51,14 +46,11 @@ const ImageWrapper = styled(Box)(({ theme }) => ({
   height: "33px",
   position: "relative",
 }));
-const Card = ({ item, configData, isSelected, handleClick }) => {
-  const theme = useTheme();
+const Card = ({ item, configData, handleClick }) => {
+  //  hooks
   const { t } = useTranslation();
   return (
-    <CardWrapper
-      onClick={() => handleClick(item)}
-      bg_change={isSelected === item?.module_type ? "true" : "false"}
-    >
+    <CardWrapper onClick={() => handleClick(item)}>
       <Typography
         sx={{
           cursor: "pointer",
@@ -116,11 +108,20 @@ const Card = ({ item, configData, isSelected, handleClick }) => {
 };
 
 const ModuleSelectionRaw = (props) => {
+  //  props
+
   const { isSmall } = props;
-  const { modules, configData } = useSelector((state) => state.configData);
+  //  hooks
+
   const [isSelected, setIsSelected] = useState(getCurrentModuleType());
   const router = useRouter();
   const dispatch = useDispatch();
+
+  //  selectors
+
+  const { modules, configData } = useSelector((state) => state.configData);
+
+
   const handleClick = (item) => {
     setIsSelected(item?.module_type);
     dispatch(setSelectedModule(item));

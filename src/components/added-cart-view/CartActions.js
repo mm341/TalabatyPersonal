@@ -49,7 +49,7 @@ const CartActions = (props) => {
       }
     }
   };
-console.log(cartList)
+
   return (
     <Stack
       direction="row"

@@ -16,13 +16,19 @@ import CookiesConsent from "../CookiesConsent";
 import useGetGuest from "../../api-manage/hooks/react-query/guest/useGetGuest";
 
 const LandingPage = ({ configData, landingPageData }) => {
-  const Testimonials = dynamic(() => import("./Testimonials"), {
-    ssr: false,
-  });
+  //  hooks
   const [location, setLocation] = useState(undefined);
   const [open, setOpen] = useState(false);
   const theme = useTheme();
   const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+  const router = useRouter();
+
+  //  dynamic import
+  const Testimonials = dynamic(() => import("./Testimonials"), {
+    ssr: false,
+  });
+
+  //  get current location
   const { coords } = useGeolocated({
     positionOptions: {
       enableHighAccuracy: false,
@@ -42,7 +48,7 @@ const LandingPage = ({ configData, landingPageData }) => {
       setOpen(false);
     }
   };
-  const router = useRouter();
+
   const handleOrderNow = () => {
     if (location) {
       if (location === "null") {
@@ -54,17 +60,12 @@ const LandingPage = ({ configData, landingPageData }) => {
       setOpen(true);
     }
   };
+
+  //  get data from localstorage
   let token = undefined;
   if (typeof window !== "undefined") {
     token = localStorage.getItem("token");
   }
-  // const { data: guestData, refetch: guestRefetch, isLoading } = useGetGuest();
-  // useEffect(() => {
-  //   if (!token) {
-  //     guestRefetch();
-  //   }
-  // }, []);
-  // localStorage.setItem("guest_id", guestData?.guest_id);
 
   return (
     <>

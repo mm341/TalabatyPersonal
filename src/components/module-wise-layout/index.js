@@ -12,13 +12,17 @@ import { setResetStoredData } from "../../redux/slices/storedData";
 import { setModules } from "../../redux/slices/configData";
 
 const ModuleWiseLayout = ({ configData }) => {
+  //  hooks
   const [rerender, setRerender] = useState(false);
-  const { selectedModule } = useSelector((state) => state.utilsData);
+
   const { data, refetch } = useGetModule();
   const dispatch = useDispatch();
   const router = useRouter();
-  const { modules } = useSelector((state) => state.storedData);
-  
+  const isSmall = useMediaQuery("(max-width:1180px)");
+  //  selectors
+
+  const { selectedModule } = useSelector((state) => state.utilsData);
+
   useEffect(() => {
     if (router.pathname === "/home") {
       refetch();
@@ -36,7 +40,7 @@ const ModuleWiseLayout = ({ configData }) => {
     dispatch(setResetStoredData());
     setRerender((prevState) => !prevState);
   };
-  const isSmall = useMediaQuery("(max-width:1180px)");
+
   const moduleSelectHandler = async (item) => {
     if (router.query.search) {
       await router.replace("/home");
