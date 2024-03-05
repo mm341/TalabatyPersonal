@@ -33,7 +33,7 @@ const HeroSection = ({ configData, landingPageData, handleOrderNow }) => {
       setCurrentLocation(window.localStorage.getItem("location"));
     }
   }, []);
-console.log(landingPageData)
+
   return (
     <CustomContainer>
       <CustomBoxFullWidth

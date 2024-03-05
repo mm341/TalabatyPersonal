@@ -57,6 +57,7 @@ import { getModule } from "../../../helper-functions/getLanguage";
 import { getSelectedVariations } from "../../header/second-navbar/SecondNavbar";
 
 const SignIn = ({ configData }) => {
+  //  hooks
   const router = useRouter();
   const previousRouteName = router.query.from;
   const guestId = getGuestId();
@@ -69,6 +70,9 @@ const SignIn = ({ configData }) => {
   const [isRemember, setIsRemember] = useState(false);
   const theme = useTheme();
   const textColor = theme.palette.whiteContainer.main;
+
+  //  get data from localstorage
+
   let userDatafor = undefined;
   if (typeof window !== "undefined") {
     userDatafor = JSON.parse(localStorage.getItem("userDatafor"));
@@ -76,57 +80,7 @@ const SignIn = ({ configData }) => {
   const getModule = () => {
     return JSON.parse(window.localStorage.getItem("module"));
   };
-  const cartListSuccessHandler = (res) => {
-    dispatch(setCartDetailsPrice(res));
-    if (res) {
-      const tempCartLists = res?.carts?.map((item) => ({
-        ...item?.item,
-        cartItemId: item?.id,
-        totalPrice:
-          handleProductValueWithOutDiscount(item?.item) * item?.quantity,
-        selectedAddons: item?.item?.addons,
-        quantity: item?.quantity,
-        food_variations: item?.item?.food_variations,
-        itemBasePrice: item?.item?.price,
-        unit_price:item?.unit_price,
-        selectedOption:
-          getModule()?.module_type !== "food"
-            ? item?.variation
-            : getSelectedVariations(item?.item?.food_variations),
-      }));
-      dispatch(setCartList(tempCartLists));
-      
-    }
-  };
 
-  const {
-    data,
-    refetch: cartListRefetch,
-    isLoading,
-  } = useGetAllCartList(cartListSuccessHandler);
-  const userOnSuccessHandler = (res) => {
-    dispatch(setUser(res));
-    //handleClose()
-  };
- 
-  const loginFormik = useFormik({
-    initialValues: {
-      phone: "",
-      // password: userDatafor ? userDatafor.password : "",
-      tandc: false,
-    },
-    validationSchema: SignUpValidation(),
-    onSubmit: async (values, helpers) => {
-      try {
-        if (isRemember) {
-          localStorage.setItem("userDatafor", JSON.stringify(values));
-        }
-        formSubmitHandler(values);
-      } catch (err) {
-        
-      }
-    },
-  });
   let location = undefined;
   let isModuleSelected = undefined;
   let lanDirection = undefined;
@@ -137,16 +91,47 @@ const SignIn = ({ configData }) => {
     lanDirection = JSON.parse(localStorage.getItem("settings"));
     languageSetting = JSON.parse(localStorage.getItem("language-setting"));
   }
+  const cartListSuccessHandler = (res) => {
+    dispatch(setCartDetailsPrice(res));
+    if (res) {
+      dispatch(setCartDetailsPrice(res));
+      dispatch(setCartList(res?.carts));
+    }
+  };
+
+  const {
+    data,
+    refetch: cartListRefetch,
+    isLoading,
+  } = useGetAllCartList(cartListSuccessHandler);
+  const userOnSuccessHandler = (res) => {
+    dispatch(setUser(res));
+    
+  };
+
+  //  handel form validation with formik
+
+  const loginFormik = useFormik({
+    initialValues: {
+      phone: "",
+
+      tandc: false,
+    },
+    validationSchema: SignUpValidation(),
+    onSubmit: async (values, helpers) => {
+      try {
+        if (isRemember) {
+          localStorage.setItem("userDatafor", JSON.stringify(values));
+        }
+        formSubmitHandler(values);
+      } catch (err) {}
+    },
+  });
 
   const handleOnChange = (value) => {
     loginFormik.setFieldValue("phone", value);
   };
-  // const passwordHandler = (value) => {
-  //   loginFormik.setFieldValue("password", value);
-  // };
-  const handleCheckbox = (e) => {
-    loginFormik.setFieldValue("tandc", e.target.checked);
-  };
+
   useEffect(() => {
     if (otpData?.phone !== "") {
       setOpenOtpModal(true);
@@ -162,19 +147,9 @@ const SignIn = ({ configData }) => {
     useGetProfile(userOnSuccessHandler);
   const { refetch: wishlistRefetch, isLoading: isLoadingWishlist } =
     useWishListGet(onSuccessHandler);
-  const handleTokenAfterSignIn = async (response) => {
-    if (response?.data) {
-      localStorage.setItem("token", response?.data?.token);
-      await wishlistRefetch();
-      await profileRefetch();
-      await cartListRefetch();
-      toast.success(t(loginSuccessFull));
-    }
-  };
 
   const handleTokenAfterSignUp = async (response) => {
     if (response) {
-     
       if (typeof window !== "undefined") {
         localStorage.setItem("token", response?.token);
         await profileRefetch();
@@ -192,8 +167,6 @@ const SignIn = ({ configData }) => {
           await router.back();
         }
       }
-      // dispatch(setToken(response?.data?.token));
-      // router.push("/");
     }
   };
   const handleCloseModuleModal = (item) => {
@@ -211,28 +184,23 @@ const SignIn = ({ configData }) => {
   const handleError = () => {
     setIsApiCalling(false);
   };
-  const { mutate,isLoading:loadingRequest } = useSignIn(handleError);
+  const { mutate, isLoading: loadingRequest } = useSignIn(handleError);
   const formSubmitHandler = (values) => {
     setIsApiCalling(true);
-    const newValues = { ...values, guest_id: guestId };
-    const signInData = {
-      // name: values.name,
 
+    const signInData = {
       phone: `+${values.phone.toString()}`,
       guest_id: guestId,
     };
     mutate(signInData, {
       onSuccess: async (response) => {
-        //setDefaultLanguage();
         if (configData?.customer_verification) {
           if (Number.parseInt(response?.is_phone_verified) === 1) {
-            // await handleTokenAfterSignUp(response);
           } else {
             setOtpData({ phone: `+${values.phone}` });
             setMainToken(response);
           }
         } else {
-          // await handleTokenAfterSignUp(response);
         }
       },
       onError: onErrorResponse,
@@ -246,7 +214,6 @@ const SignIn = ({ configData }) => {
       handleTokenAfterSignUp(res);
       toast.success(res?.message);
       setOpenOtpModal(false);
-      // handleTokenAfterSignIn(mainToken);
     };
     otpVerifyMutate(values, {
       onSuccess: onSuccessHandler,
@@ -258,7 +225,6 @@ const SignIn = ({ configData }) => {
     <SignInForm
       configData={configData}
       handleOnChange={handleOnChange}
-      // passwordHandler={passwordHandler}
       loginFormik={loginFormik}
       lanDirection={lanDirection?.direction}
     />
@@ -270,26 +236,19 @@ const SignIn = ({ configData }) => {
       localStorage.removeItem("userDatafor");
     }
   };
-  // useEffect(()=>{
-  //   signUpFormik.setFieldValue('phone', "")
-  //   },[])
+
   return (
     <>
       <NoSsr>
         <CustomStackFullWidth
           justifyContent="center"
           alignItems="center"
-          // mt="10rem"
           pb="80px"
-          mt="1rem"
+          mt="30px"
         >
           <Box maxWidth="500px" width="100%">
             <CustomPaperBigCard>
-              <CustomStackFullWidth
-                // justifyContent="center"
-                // alignItems="center"
-                spacing={2}
-              >
+              <CustomStackFullWidth spacing={2}>
                 <AuthHeader configData={configData} title={t("Sign In")} />
                 <form
                   noValidate

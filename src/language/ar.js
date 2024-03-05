@@ -12,7 +12,7 @@ export const arabic = {
     "يجب أن يكون إجمالي سعرك أكثر من مبلغ القسيمة",
   "You can use this ID to track your order later":
     "يمكنك استخدام هذا المعرف لتتبع طلبك لاحقًا",
-  "Cart item remove successfully": "عنصر العربة إزالة بنجاح",
+  "Cart item remove successfully": "تم ازاله العنصر بنجاح",
   "Theme Mode": "وضع الموضوع",
   "Search for products or store...": "ابحث عن المنتجات أو المتجر ...",
   "not now": "ليس الآن",
@@ -38,8 +38,8 @@ export const arabic = {
   "out of limits": "خارج الحدود",
   "You have balance in  your wallet": "لديك توازن في محفظتك",
   "Personal Details": "تفاصيل شخصية",
-  "Shopping Cart": "عربة التسوق",
-  "You have Saved": "لقد أنقذت",
+  "Shopping Cart": "سله التسوق",
+  "You have Saved": "لقد وفرت",
   "more for free delivery": "المزيد للتسليم المجاني",
   "Checking theme and rtl": "التحقق من الموضوع و RTL",
   "Iâll Pick It Up MySelf": "سألتقطها بنفسي",
@@ -47,7 +47,7 @@ export const arabic = {
   Custom: "مخصص",
   "Download ON": "تنزيل على",
   "No items added in your cart. Please add product to your cart list.":
-    "لم تتم إضافة عناصر في عربة التسوق الخاصة بك. الرجاء إضافة منتج إلى قائمة العربة الخاصة بك.",
+    "لم تتم إضافة عناصر في سله التسوق الخاصة بك. الرجاء إضافة منتج إلى قائمة السله الخاصة بك.",
   "GET IT ON": "احصل عليه",
   "Add Payment Method": "إضافة طريقة دفع",
   "Save this Address": "احفظ هذا العنوان",
@@ -55,7 +55,7 @@ export const arabic = {
   "Search for items or store...": "ابحث عن العناصر أو المتجر ...",
   Stores: "المتاجر",
   "Filter Search Results": "نتائج البحث مرشح",
-  "Your cart is empty": "عربة التسوق فارغة",
+  "Your cart is empty": "سله التسوق فارغة",
   Your: "لك",
   "e-Commerce !": "التجارة الإلكترونية!",
   "Venture Starts Here": "يبدأ المشروع هنا",
@@ -123,7 +123,7 @@ export const arabic = {
   "All Stores": "جميع المتاجر",
   "Take away": "يبعد",
   "If you want to change store type, it will reset your cart and other related cache data.":
-    "إذا كنت ترغب في تغيير نوع المتجر ، فسيتم إعادة ضبط عربة التسوق الخاصة بك وبيانات ذاكرة التخزين المؤقت الأخرى ذات الصلة.",
+    "إذا كنت ترغب في تغيير نوع المتجر ، فسيتم إعادة ضبط سله التسوق الخاصة بك وبيانات ذاكرة التخزين المؤقت الأخرى ذات الصلة.",
   Change: "يتغير",
   Location: "موقع",
   "You must accept the terms and conditions": "يجب عليك قبول الأحكام والشروط",
@@ -144,7 +144,7 @@ export const arabic = {
   "No transaction found": "لم يتم العثور على معاملة",
   "insufficient amount": "كمية غير كافية",
   "You have item from another store in cart. If you continue, your all previous item from cart will be removed":
-    "لديك عنصر من متجر آخر في العربة. إذا واصلت ، ستتم إزالة العنصر السابق من العربة",
+    "لديك عنصر من متجر آخر في السله. إذا واصلت ، ستتم إزالة العنصر السابق من السله",
   "Theme Settings": "إعدادات الموضوع",
   "Change language": "تغيير اللغة",
   "Floor:": "أرضية:",
@@ -155,12 +155,12 @@ export const arabic = {
   "Search for items...": "ابحث عن العناصر ...",
   "Shipping policy": "سياسة الشحن",
   "Your cart has been cleared successfully. Now try to add the product again.":
-    "تم مسح عربة التسوق الخاصة بك بنجاح. حاول الآن إضافة المنتج مرة أخرى.",
+    "تم مسح سله التسوق الخاصة بك بنجاح. حاول الآن إضافة المنتج مرة أخرى.",
   "items in your cart": "الوحدات الموجودة فى سلة التسوق الخاصة بك",
   "No Favourite Items Found": "لم يتم العثور على عناصر مفضلة",
   "No Favourite Stores Found": "لم يتم العثور على المتاجر المفضلة",
   "You have nothing in your cart to checkout.":
-    "ليس لديك شيء في عربة التسوق الخاصة بك.",
+    "ليس لديك شيء في سله التسوق الخاصة بك.",
   "Choose Your Interests": "اختر اهتماماتك",
   "Get personalized food recommendations.": "الحصول على توصيات طعام مخصصة.",
   "Filter your search results": "تصفية نتائج البحث الخاصة بك",
@@ -185,7 +185,7 @@ export const arabic = {
   "Collect Cash": "جمع النقد",
   "Open Confirm Dialog": "افتح حوار تأكيد",
   "Confirm this request ? ": "تأكيد هذا الطلب؟",
-  Cancel: "يلغي",
+  Cancel: "الغاء",
   Yes: "نعم",
   Download: "تحميل",
   Filter: "منقي",
@@ -391,11 +391,11 @@ export const arabic = {
   Offer: "يعرض",
   "Expired on": "انتهت يوم",
   Purchase: "شراء",
-  "Min purchase": "دقيقة شراء",
+  "Min purchase": "أدني شراء",
   "Only for": "فقط ل",
   "Only for some specific zones": "فقط لبعض المناطق المحددة",
   Restaurant: "مطعم",
-  Max: "الأعلى",
+  Max: "اقصي",
   Code: "شفرة",
   "has been copied": "تم نسخه",
   Copied: "كود نسخ!",
@@ -406,7 +406,7 @@ export const arabic = {
   "Order Status": "حالة الطلب",
   Amount: "كمية",
   "Payment method": "طريقة الدفع او السداد",
-  "Update To Cart": "تحديث العربة",
+  "Update To Cart": "تحديث السله",
   "Order placed": "تم الطلب",
   Order: "طلب",
   "Follow us on": "اتبعنا",
@@ -472,7 +472,7 @@ export const arabic = {
   "Download our app from google play store & app store.":
     "قم بتنزيل تطبيقنا من متجر Google Play Store & App Store.",
   "I agree with the terms & conditions": "أنا أتفق مع الشروط والأحكام",
-  "Item added to cart": "العنصر المضافة إلى العربة",
+  "Item added to cart": "العنصر المضافة إلى السله",
   "You are not logged in": "لم يتم دخولك",
   Free: "حر",
   "Login Information": "معلومات تسجيل الدخول",
@@ -564,7 +564,7 @@ export const arabic = {
   "You cannot order from multiple restaurants in a single order":
     "لا يمكنك الطلب من مطاعم متعددة بطلب واحد",
   "You have food from another restaurant in cart. If you continue, your all previous food from cart will be removed":
-    "لديك طعام من مطعم آخر في العربة. إذا واصلت ، ستتم إزالة كل طعامك السابق من العربة",
+    "لديك طعام من مطعم آخر في السله. إذا واصلت ، ستتم إزالة كل طعامك السابق من السله",
   "Are you sure, you want to reset?": "هل أنت متأكد أنك تريد إعادة تعيين؟",
   "Please Choose a delivery address.": "الرجاء اختيار عنوان التسليم.",
   "You denied location permission. Please allow browsers location permission from your device, refresh the site and receive more accurate delivery.":
@@ -691,7 +691,7 @@ export const arabic = {
   "No Coupon Found": "لم يتم العثور على قسيمة",
   "Search a restaurant": "ابحث في مطعم",
   "Closed Now": "مغلق الآن",
-  Min: "دقيقة",
+  Min: "أدني",
   "% off on all foods": "٪ خصم على جميع الأطعمة",
   Enjoy: "يتمتع",
   "Discount available from": "خصم متاح من",
@@ -706,8 +706,8 @@ export const arabic = {
   "Minimum purchase value": "الحد الأدنى لقيمة الشراء",
   "Max Discount": "خصم أقصى",
   "Cart is Empty": "البطاقه خاليه",
-  "in your cart": "في عربة التسوق الخاصة بك",
-  min: "دقيقة",
+  "in your cart": "في سله التسوق الخاصة بك",
+  min: "أدني",
   "Clear All": "امسح الكل",
   "Total Price": "السعر الكلي",
   "Wallet balance is below total amount": "رصيد المحفظة أقل من إجمالي المبلغ",
@@ -752,14 +752,14 @@ export const arabic = {
   "Help & Support": "ساعد لدعم",
   "Open your own  virtual restaurant on": "افتح مطعمك الافتراضي على",
   "Are you sure you want to  logout?": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
-  "Clear Cart": "عربة واضحة",
+  "Clear Cart": "مسح السله",
   "Order Now": "اطلب الان",
   "To select from saved addresses, you need to sign in.":
     "للاختيار من العناوين المحفوظة ، تحتاج إلى تسجيل الدخول.",
   "Location is required.": "الموقع مطلوب.",
   Agree: "يوافق",
   Okay: "تمام",
-  Close: "يغلق",
+  Close: "خروج",
   Favorites: "المفضلة",
   "Pick from map": "اختر من الخريطة",
   Or: "أو",
@@ -855,7 +855,7 @@ export const arabic = {
   "Password can not be updated while you are logged in by using social logins.":
     "لا يمكن تحديث كلمة المرور أثناء تسجيل الدخول باستخدام تسجيل الدخول الاجتماعي.",
   "Previously added restaurant foods have been removed from cart. Now, try again.":
-    "تمت إزالة أطعمة المطعم المضافة سابقًا من العربة. الآن ، حاول مرة أخرى.",
+    "تمت إزالة أطعمة المطعم المضافة سابقًا من السله. الآن ، حاول مرة أخرى.",
   "Order placement failed": "فشل وضع الطلب",
   "Order placed successfully.": "وضع النظام بنجاح.",
   "Your payment has been successfully processed, and your order ":
@@ -899,7 +899,7 @@ export const arabic = {
   "Start Exploring!": "ابدأ في الاستكشاف!",
   "Select location first to start exploring shops & restaurants near you":
     "حدد الموقع أولاً لبدء استكشاف المتاجر والمطاعم بالقرب منك",
-  Cart: "عربة التسوق",
+  Cart: "سله التسوق",
   Store: "محل",
   We: "نحن",
   satisfied: "راضي",
@@ -928,7 +928,7 @@ export const arabic = {
   "Select a type of module for your orders":
     "حدد نوعًا من الوحدة النمطية لطلباتك",
   "You have item from another store in cart. If you continue, your all previous item from cart will be removed and this one will be added.":
-    "لديك عنصر من متجر آخر في العربة. إذا واصلت ، ستتم إزالة العنصر السابق من CART وسيتم إضافة هذا العنصر.",
+    "لديك عنصر من متجر آخر في السله. إذا واصلت ، ستتم إزالة العنصر السابق من سله التسوق وسيتم إضافة هذا العنصر.",
   "More products need to apply the coupon":
     "المزيد من المنتجات تحتاج إلى تطبيق القسيمة",
   "Terms And Conditions": "الأحكام والشروط",
@@ -984,7 +984,7 @@ export const arabic = {
   "Dont have a cutlery? Restaurant will provide you.":
     "ليس لديك أدوات مائدة؟ المطعم سوف يوفر لك.",
   "If Any Product is not available": "إذا كان أي منتج غير متوفر",
-  "Remove it form my cart": "إزالتها تشكل عربة التسوق الخاصة بي",
+  "Remove it form my cart": "إزالتها تشكل سله التسوق الخاصة بي",
   "I will wait until it is restocked": "سأنتظر حتى يتم إعادة تخزينه",
   "Please cancel the order": "يرجى إلغاء النظام",
   "Call me ASAP": "الاتصال بي في اسرع وقت ممكن",
@@ -1012,7 +1012,7 @@ export const arabic = {
   Accept: "يقبل",
   "Without any payment method, you can not place the order.":
     "بدون أي طريقة دفع ، لا يمكنك تقديم الطلب.",
-  Subscribe: "يشترك",
+  Subscribe: "اشترك",
   "Nothing found": "لم يتم العثور على شيء",
   Unit: "وحدة",
   "In Stock": "في الأوراق المالية",
@@ -1096,7 +1096,7 @@ export const arabic = {
   "Pay via Wallet": "دفع عبر المحفظة",
   "% discount": "٪ خصم",
   discount: "خصم",
-  "min Order of": "دقيقة من",
+  "min Order of": "ادني من",
   "Select option from below": "حدد الخيار من أدناه",
   "Pay your bill using any of the payment method below and input the required information in the form":
     "ادفع فاتورتك باستخدام أي من طريقة الدفع أدناه وإدخال المعلومات المطلوبة في النموذج",

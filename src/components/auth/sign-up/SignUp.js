@@ -7,7 +7,7 @@ import {
 } from "../../../styled-components/CustomStyles.style";
 import AuthHeader from "../AuthHeader";
 import SignUpForm from "./SignUpForm";
-// import AcceptTermsAndConditions from "../../../../pages/auth/AcceptTermsAndConditions";
+
 import LoadingButton from "@mui/lab/LoadingButton";
 import { Typography, useTheme } from "@mui/material";
 import { useFormik } from "formik";
@@ -25,23 +25,24 @@ import { setDefaultLanguage } from "../../../utils/setDefaultLanguage";
 import { signup_successfull } from "../../../utils/toasterMessages";
 import { ModuleSelection } from "../../landing-page/hero-section/module-selection";
 import CustomModal from "../../modal";
-// import AcceptTermsAndConditions from "../AcceptTermsAndConditions";
 import OtpForm from "./OtpForm";
 import SignUpValidation from "./SignUpValidation";
 import { getGuestId } from "../../../helper-functions/getToken";
-// import CustomModal from "../../modal";
-// import OtpForm from "./OtpForm";
-// import { useVerifyPhone } from "../../../api-manage/hooks/auth/useVerifyPhone";
 
 const SignUp = () => {
+  //  hooks
   const router = useRouter();
-  const { configData } = useSelector((state) => state.configData);
+
   const [openModuleSelection, setOpenModuleSelection] = useState(false);
   const theme = useTheme();
   const [otpData, setOtpData] = useState({ phone: "" });
-  //   const [mainToken, setMainToken] = useState(null);
   const [openOtpModal, setOpenOtpModal] = useState(false);
   const guestId = getGuestId();
+
+  //  selectors
+  const { configData } = useSelector((state) => state.configData);
+  //  handel form validation with formik
+
   const signUpFormik = useFormik({
     initialValues: {
       f_name: "",
@@ -50,7 +51,6 @@ const SignUp = () => {
     },
     validationSchema: SignUpValidation(),
     onSubmit: async (values) => {
-      
       try {
         formSubmitHandler(values);
       } catch (err) {}
@@ -127,16 +127,14 @@ const SignUp = () => {
     });
   };
 
-  //   const handleClick = () => {
-  //     window.open("/terms-and-conditions");
-  //   };
+  
   const { mutate: otpVerifyMutate, isLoading: isLoadingOtpVerifyApi } =
     useVerifyPhone();
   const otpFormSubmitHandler = (values) => {
     const onSuccessHandler = (res) => {
       toast.success(res?.message);
       setOpenOtpModal(false);
-      // handleTokenAfterSignUp(mainToken);
+      
       handleTokenAfterSignUp(res);
     };
     otpVerifyMutate(values, {
@@ -151,6 +149,7 @@ const SignUp = () => {
         justifyContent="center"
         alignItems="center"
         pb="80px"
+        mt={"30px"}
       >
         <Box maxWidth="500px" width="100%">
           <CustomPaperBigCard>
