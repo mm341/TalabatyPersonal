@@ -68,7 +68,8 @@ const SearchResult = (props) => {
   const [sortBy, setSortBy] = useState("high2Low");
   const { ref, inView } = useInView();
   const scrollDivRef = useRef(true);
-  const selectedCategoriesIds= selectedCategories?.length>0 ? selectedCategories:[id]
+  const selectedCategoriesIds =
+    selectedCategories?.length > 0 ? selectedCategories : [id];
 
   const {
     data: allItems,
@@ -144,7 +145,6 @@ const SearchResult = (props) => {
     hasNextPage: hasNextPageStores,
   } = useGetStoresByFiltering(pageParams);
 
-
   useEffect(() => {
     if (category_id) {
       if (currentTab === 0) {
@@ -163,11 +163,11 @@ const SearchResult = (props) => {
       }
     }
   }, [selectedCategories]);
- useEffect(()=>{
-   if(searchValue==="special-offer"){
-     refetchSpecialOffer()
-   }
- },[])
+  useEffect(() => {
+    if (searchValue === "special-offer") {
+      refetchSpecialOffer();
+    }
+  }, []);
   const hasApiNextPage =
     hasNextPageStores ||
     hasNextPageForCategoriesStores ||
@@ -371,8 +371,9 @@ const SearchResult = (props) => {
   };
 
   const getCategoriesWiseFilter = () => {
-    let categoryWiseFiltered;
+    let categoryWiseFiltered = [];
     let pageItems = [];
+    
     if (selectedCategories?.length > 0) {
       if (pageData?.length > 0) {
         pageData?.forEach((item) => {
@@ -409,17 +410,21 @@ const SearchResult = (props) => {
 
   const getPageData = () => {
     const categoryWiseFiltered = getCategoriesWiseFilter();
+    
     const isChecked =
       filterData?.length > 0
         ? filterData?.some((item) => item?.checked === true)
         : false;
     //CHECKING FILTER
+
     if (isChecked) {
       let filteredData;
+
       if (searchValue === VIEW_ALL_TEXT.specialOffer) {
         const isDiscounted = filterData?.find(
           (item) => item?.value === "discounted"
         )?.checked;
+
         filteredData = isDiscounted
           ? getFilteredData(filterData, categoryWiseFiltered, currentTab)
           : [];
@@ -430,6 +435,7 @@ const SearchResult = (props) => {
           currentTab
         );
       }
+
       return filteredData;
     } else {
       if (currentTab === 0) {
@@ -493,12 +499,12 @@ const SearchResult = (props) => {
     return getPageData()?.length || 0;
   };
   const isApiCalling =
-      isFetchingSearchAPi||
-      isFetchingNextPageAllStores ||
-      isFetchingNextPageForCategoriesStores ||
-      isFetchingNextPageForCategoriesItems ||
-      isFetchingNextPagePageSpecialOffer ||
-      isFetchingNextPageAllItems;
+    isFetchingSearchAPi ||
+    isFetchingNextPageAllStores ||
+    isFetchingNextPageForCategoriesStores ||
+    isFetchingNextPageForCategoriesItems ||
+    isFetchingNextPagePageSpecialOffer ||
+    isFetchingNextPageAllItems;
   return (
     <CustomContainer>
       <CustomStackFullWidth alignItems="center" justifyContent="center">
@@ -542,10 +548,10 @@ const SearchResult = (props) => {
             searchValue={searchValue}
             pageData={getPageData()}
             isLoading={
-                itemIsLoading ||
-                isLoading ||
-                isLoadingAllStores ||
-                specialOfferLoading
+              itemIsLoading ||
+              isLoading ||
+              isLoadingAllStores ||
+              specialOfferLoading
             }
             isInitialRefetching={
               isRefetchingSearch ||

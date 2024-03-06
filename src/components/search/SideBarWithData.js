@@ -1,4 +1,4 @@
-import React, {forwardRef, useEffect, useState} from "react";
+import React, { forwardRef, useEffect, useState } from "react";
 import {
   CustomBoxFullWidth,
   CustomStackFullWidth,
@@ -54,6 +54,8 @@ const SideBarWithData = forwardRef((props, ref) => {
       </CardWrapper>
     </Grid>
   );
+
+  
   const getLayoutHandler = () => {
     if (currentTab === 0) {
       return (
@@ -166,7 +168,7 @@ const SideBarWithData = forwardRef((props, ref) => {
             <CustomBoxFullWidth>
               <Grid container spacing={2} ref={ref}>
                 {getLayoutHandler()}
-                {(isApiCalling  || !loading ||isInitialRefetching)&& (
+                {(isApiCalling || !loading || isInitialRefetching) && (
                   <Grid
                     item
                     xs={12}

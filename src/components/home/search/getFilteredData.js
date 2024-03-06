@@ -2,7 +2,11 @@ export const getFilteredData = (selectedFilters, data, currentTab) => {
   //item wise
 
   let newData = data;
+ 
+ 
+  
   if (currentTab === 0) {
+
     selectedFilters?.forEach((item) => {
       if (item?.value === "discounted" && item?.checked) {
         newData = newData?.filter((item) => item?.discount >= 0);
@@ -62,5 +66,7 @@ export const getFilteredData = (selectedFilters, data, currentTab) => {
       }
     });
   }
+
+ 
   return newData;
 };
