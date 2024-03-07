@@ -323,7 +323,7 @@ const MiddleSection = (props) => {
         });
       }
     }
-  }, [data, searchData]);
+  }, [data, searchData,state.searchKey]);
 
   useEffect(() => {
     if (inView) {
@@ -418,6 +418,7 @@ const MiddleSection = (props) => {
     ? getModuleId()
     : parseInt(router.query.module_id);
   const handleSearchResult = (value) => {
+    
     setOffset(1);
     dispatch({ type: ACTION.setOffSet, payload: 1 });
     if (value !== "") {
