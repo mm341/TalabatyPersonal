@@ -16,11 +16,17 @@ export const Logo = styled("div")(({ theme, height, width }) => ({
   },
 }));
 const CustomLogo = ({ logoImg, atlText, height, width, objectFit }) => {
+  //  hooks
   const router = useRouter();
+
+  //  get data from localstorage
   let location = undefined;
   if (typeof window !== "undefined") {
     location = localStorage.getItem("location");
   }
+
+
+  //  click function to handel icon routing
   const handleClick = () => {
     if (router.pathname === "/") {
       if (location) {

@@ -13,19 +13,40 @@ import AppLinks from "./AppLinks";
 import RouteLinks from "./RouteLinks";
 import SocialLinks from "./SocialLinks";
 import SomeInfo from "./SomeInfo";
+import { useRouter } from "next/router";
 
 const FooterMiddle = (props) => {
+  //  props
   const { configData, landingPageData } = props;
+
+  //  hooks
   const { t } = useTranslation();
+  const theme = useTheme();
+  const router = useRouter();
+  //  get data from localstorage
   let zoneid = undefined;
+  let token = undefined;
+  let location = undefined;
   if (typeof window !== "undefined") {
     zoneid = localStorage.getItem("zoneid");
+    token = localStorage.getItem("token");
+    location = localStorage.getItem("location");
   }
-  const theme = useTheme();
-  const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
-  let token;
-  const businessLogo = `${configData?.base_urls?.business_logo_url}/${configData?.logo}`;
 
+  const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+
+  //  click function to handel icon routing
+  const handleClick = () => {
+    if (router.pathname === "/") {
+      if (location) {
+        router.replace("/home", undefined, { shallow: true });
+      } else {
+        router.push("/", undefined, { shallow: true });
+      }
+    } else {
+      router.replace("/home", undefined, { shallow: true }).then();
+    }
+  };
   return (
     <CustomStackFullWidth sx={{ py: { xs: "10px", sm: "3rem" } }}>
       <Grid container spacing={{ xs: 3, md: 4 }} justifyContent="flex-start">
@@ -36,6 +57,7 @@ const FooterMiddle = (props) => {
             justifyContent="flex-start"
           >
             <Box
+              onClick={() => handleClick()}
               sx={{
                 img: {
                   transition: "all ease 0.5s",
@@ -45,10 +67,13 @@ const FooterMiddle = (props) => {
                     transform: "scale(1.04)",
                   },
                 },
+                cursor:"pointer"
               }}
             >
               <CustomImageContainer
-                src={businessLogo}
+                src={
+                  "https://talabateedashboard.talabatee.net/storage/app/public/business/2024-01-16-65a63c2f298ad.png"
+                }
                 alt={`${configData?.business_name}`}
                 width="auto"
                 height="50px"

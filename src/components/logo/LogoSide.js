@@ -2,7 +2,7 @@ import CustomLogo from "./CustomLogo";
 import { Stack } from "@mui/system";
 
 const LogoSide = ({ configData, width, height, objectFit }) => {
-  const businessLogo = configData?.base_urls?.business_logo_url;
+ 
 
   return (
     <Stack
@@ -16,7 +16,7 @@ const LogoSide = ({ configData, width, height, objectFit }) => {
         logoImg={
           "https://talabateedashboard.talabatee.net/storage/app/public/business/2024-01-16-65a63c2f298ad.png"
         }
-        //height="1.5rem"
+       
         width={width}
         height={height}
         objectFit={objectFit}

@@ -38,8 +38,12 @@ import { getGuestId } from "../../../helper-functions/getToken";
 import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined";
 import useGetGuest from "../../../api-manage/hooks/react-query/guest/useGetGuest";
 
+//  cart module
 const Cart = ({ isLoading }) => {
+  //  hooks
   const [sideDrawerOpen, setSideDrawerOpen] = useState(false);
+
+  //  selectors
   const { cartList } = useSelector((state) => state.cart);
 
   const handleIconClick = () => {
@@ -66,6 +70,8 @@ const Cart = ({ isLoading }) => {
     </>
   );
 };
+
+//  wishilist module
 const WishListSideBar = ({ totalWishList }) => {
   const [wishListSideDrawerOpen, setWishListSideDrawerOpen] = useState(false);
   const handleIconClick = () => {
@@ -91,62 +97,47 @@ const WishListSideBar = ({ totalWishList }) => {
   );
 };
 
-export const getSelectedVariations = (variations) => {
-  let selectedItem = [];
-  if (variations?.length > 0) {
-    variations?.forEach((item, index) => {
-      item?.values?.forEach((value, optionIndex) => {
-        if (value?.isSelected) {
-          const itemObj = {
-            choiceIndex: index,
-            isSelected: value?.isSelected,
-            label: value?.label,
-            optionIndex: optionIndex,
-            optionPrice: value?.optionPrice,
-            // type:item?.
-          };
-          selectedItem.push(itemObj);
-        }
-      });
-    });
-  }
-  return selectedItem;
-};
-const getOtherModuleVariation = (itemVariations, selectedVariation) => {
-  let selectedItem = [];
-  itemVariations?.forEach((item) => {
-    selectedVariation?.forEach((sVari) => {
-      if (sVari?.type === item?.type) {
-        selectedItem?.push(item);
-      }
-    });
-  });
-
-  return selectedItem;
-};
 const SecondNavBar = ({ configData }) => {
+
+  //  hooks
   const theme = useTheme();
   const dispatch = useDispatch();
   const router = useRouter();
-  const { selectedModule } = useSelector((state) => state.utilsData);
-  const { offlineInfoStep } = useSelector((state) => state.offlinePayment);
+
   const isSmall = useMediaQuery("(max-width:1180px)");
-  const { profileInfo } = useSelector((state) => state.profileInfo);
+  const anchorRef = useRef(null);
   const [openPopover, setOpenPopover] = useState(false);
 
   const [moduleType, SetModuleType] = useState("");
   const { wishLists } = useSelector((state) => state.wishList);
   const [toggled, setToggled] = useState(false);
 
+
+
+// selectors
+const { profileInfo } = useSelector((state) => state.profileInfo);
+const { selectedModule } = useSelector((state) => state.utilsData);
+const { offlineInfoStep } = useSelector((state) => state.offlinePayment);
+
+
   const totalWishList = wishLists?.item?.length + wishLists?.store?.length;
-  const anchorRef = useRef(null);
+  
+
+  //  get data from localstorage
   let token = undefined;
   let location = undefined;
   let zoneId;
   const guestId = getGuestId();
+  if (typeof window !== "undefined") {
+    location = localStorage.getItem("location");
+    token = localStorage.getItem("token");
+    zoneId = JSON.parse(localStorage.getItem("zoneid"));
+  }
+ 
 
+
+  //  get guest id from calling api
   const { data: guestData, refetch: guestRefetch } = useGetGuest();
-
   useEffect(() => {
     if (
       (!token || token === undefined) &&
@@ -166,12 +157,14 @@ const SecondNavBar = ({ configData }) => {
     }
   }, [guestId, token, guestData]);
 
+
+  //  get cart data from calling api
   const {
     data,
     refetch: cartListRefetch,
     isLoading,
   } = useGetAllCartList(guestId);
-
+ //  recalling api with dependencies
   useEffect(() => {
     cartListRefetch();
   }, [moduleType, guestId]);
@@ -193,11 +186,7 @@ const SecondNavBar = ({ configData }) => {
     SetModuleType(selectedModule?.module_type);
   }, [selectedModule]);
 
-  if (typeof window !== "undefined") {
-    location = localStorage.getItem("location");
-    token = localStorage.getItem("token");
-    zoneId = JSON.parse(localStorage.getItem("zoneid"));
-  }
+ 
 
   const handleOpenPopover = () => {
     setOpenPopover(true);
@@ -216,6 +205,9 @@ const SecondNavBar = ({ configData }) => {
       pathname: "/track-order",
     });
   };
+
+
+  //  small screens component
   const getMobileScreenComponents = () => (
     <ModuleWiseNav
       router={router}
@@ -225,15 +217,17 @@ const SecondNavBar = ({ configData }) => {
       location={location}
     />
   );
+
+ //  Desktop screens component
+  
   const getDesktopScreenComponents = () => (
     <CustomStackFullWidth
       direction="row"
       alignItems="center"
       justifyContent="space-between"
-      //spacing={2}
+    
       sx={{
-        // paddingBottom: isSmall && "10px",
-        // paddingTop: isSmall && "10px",
+       
         marginLeft: "0 !important",
       }}
     >
