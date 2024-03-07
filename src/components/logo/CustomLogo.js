@@ -25,7 +25,6 @@ const CustomLogo = ({ logoImg, atlText, height, width, objectFit }) => {
     location = localStorage.getItem("location");
   }
 
-
   //  click function to handel icon routing
   const handleClick = () => {
     if (router.pathname === "/") {
