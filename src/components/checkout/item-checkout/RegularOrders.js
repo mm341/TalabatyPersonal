@@ -52,24 +52,25 @@ const RegularOrders = (props) => {
             key={index}
             direction="row"
             alignItems="flex-start"
-            spacing={{ xs: 1, sm: 1, md: 2 }}
+            spacing={{ xs: 1, sm: 1, md: 1.2 }}
             mt={index !== 0 && "1rem"}
           >
             <Stack position="relative">
               <CustomImageContainer
-                height="30px"
-                width="30px"
+                height="60px"
+                width="60px"
                 src={`${productBaseUrl}/${item?.item?.image}`}
                 loading="lazy"
+                borderRadius={"8px"}
               />
             </Stack>
             <Stack
               direction="row"
-              justifyContent="space-between"
+              
               alignItems="flex-start"
               width="100%"
             >
-              <Stack direction="row" spacing={1.3}>
+              <Stack sx={{width:"80%"}}  direction="row" spacing={1}>
                 <OrderFoodSubtitle>
                   {item?.quantity}
                   <Typography component="span" fontSize="12px" pl="5px">

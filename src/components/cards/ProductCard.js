@@ -367,13 +367,7 @@ const ProductCard = (props) => {
         (item) => item?.store_id === state?.modalData[0]?.store_id
       );
 
-      // getDiscountedAmount(
-      //     state?.modalData[0]?.price,
-      //     state?.modalData[0]?.discount,
-      //     state?.modalData[0]?.discount_type,
-      //     state?.modalData[0]?.store_discount,
-      //     state?.modalData[0]?.quantity
-      // )
+     
       if (isStoreExist) {
         if (!isInCart) {
           const itemObject = {
