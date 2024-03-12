@@ -14,13 +14,14 @@ import { alpha } from "@mui/material";
 import useGetItemOrStore from "../../../api-manage/hooks/react-query/search/useGetItemOrStore";
 import { debounce } from "lodash";
 
-const ManageSearch = ({ zoneid, token, maxwidth, fullWidth,query }) => {
+const ManageSearch = ({ zoneid, token, maxwidth, fullWidth, query }) => {
   const router = useRouter();
   const [openSearchSuggestions, setOpenSearchSuggestions] = useState(false);
   const [selectedValue, setSelectedValue] = useState("");
   const [onSearchdiv, setOnSearchdiv] = useState(false);
   const [isEmpty, setIsEmpty] = useState(true);
   const [searchValue, setSearchValue] = useState("");
+  
   const handleKeyPress = (value) => {
     if (value !== "") {
       setOpenSearchSuggestions(false);
@@ -51,6 +52,7 @@ const ManageSearch = ({ zoneid, token, maxwidth, fullWidth,query }) => {
             shallow: true,
           }
         );
+        setSearchValue("");
       }
     } else {
       setSearchValue("");
@@ -84,14 +86,16 @@ const ManageSearch = ({ zoneid, token, maxwidth, fullWidth,query }) => {
         setOpenSearchSuggestions(true);
       }
     }
-  }, [itemOrStoreSuggestionData?.items,itemOrStoreSuggestionData?.stores]);
+  }, [itemOrStoreSuggestionData?.items, itemOrStoreSuggestionData?.stores]);
   const handleOnFocus = () => {
-    if (searchValue === "") {
+    if (!searchValue) {
+      setOpenSearchSuggestions(false);
       setIsEmpty(true);
     } else {
+      setOpenSearchSuggestions(true);
       setIsEmpty(false);
     }
-    setOpenSearchSuggestions(true);
+
     localStorage.setItem("bg", true);
   };
   const searchRef = useRef(null);

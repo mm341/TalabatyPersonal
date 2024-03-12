@@ -42,23 +42,24 @@ const ProductSearchPage = ({ configData }) => {
       handleAPiCallOnSuccess
     );
   useEffect(() => {
-    let searchValue = "";
-    if (typeof window !== "undefined") {
-      searchValue = localStorage.getItem("searchValue");
-    }
+    // let searchValue = "";
+    // if (typeof window !== "undefined") {
+    //   searchValue = localStorage.getItem("searchValue");
+    // }
     if (router.query.searchValue) {
       setSearchValue(router.query.searchValue);
-    } else {
-      let searchValues = [];
-      if (typeof window !== "undefined") {
-        searchValues = JSON.parse(localStorage.getItem("searchedValues"));
-        if (searchValues.length > 0 && searchValues[0]) {
-          setSearchValue(searchValues[0]);
-        } else {
-          router.push("/home", undefined, { shallow: true });
-        }
-      }
-    }
+    } 
+    // else {
+    //   let searchValues = [];
+    //   if (typeof window !== "undefined") {
+    //     searchValues = JSON.parse(localStorage.getItem("searchedValues"));
+    //     if (searchValues.length > 0 && searchValues[0]) {
+    //       setSearchValue(searchValues[0]);
+    //     } else {
+    //       router.push("/home", undefined, { shallow: true });
+    //     }
+    //   }
+    // }
   }, [router]);
   useEffect(() => {
     if (searchValue !== "") {
