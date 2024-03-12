@@ -269,8 +269,8 @@ const { offlineInfoStep } = useSelector((state) => state.offlinePayment);
             <WishListSideBar totalWishList={totalWishList} />
           )}
 
-          {moduleType !== "parcel" && location && (
-            <Cart isLoading={isLoading} />
+          {moduleType !== "parcel" && location &&router.pathname!=="/checkout" && (
+            <Cart isLoading={isLoading}  />
           )}
 
           {token ? (

@@ -67,7 +67,7 @@ function MyApp(props) {
               </SettingsConsumer>
             </SettingsProvider>
           </ReduxProvider>
-          <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+          {/* <ReactQueryDevtools initialIsOpen={false} position="bottom-right" /> */}
         </QueryClientProvider>
       </CacheProvider>
     </>

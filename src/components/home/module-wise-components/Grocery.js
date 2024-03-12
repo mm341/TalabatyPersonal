@@ -81,9 +81,7 @@ const Grocery = (props) => {
       {/*  </CustomContainer>*/}
       {/*</Grid>*/}
       <Grid item xs={12}>
-        <CustomContainer>
-          {/* <RunningCampaigns /> */}
-        </CustomContainer>
+        <CustomContainer>{/* <RunningCampaigns /> */}</CustomContainer>
       </Grid>
       <Grid item xs={12}>
         <CustomContainer>
