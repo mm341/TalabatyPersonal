@@ -99,20 +99,26 @@ const SearchSuggestionsBottom = (props) => {
       localStorage.setItem("searchedValues", JSON.stringify(newItems));
     }
   };
-  const clearAll=()=>{
-    setList([])
+  const clearAll = () => {
+    setList([]);
     localStorage.removeItem("searchedValues");
-  }
+  };
   return (
     <>
       <CustomPaper
         elevation={8}
         onMouseEnter={() => setOnSearchdiv(true)}
         onMouseLeave={() => setOnSearchdiv(false)}
-        display={token ? "inherit" : (list.length > 0 || itemOrStoreSuggestionData) ? "inherit" : "none"}
+        display={
+          token
+            ? "inherit"
+            : list.length > 0 || itemOrStoreSuggestionData
+            ? "inherit"
+            : "none"
+        }
       >
-        <CustomStackFullWidth spacing={1}>
-          {isEmpty ? (
+        <CustomStackFullWidth>
+          {/* {isEmpty ? (
             <>
               {list.length > 0 && (
                 <RecentSearchWithSuggestions
@@ -125,19 +131,19 @@ const SearchSuggestionsBottom = (props) => {
                 />
               )}
             </>
-          ) : (
-            <>
-              {(itemOrStoreSuggestionData?.items?.length > 0 ||
-                itemOrStoreSuggestionData?.stores?.length > 0) && (
-                <SuggestedSearches
-                  t={t}
-                  data={itemOrStoreSuggestionData}
-                  handleKeyPress={handleKeyPress}
-                  isRefetching={isRefetchingItemOrStoreSuggestion}
-                />
-              )}
-            </>
-          )}
+          ) : ( */}
+          <>
+            {(itemOrStoreSuggestionData?.items?.length > 0 ||
+              itemOrStoreSuggestionData?.stores?.length > 0) && (
+              <SuggestedSearches
+                t={t}
+                data={itemOrStoreSuggestionData}
+                handleKeyPress={handleKeyPress}
+                isRefetching={isRefetchingItemOrStoreSuggestion}
+              />
+            )}
+          </>
+          {/* )} */}
 
           {isRefetching && (
             <Stack spacing={1}>
