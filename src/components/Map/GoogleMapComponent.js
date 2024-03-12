@@ -11,19 +11,18 @@ import { useTheme } from "@mui/material/styles";
 import pickMarker from "./assets/pick_marker.png";
 
 const GoogleMapComponent = ({
-  setDisablePickButton,
   setLocationEnabled,
   setLocation,
-  setCurrentLocation,
+
   locationLoading,
   location,
   setPlaceDetailsEnabled,
   placeDetailsEnabled,
-  locationEnabled,
-  setPlaceDescription,
+
   height,
   isModalExpand,
 }) => {
+  //  hooks
   const theme = useTheme();
   const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
   const containerStyle = {
@@ -60,7 +59,7 @@ const GoogleMapComponent = ({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY,
   });
   const [isMounted, setIsMounted] = useState(false);
-  const [openInfoWindow, setOpenInfoWindow] = useState(false);
+
   const [mapSetup, setMapSetup] = useState(false);
   useEffect(() => setIsMounted(true), []);
   const [map, setMap] = useState(null);
@@ -107,11 +106,10 @@ const GoogleMapComponent = ({
         onUnmount={onUnmount}
         onMouseDown={(e) => {
           setMapSetup?.(true);
-          setDisablePickButton?.(true);
         }}
         onMouseUp={(e) => {
           setMapSetup?.(false);
-          setDisablePickButton?.(false);
+
           setLocationEnabled?.(true);
           setLocation?.({
             lat: map.center?.lat(),
@@ -122,7 +120,6 @@ const GoogleMapComponent = ({
             lng: map.center?.lng(),
           });
           setPlaceDetailsEnabled?.(false);
-          setPlaceDescription?.(undefined);
         }}
         //  yesIWantToUseGoogleMapApiInternals
         onZoomChanged={() => {

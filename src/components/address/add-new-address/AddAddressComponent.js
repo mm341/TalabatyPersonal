@@ -53,29 +53,20 @@ const AddAddressComponent = ({
   addressRefetch,
   setEditAddress,
 }) => {
+  //  hooks
   const [state, dispatch] = useReducer(reducer, initialState);
   const [addressType, setAddressType] = useState(
     editAddress ? editAddress?.address_type : ""
   );
-  const [defaultLocation, setDefaultLocation] = useState({});
-  const [isDisablePickButton, setDisablePickButton] = useState(false);
+
   const [locationEnabled, setLocationEnabled] = useState(false);
-  const [location, setLocation] = useState({
-    lat: configData?.default_location?.lat
-      ? Number(configData?.default_location?.lat)
-      : "30.00758635247977",
-    lng: configData?.default_location?.lng
-      ? Number(configData?.default_location?.lng)
-      : "31.459522247314453",
-  });
+  const [location, setLocation] = useState();
   const [searchKey, setSearchKey] = useState("");
   const [enabled, setEnabled] = useState(false);
-  //const [currentLocation, setCurrentLocation] = useState(locations)
-  // const [locationLoading, setLocationLoading] = useState(false)
   const [placeDetailsEnabled, setPlaceDetailsEnabled] = useState(true);
-  const [placeDescription, setPlaceDescription] = useState(undefined);
-  const [zoneId, setZoneId] = useState(undefined);
-  const [mounted, setMounted] = useState(true);
+
+  const [zone, setZone] = useState(false);
+
   const [predictions, setPredictions] = useState([]);
   const [placeId, setPlaceId] = useState("");
 
@@ -91,6 +82,7 @@ const AddAddressComponent = ({
       isGeolocationEnabled: true,
     });
 
+  //  get places
   const { data: places, isLoading } = useGetAutocompletePlace(
     searchKey,
     enabled
@@ -102,15 +94,17 @@ const AddAddressComponent = ({
     }
   }, [places]);
   const zoneIdEnabled = locationEnabled;
+
+  //  get zone data form api
   const { data: zoneData } = useGetZoneId(location, zoneIdEnabled);
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      if (zoneData) {
-        // dispatch(setZoneData(zoneData?.data?.zone_data));
-        // localStorage.setItem("zoneid", zoneData?.zone_id);
-      }
+    if (zoneData) {
+      setZone(true);
+    } else {
+      setZone(false);
     }
   }, [zoneData]);
+
   const { isLoading: isLoading2, data: placeDetails } = useGetPlaceDetails(
     placeId,
     placeDetailsEnabled
@@ -126,30 +120,35 @@ const AddAddressComponent = ({
   const { data: geoCodeResults, isFetching: isFetchingGeoCode } =
     useGetGeoCode(location);
 
-  const theme = useTheme();
-  const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
   const handleClick = (name) => {
     setAddressType(name);
     setEditAddress({ ...editAddress, address_type: null });
   };
 
-
   //  handel default location
 
- 
   useEffect(() => {
-    if (editAddress?.latitude) {
-      setLocation({
-        lat: Number(editAddress?.latitude),
-        lng: Number(editAddress?.longitude),
-      });
-    } else if (coords) {
+    if (coords && !editAddress?.latitude && !editAddress?.longitude) {
       setLocation({
         lat: coords?.latitude,
         lng: coords?.longitude,
       });
+    } else if (editAddress?.latitude && editAddress?.longitude) {
+      setLocation({
+        lat: Number(editAddress?.latitude),
+        lng: Number(editAddress?.longitude),
+      });
+    } else if (!coords?.latitude && !editAddress?.latitude) {
+      setLocation({
+        lat: configData?.default_location?.lat
+          ? Number(configData?.default_location?.lat)
+          : "30.00758635247977",
+        lng: configData?.default_location?.lng
+          ? Number(configData?.default_location?.lng)
+          : "31.459522247314453",
+      });
     }
-  }, [coords, editAddress]);
+  }, [coords, editAddress?.latitude, editAddress?.longitude, configData]);
 
   const handleChangeForSearchs = (event) => {
     if (event.target.value) {
@@ -164,6 +163,8 @@ const AddAddressComponent = ({
     }
     setPlaceDetailsEnabled(true);
   };
+
+ 
   return (
     <>
       <Grid item md={12} xs={12} alignSelf="center">
@@ -191,7 +192,6 @@ const AddAddressComponent = ({
       <Grid item xs={12} md={5} position="relative" align="center">
         <AddAddressSearchBox>
           <CustomMapSearch
-            // showCurrentLocation={state.showCurrentLocation}
             predictions={predictions}
             handleChange={(event, value) =>
               handleChangeS(event, value, dispatch)
@@ -202,8 +202,6 @@ const AddAddressComponent = ({
             handleAgreeLocation={() => handleAgreeLocation(coords, dispatch)}
             currentLocation={state.currentLocation}
             handleCloseLocation={() => handleCloseLocation(dispatch)}
-            // frommap="true"
-            // isLoading={isFetchingGeoCode}
           />
         </AddAddressSearchBox>
         <GoogleMapComponent
@@ -212,9 +210,7 @@ const AddAddressComponent = ({
           setPlaceDetailsEnabled={setPlaceDetailsEnabled}
           placeDetailsEnabled={placeDetailsEnabled}
           locationEnabled={locationEnabled}
-          setPlaceDescription={setPlaceDescription}
           setLocationEnabled={setLocationEnabled}
-          setDisablePickButton={setDisablePickButton}
           height="350px"
         />
       </Grid>
@@ -266,13 +262,14 @@ const AddAddressComponent = ({
           </Stack>
         </CustomStackFullWidth>
         <AddressForm
+          zone={zone}
           deliveryAddress={geoCodeResults?.results[0]?.formatted_address}
           atModal="false"
           addressType={addressType}
           configData={configData}
           phone={userData?.phone}
-          lat={location?.lat || ""}
-          lng={location?.lng || ""}
+          lat={location?.lat ?? ""}
+          lng={location?.lng ?? ""}
           personName={
             editAddress
               ? editAddress?.contact_person_name
