@@ -84,10 +84,9 @@ const ProductInformation = ({
   const handleClearCartModalOpen = () => setClearCartModal(true);
 
   const handleClose = (value) => {
-   
     if (value === "add-item") {
       const itemObject = getItemObject(state?.modalData[0]);
-     
+
       mutate(itemObject, {
         onSuccess: handleSuccess,
         onError: onErrorResponse,
@@ -107,7 +106,6 @@ const ProductInformation = ({
       state.modalData
     );
   }, [productDetailsData]);
-
 
   //  handel choices of variations
   const handleChoices = (option, choice) => {
@@ -172,15 +170,9 @@ const ProductInformation = ({
     }
   };
   const handleSuccess = (res) => {
-    
     if (res) {
-     
-      dispatchRedux(
-       setCartList(res?.carts)
-      );
-      dispatchRedux(
-        setCartDetailsPrice(res)
-       );
+      dispatchRedux(setCartList(res?.carts));
+      dispatchRedux(setCartDetailsPrice(res));
       toast.success(t("Item added to cart"));
       handleModalClose?.();
       setClearCartModal(false);
@@ -213,22 +205,15 @@ const ProductInformation = ({
   };
 
   const updateCartSuccessHandler = (res) => {
-    
     if (res) {
-     
-      dispatchRedux(
-        setCartList(res?.carts)
-       );
-       dispatchRedux(
-         setCartDetailsPrice(res)
-        );
+      dispatchRedux(setCartList(res?.carts));
+      dispatchRedux(setCartDetailsPrice(res));
       toast.success(t(product_update_to_cart_message));
       handleModalClose?.();
     }
   };
 
   const handleUpdateToCart = (cartItem) => {
-  
     if (
       JSON.stringify(productDetailsData) === JSON.stringify(state.modalData[0])
     ) {
@@ -237,10 +222,9 @@ const ProductInformation = ({
       });
     } else {
       const itemIsInCart = cartList?.find(
-        (item) =>
-          item?.item?.id === productDetailsData?.item?.id 
+        (item) => item?.item?.id === productDetailsData?.item?.id
       );
-    
+
       const cartItemObject = {
         cart_id: itemIsInCart?.id,
         guest_id: getGuestId(),
@@ -255,7 +239,6 @@ const ProductInformation = ({
         variation: state.modalData[0]?.selectedOption,
       };
 
-     
       updateMutate(cartItemObject, {
         onSuccess: updateCartSuccessHandler,
         onError: onErrorResponse,
@@ -449,7 +432,7 @@ const ProductInformation = ({
               handleClose={handleClose}
               dispatchRedux={dispatchRedux}
               handleAddToCartOnDispatch={addToCard}
-              handleCloseFoodModel={()=>handleModalClose()}
+              handleCloseFoodModel={() => handleModalClose()}
             />
           </CustomModal>
         </CustomStackFullWidth>

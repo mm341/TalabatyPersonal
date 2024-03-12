@@ -342,7 +342,7 @@ const SearchResult = (props) => {
     });
     setFilterData(newData);
   };
-  console.log(currentTab);
+
   const searchValuesHandler = async () => {
     if (searchValue) {
       if (searchValue === VIEW_ALL_TEXT.allCategories) {

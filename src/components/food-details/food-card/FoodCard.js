@@ -32,12 +32,9 @@ import { useMutation } from "react-query";
 import { ProductsApi } from "../../hooks/react-query/config/productsApi";
 import { addWishList, removeWishListFood } from "../../redux/slices/wishList";
 import { useWishListDelete } from "../../hooks/react-query/config/wish-list/useWishListDelete";
-import { RTL } from "../RTL/RTL";
 
 const FoodCard = ({ product, productImageUrl }) => {
-  const theme = useTheme();
-  const dispatch = useDispatch();
-  const isXSmall = useMediaQuery(theme.breakpoints.down("sm"));
+  //  props
   const {
     name,
     image,
@@ -50,11 +47,16 @@ const FoodCard = ({ product, productImageUrl }) => {
     available_time_starts,
     restaurant_discount,
   } = product;
+  //  hooks
+  const theme = useTheme();
+  const dispatch = useDispatch();
+  const isXSmall = useMediaQuery(theme.breakpoints.down("sm"));
+
   const [openModal, setOpenModal] = React.useState(false);
   const { t } = useTranslation();
   const imageUrl = `${productImageUrl}/${image}`;
   const { configData, token } = useSelector(
-    (state) => state.configDataSettings
+    (state) => state.configData
   );
   const { wishLists } = useSelector((state) => state.wishList);
   let currencySymbol;
