@@ -162,7 +162,8 @@ const SearchResult = (props) => {
         }
       }
     }
-  }, [selectedCategories]);
+  }, [selectedCategories, currentTab]);
+
   useEffect(() => {
     if (searchValue === "special-offer") {
       refetchSpecialOffer();
@@ -245,6 +246,10 @@ const SearchResult = (props) => {
       serachRefetch();
     }
   }, [qureyValue]);
+
+  useEffect(() => {
+    serachRefetch();
+  }, [currentTab]);
   useEffect(() => {
     if (currentTab === 0) {
       if (categoryData?.pages?.length > 0) {
@@ -337,7 +342,7 @@ const SearchResult = (props) => {
     });
     setFilterData(newData);
   };
-
+  console.log(currentTab);
   const searchValuesHandler = async () => {
     if (searchValue) {
       if (searchValue === VIEW_ALL_TEXT.allCategories) {
@@ -373,7 +378,7 @@ const SearchResult = (props) => {
   const getCategoriesWiseFilter = () => {
     let categoryWiseFiltered = [];
     let pageItems = [];
-    
+
     if (selectedCategories?.length > 0) {
       if (pageData?.length > 0) {
         pageData?.forEach((item) => {
@@ -410,7 +415,7 @@ const SearchResult = (props) => {
 
   const getPageData = () => {
     const categoryWiseFiltered = getCategoriesWiseFilter();
-    
+
     const isChecked =
       filterData?.length > 0
         ? filterData?.some((item) => item?.checked === true)
