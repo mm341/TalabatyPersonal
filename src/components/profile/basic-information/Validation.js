@@ -8,10 +8,10 @@ const ValidationSechemaProfile = () => {
         f_name: Yup.string().required(t('name is required')),
         l_name: Yup.string().required(t('last name required')),
         phone: Yup.string().required(t('phone number required')),
-        email: Yup.string()
-            .email('Must be a valid email')
-            .max(255)
-            .required(t('Email is required')),
+        // email: Yup.string()
+        //     .email('Must be a valid email')
+        //     .max(255)
+        //     .required(t('Email is required')),
     })
 }
 

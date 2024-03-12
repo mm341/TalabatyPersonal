@@ -77,11 +77,11 @@ const BasicInformationForm = ({
     initialValues: {
       f_name: f_name ? f_name : "",
       l_name: l_name ? l_name : "",
-      email: email ? email : "",
+      // email: email ? email : "",
       phone: phone ? phone : "",
       image: image ? image : "",
-      password: "",
-      confirm_password: "",
+      // password: "",
+      // confirm_password: "",
     },
     validationSchema: ValidationSechemaProfile(),
     onSubmit: async (values, helpers) => {
@@ -131,9 +131,11 @@ const BasicInformationForm = ({
   const handleReset = () => {
     profileFormik.setFieldValue("f_name", "");
     profileFormik.setFieldValue("l_name", "");
-    profileFormik.setFieldValue("email", "");
-    profileFormik.setFieldValue("password", "");
+    // profileFormik.setFieldValue("email", "");
+    // profileFormik.setFieldValue("password", "");
   };
+
+
   return (
     <>
       <Grid item md={12} xs={12} alignSelf="center">
