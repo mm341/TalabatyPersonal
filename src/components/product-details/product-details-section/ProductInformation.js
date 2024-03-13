@@ -255,6 +255,8 @@ const ProductInformation = ({
     token = localStorage.getItem("token");
   }
 
+  console.log(state.modalData[0])
+
   const { mutate: addFavoriteMutation } = useAddToWishlist();
   const addToFavorite = () => {
     if (token) {

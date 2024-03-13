@@ -393,13 +393,14 @@ const SearchResult = (props) => {
             }
           } else {
             item?.category_ids?.forEach((catItem, index) => {
-              if (index != 0) {
-                const categoryId = Number.parseInt(
-                  currentTab === 0 ? catItem?.id : catItem
-                );
-                if (selectedCategories?.includes(categoryId)) {
-                  pageItems?.push(item);
-                }
+              //  here i handel code 13/3/2024 10:45 pm
+              // if (index != 0) {
+              const categoryId = Number.parseInt(
+                currentTab === 0 ? catItem?.id : catItem
+              );
+              if (selectedCategories?.includes(categoryId)) {
+                pageItems?.push(item);
+                //   }
               }
             });
           }
