@@ -15,6 +15,7 @@ const CampaignsDetails = ({
   isRefetching,
   isLoading,
 }) => {
+  //  hooks
   const theme=useTheme()
   const camImage = `${configData?.base_urls?.campaign_image_url}/${campaignsDetails?.image}`;
   return (

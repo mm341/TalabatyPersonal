@@ -7,7 +7,7 @@ import LockIcon from "@mui/icons-material/Lock";
 import CustomDialogConfirm from "../../../custom-dialog/confirm/CustomDialogConfirm";
 
 const ButtonsContainer = ({
-  handleRoute,
+  
   token,
   handleLogout,
   openModal,
@@ -17,11 +17,11 @@ const ButtonsContainer = ({
   return (
     <CustomStackFullWidth>
       {token && (
-        <ButtonContainer>
+        <ButtonContainer sx={{width:"100%",display:"flex",justifyContent:"center"}}>
           <Button
             variant="contained"
-            fullWidth
-            sx={{ mt: 3, mb: 1 }}
+            
+            sx={{ mt: 3, mb: 1,width:"200px" }}
             onClick={() => setOpenModal(true)}
           >
             {t("Logout")}

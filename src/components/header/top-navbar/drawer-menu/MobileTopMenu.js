@@ -32,17 +32,17 @@ const MobileTopMenu = ({
   isLogoutLoading,
   setOpenModal,
 }) => {
+  //  Selectors
   const { wishLists } = useSelector((state) => state.wishList);
-  const router = useRouter();
+
+  //  get data from localstorage
   let token = undefined;
   let location = undefined;
   if (typeof window !== undefined) {
     location = localStorage.getItem("location");
     token = localStorage.getItem("token");
   }
-  const { configData, countryCode, language } = useSelector(
-    (state) => state.configData
-  );
+  const { countryCode, language } = useSelector((state) => state.configData);
   const { data: categoriesData, refetch } = useGetCategories();
   const { data: latestStore, refetch: refetchStore } = useGetLatestStore();
   const type = "all";
@@ -111,6 +111,7 @@ const MobileTopMenu = ({
         width: "auto",
         height: "100%",
         justifyContent: "space-between",
+        pb:"20px"
       }}
       role="presentation"
       onKeyDown={toggleDrawer(false)}
@@ -157,10 +158,10 @@ const MobileTopMenu = ({
                   />
                 </>
               )}
-              <ListItemButton>
+              {/* <ListItemButton>
                 <ListItemText>{t("Theme Mode")}</ListItemText>
                 <ThemeSwitches noText />
-              </ListItemButton>
+              </ListItemButton> */}
               <ListItemButton>
                 <ListItemText>{t("Language")}</ListItemText>
                 <CustomLanguage
@@ -169,29 +170,7 @@ const MobileTopMenu = ({
                   noText
                 />
               </ListItemButton>
-              {/*{token && (*/}
-              {/*  <>*/}
-              {/*    {router.pathname === "/" && (*/}
-              {/*      <ListItemButton*/}
-              {/*        sx={{*/}
-              {/*          "&:hover": {*/}
-              {/*            backgroundColor: (theme) =>*/}
-              {/*              alpha(theme.palette.primary.main, 0.3),*/}
-              {/*          },*/}
-              {/*        }}*/}
-              {/*      >*/}
-              {/*        <ListItemText*/}
-              {/*          primary={t("Favorites")}*/}
-              {/*          onClick={() => handleRoute("wishlist")}*/}
-              {/*        />*/}
-              {/*        <CustomChip*/}
-              {/*          label={getWishlistCount()}*/}
-              {/*          color="secondary"*/}
-              {/*        />*/}
-              {/*      </ListItemButton>*/}
-              {/*    )}*/}
-              {/*  </>*/}
-              {/*)}*/}
+              
             </>
           </List>
         </Scrollbar>

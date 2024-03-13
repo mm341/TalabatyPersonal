@@ -14,6 +14,7 @@ import { clearWishList } from "../../../../redux/slices/wishList";
 import { setClearCart } from "../../../../redux/slices/cart";
 
 const DrawerMenu = ({ setToggled }) => {
+  //  hooks
   const { t } = useTranslation();
   const router = useRouter();
   const dispatch = useDispatch();

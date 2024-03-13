@@ -6,6 +6,7 @@ import { t } from "i18next";
 import moment from "moment";
 
 const MiddleSection = ({ campaignsDetails, image }) => {
+  //  hooks
   const theme = useTheme();
   return (
     <CustomStackFullWidth spacing={1} sx={{ paddingLeft: "1.6rem" }}>
@@ -48,6 +49,7 @@ const MiddleSection = ({ campaignsDetails, image }) => {
           <Typography variant="subtitle2">{t("Daily time: ")}</Typography>
           {campaignsDetails ? (
             <Typography
+            dir="ltr"
               fontWeight="600"
               fontSize="16px"
               color={theme.palette.primary.main}
