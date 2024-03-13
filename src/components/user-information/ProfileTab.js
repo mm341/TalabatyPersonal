@@ -101,16 +101,16 @@ const ProfileTab = ({
           );
         })}
       </UserProfileTabs>
-      {getToken() && (
+      {/* {getToken() && (
         <MoreVertIcon
           aria-describedby={id}
           variant="contained"
           onClick={handleClickDelete}
           sx={{ cursor: "pointer" }}
         />
-      )}
+      )} */}
 
-      <Popover
+      {/* <Popover
         id={id}
         open={open}
         anchorEl={anchorEl}
@@ -126,7 +126,7 @@ const ProfileTab = ({
         >
           {t("Delete your account")}
         </Button>
-      </Popover>
+      </Popover> */}
     </Stack>
   );
 };
