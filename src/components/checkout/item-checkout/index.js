@@ -885,6 +885,7 @@ const ItemCheckout = (props) => {
               {Number.parseInt(configData?.dm_tips_status) === 1 &&
                 orderType !== "take_away" && (
                   <DeliveryManTip
+                  configData={configData}
                     orderType={orderType}
                     deliveryTip={deliveryTip}
                     setDeliveryTip={setDeliveryTip}

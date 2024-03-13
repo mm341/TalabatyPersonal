@@ -437,6 +437,7 @@ export const arabic = {
     "أوافق على أن وضع الطلب يضعني بموجب الشروط والأحكام وسياسات الخصوصية",
   "Have a Coupon?": "هل لديك قسيمة؟",
   "Apply Now": "قدم الآن",
+  "Apply":"تفعيل",
   "View Saved Address": "عرض العنوان المحفوظ",
   "Delivery Address": "عنوان التوصيل",
   " Add new address": "أضف عنوانًا جديدًا",

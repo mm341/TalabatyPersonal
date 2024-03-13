@@ -18,7 +18,7 @@ const DeliveryManTip = ({
   setDeliveryTip,
   
   isSmall,
-  
+  configData,
   tripsData,
   
 }) => {
@@ -92,7 +92,7 @@ const DeliveryManTip = ({
                             : theme.palette.primary.main
                         }
                       >
-                        {index === 0 ? t("not now") : getAmountWithSign(item)}
+                        {index === 0 ? t("not now") : `${item} ${configData?.currency_symbol}`}
                       </Typography>
                       {tripsData?.most_tips_amount === item && !isSmall && (
                         <Stack

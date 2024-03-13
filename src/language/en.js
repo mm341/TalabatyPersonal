@@ -7,6 +7,7 @@ export const english = {
   "Enter your order id": "Enter your order id",
   "Search Order": "Search Order",
   Available: "Available",
+  "Apply":"Apply",
   "Your order is": "Your order is",
   "Your total price must be more then coupon amount":
     "Your total price must be more then coupon amount",
