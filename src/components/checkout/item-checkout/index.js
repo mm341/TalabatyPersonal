@@ -97,7 +97,7 @@ const ItemCheckout = (props) => {
   const [paymentMethod, setPaymentMethod] = useState("");
   const [numberOfDay, setDayNumber] = useState(getDayNumber(today));
   const [couponDiscount, setCouponDiscount] = useState(null);
-  const [offlinePayments, setOfflinePayments] = useState("");
+  // const [offlinePayments, setOfflinePayments] = useState("");
   const [scheduleAt, setScheduleAt] = useState("now");
   const [orderSuccess, setOrderSuccess] = useState(false);
 

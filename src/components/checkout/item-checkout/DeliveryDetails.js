@@ -55,6 +55,8 @@ const DeliveryDetails = (props) => {
 
 
 
+
+  // function  change order type
   const handleOrderType = (value) => {
     if (value === "take_away") {
       setDeliveryTip(0);

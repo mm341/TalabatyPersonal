@@ -20,9 +20,10 @@ const AddNewAddressButton = ({
   align,
   handleAddressModal,
 }) => {
+  //  hooks
   const theme = useTheme();
   const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
-  const { openAddressModal } = useSelector((state) => state.addressModel);
+  // const { openAddressModal } = useSelector((state) => state.addressModel);
   const dispatch = useDispatch();
 
   return (

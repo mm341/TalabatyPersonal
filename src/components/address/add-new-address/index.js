@@ -40,6 +40,7 @@ import { setOpenAddressModal } from "../../../redux/slices/addAddress";
 import { setGuestUserInfo } from "../../../redux/slices/guestUserInfo";
 
 const AddNewAddress = (props) => {
+  //  props
   const {
     configData,
     refetch,
@@ -52,20 +53,34 @@ const AddNewAddress = (props) => {
     editAddress,
     setEditAddress,
   } = props;
-
+  //  hooks
+  const theme = useTheme();
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [location, setLocation] = useState({
+    lat: configData?.default_location?.lat
+      ? Number(configData?.default_location?.lat)
+      : "30.00758635247977",
+    lng: configData?.default_location?.lng
+      ? Number(configData?.default_location?.lng)
+      : "31.459522247314453",
+  });
+  const [zone, setZone] = useState(false);
+  const [searchKey, setSearchKey] = useState("");
+  const [placeDetailsEnabled, setPlaceDetailsEnabled] = useState(true);
+  const [locationEnabled, setLocationEnabled] = useState(false);
+  const [placeId, setPlaceId] = useState("");
+  const [predictions, setPredictions] = useState([]);
+  const reduxDispatch = useDispatch();
+  const [enabled, setEnabled] = useState(false);
+  //  selectors
   const { profileInfo } = useSelector((state) => state.profileInfo);
   const { guestUserInfo } = useSelector((state) => state.guestUserInfo);
-  const [editAddressLocation,setEditAddressLocation]=useState({
-    lat: editAddress?.latitude,
-    lng: editAddress?.longitude,
-  })
-  const token = localStorage.getItem('token')
-  const reduxDispatch = useDispatch();
-  const [addressType, setAddressType] = useState(guestUserInfo ? guestUserInfo?.address_type : "");
+
+  const [addressType, setAddressType] = useState(
+    guestUserInfo ? guestUserInfo?.address_type : ""
+  );
   const personName = `${profileInfo?.f_name} ${profileInfo?.l_name}`;
 
-  //useEffect calls for getting data
   //****getting current location/***/
   const { coords, isGeolocationAvailable, isGeolocationEnabled, getPosition } =
     useGeolocated({
@@ -75,87 +90,48 @@ const AddNewAddress = (props) => {
       userDecisionTimeout: 5000,
       isGeolocationEnabled: true,
     });
-  //
-  // const editLocation = {
-  //   lat: editAddress?.latitude,
-  //   lng: editAddress?.longitude,
-  // };
 
-  useEffect(() => {
-    setEditAddressLocation(state?.location)
-  }, [state?.location]);
-
-  useEffect(() => {
-    dispatch({
-      type: ACTIONS.setLocation,
-      payload: configData?.default_location,
-    });
-  }, []);
-
-  // useEffect(() => {
-  //   dispatch({
-  //     type: ACTIONS.setLocation,
-  //     payload: editLocation,
-  //   });
-  // }, [editAddress]);
+  //  get places
   const { data: places, isLoading } = useGetAutocompletePlace(
-    state.searchKey,
-    state.enabled
+    searchKey,
+    enabled
   );
+
   useEffect(() => {
     if (places) {
-      dispatch({ type: ACTIONS.setPredictions, payload: places?.predictions });
+      setPredictions(places?.predictions);
     }
   }, [places]);
-  const { data: geoCodeResults, isFetching: isFetchingGeoCode } = useGetGeoCode(
-    state.location,
-    state.geoLocationEnable
-  );
+
+  const { data: geoCodeResults, isFetching: isFetchingGeoCode } =
+    useGetGeoCode(location);
+
+  //  get zone data form api
+  const zoneIdEnabled = locationEnabled;
+  const { data: zoneData } = useGetZoneId(location, zoneIdEnabled);
+
   useEffect(() => {
-    if (geoCodeResults?.results) {
-      dispatch({
-        type: ACTIONS.setCurrentLocation,
-        payload: geoCodeResults?.results[0]?.formatted_address,
-      });
-    }
-  }, [geoCodeResults, state.location]);
-  const { data: zoneData } = useGetZoneId(state.location, state.zoneIdEnabled);
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      if (zoneData) {
-        // dispatch(setZoneData(zoneData?.data?.zone_data));
-        // localStorage.setItem("zoneid", zoneData?.zone_id);
-      }
+    if (zoneData) {
+      setZone(true);
+    } else {
+      setZone(false);
     }
   }, [zoneData]);
+
   // //********************Pick Location */
+
   const { isLoading: isLoading2, data: placeDetails } = useGetPlaceDetails(
-    state.placeId,
-    state.placeDetailsEnabled
+    placeId,
+    placeDetailsEnabled
   );
   //
   useEffect(() => {
     if (placeDetails) {
-      dispatch({
-        type: ACTIONS.setLocation,
-        payload: placeDetails?.result?.geometry?.location,
-      });
+      setLocation(placeDetails?.result?.geometry?.location);
+      setLocationEnabled(true);
     }
   }, [placeDetails]);
 
-  // const orangeColor = theme.palette.primary.main;
-  let data = {};
-
-  useEffect(() => {
-    if (state.placeDescription) {
-      dispatch({
-        type: ACTIONS.setCurrentLocation,
-        payload: state.placeDescription,
-      });
-    }
-  }, [state.placeDescription]);
-  const theme = useTheme();
-  const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
   const handleClick = (name) => {
     setAddressType(name);
     if (editAddress) {
@@ -165,6 +141,66 @@ const AddNewAddress = (props) => {
   const closePopover = () => {
     reduxDispatch(setOpenAddressModal(false));
   };
+
+  //  handel default location
+
+  useEffect(() => {
+    if (coords && !editAddress?.latitude && !editAddress?.longitude) {
+      setLocation({
+        lat: coords?.latitude,
+        lng: coords?.longitude,
+      });
+    } else if (!coords?.latitude && !editAddress?.latitude) {
+      setLocation({
+        lat: configData?.default_location?.lat
+          ? Number(configData?.default_location?.lat)
+          : "30.00758635247977",
+        lng: configData?.default_location?.lng
+          ? Number(configData?.default_location?.lng)
+          : "31.459522247314453",
+      });
+    }
+  }, [coords, editAddress?.latitude, editAddress?.longitude, configData]);
+  useEffect(() => {
+    if (editAddress?.latitude && editAddress?.longitude) {
+      setLocation({
+        lat: Number(editAddress?.latitude),
+        lng: Number(editAddress?.longitude),
+      });
+    }
+  }, [editAddress?.latitude, editAddress?.longitude]);
+
+  const handleChangeForSearchs = (event) => {
+    if (event.target.value) {
+      setSearchKey(event.target.value);
+      setEnabled(true);
+      setPlaceDetailsEnabled(true);
+    }
+  };
+  const handleChangeS = (event, value) => {
+    if (value) {
+      setPlaceId(value?.place_id);
+    }
+    setPlaceDetailsEnabled(true);
+  };
+
+  useEffect(() => {
+    if (!openAddressModal) {
+      setLocation({
+        lat: coords?.latitude
+          ? coords?.latitude
+          : configData?.default_location?.lat
+          ? Number(configData?.default_location?.lat)
+          : "30.00758635247977",
+        lng: coords?.longitude
+          ? coords?.longitude
+          : configData?.default_location?.lng
+          ? Number(configData?.default_location?.lng)
+          : "31.459522247314453",
+      });
+    }
+  }, [openAddressModal, configData, coords?.latitude, coords?.longitude]);
+
   return (
     <Box>
       {openAddressModal && (
@@ -194,25 +230,14 @@ const AddNewAddress = (props) => {
               {/*<SimpleBar style={{ maxHeight: "60vh" }}></SimpleBar>*/}
             </CustomStackFullWidth>
             <GoogleMapComponent
+              addresse={editAddress}
               height="236px"
-              key={state.rerenderMap}
-              setLocation={(values) => {
-                dispatch({
-                  type: ACTIONS.setLocation,
-                  payload:  values,
-                });
-              }}
-              // setCurrentLocation={setCurrentLocation}
-              // locationLoading={locationLoading}
-              location={editAddress ? editAddressLocation : state.location}
-              setPlaceDetailsEnabled={(value) =>
-                dispatch({
-                  type: ACTIONS.setPlaceDetailsEnabled,
-                  payload: value,
-                })
-              }
-              placeDetailsEnabled={state.placeDetailsEnabled}
-              locationEnabled={state.locationEnabled}
+              setLocation={setLocation}
+              location={location}
+              setPlaceDetailsEnabled={setPlaceDetailsEnabled}
+              placeDetailsEnabled={placeDetailsEnabled}
+              setLocationEnabled={setLocationEnabled}
+              locationEnabled={locationEnabled}
             />
 
             <CustomStackFullWidth pt="20px">
@@ -220,8 +245,10 @@ const AddNewAddress = (props) => {
               <Stack direction="row" spacing={2.5} pt="10px">
                 <AddressTypeStack
                   value="home"
-                  addressType={guestUserInfo ? addressType :
-                    editAddress?.address_type
+                  addressType={
+                    guestUserInfo
+                      ? addressType
+                      : editAddress?.address_type
                       ? editAddress?.address_type
                       : addressType
                   }
@@ -267,6 +294,7 @@ const AddNewAddress = (props) => {
             </CustomStackFullWidth>
             <CustomStackFullWidth mt="1.3rem">
               <AddressForm
+                zone={zone}
                 atModal="true"
                 setAddressType={setAddressType}
                 addressType={
@@ -275,9 +303,7 @@ const AddNewAddress = (props) => {
                     : addressType
                 }
                 configData={configData}
-                deliveryAddress={
-                  geoCodeResults?.results[0]?.formatted_address
-                }
+                deliveryAddress={geoCodeResults?.results[0]?.formatted_address}
                 personName={
                   editAddress ? editAddress?.contact_person_name : personName
                 }
@@ -286,8 +312,8 @@ const AddNewAddress = (props) => {
                     ? editAddress?.contact_person_number
                     : profileInfo?.phone
                 }
-                lat={editAddress ? editAddress?.lat : state.location?.lat}
-                lng={editAddress ? editAddress?.lng : state.location?.lng}
+                lat={location?.lat ?? ""}
+                lng={location?.lng ?? ""}
                 popoverClose={closePopover}
                 refetch={refetch}
                 isRefetcing={isFetchingGeoCode}

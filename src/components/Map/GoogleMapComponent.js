@@ -18,7 +18,7 @@ const GoogleMapComponent = ({
   location,
   setPlaceDetailsEnabled,
   placeDetailsEnabled,
-
+  addresse,
   height,
   isModalExpand,
 }) => {
@@ -37,12 +37,19 @@ const GoogleMapComponent = ({
     paddingBottom: "0px",
   };
   const mapRef = useRef(GoogleMap);
+
   const center = useMemo(
     () => ({
-      lat: parseFloat(location?.lat),
-      lng: parseFloat(location?.lng),
+      lat:
+        Number(addresse?.latitude) > 0
+          ? Number(addresse?.latitude)
+          : location?.lat,
+      lng:
+        Number(addresse?.longitude) > 0
+          ? Number(addresse?.longitude)
+          : location?.lng,
     }),
-    [location?.lng, location?.lng]
+    []
   );
 
   const options = useMemo(
@@ -70,14 +77,15 @@ const GoogleMapComponent = ({
     setZoom(12);
     setMap(map);
   }, []);
+
   useEffect(() => {
-    if (location && placeDetailsEnabled) {
+    if (location) {
       setCenterPosition(location);
     }
-    if (map?.center && mapSetup) {
+    if (map?.center && mapSetup && map?.center?.lat && map?.center?.lng) {
       setCenterPosition({
-        lat: map.center?.lat(),
-        lng: map.center?.lng(),
+        lat: map?.center?.lat(),
+        lng: map?.center?.lng(),
       });
     }
 

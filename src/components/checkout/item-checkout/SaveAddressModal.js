@@ -15,6 +15,7 @@ import SimpleBar from "simplebar-react";
 import AddNewAddressButton from "../../address/add-new-address/AddNewAddressButton";
 
 const SaveAddressModal = (props) => {
+  //  props
   const {
     dispatch,
     data,
@@ -30,6 +31,7 @@ const SaveAddressModal = (props) => {
     openAddressModal,
     handleAddressModal,
   } = props;
+  //  hooks
   const theme = useTheme();
   const borderColor = theme.palette.neutral[400];
   const [selectedAddress, setSelectedAddress] = useState(address);
