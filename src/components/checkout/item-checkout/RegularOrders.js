@@ -47,7 +47,7 @@ const RegularOrders = (props) => {
   return (
     <>
       {cartList?.length > 0 ? (
-        cartList.map((item, index) => (
+        cartList?.map((item, index) => (
           <CustomStackFullWidth
             key={index}
             direction="row"
@@ -84,7 +84,7 @@ const RegularOrders = (props) => {
                 </Stack>
               </Stack>
               <OrderFoodAmount>
-                {getAmountWithSign(item?.price)}
+                {item?.price} {configData?.currency_symbol}
               </OrderFoodAmount>
             </Stack>
           </CustomStackFullWidth>

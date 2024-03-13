@@ -41,6 +41,14 @@ const OrderCalculation = (props) => {
     variation_price,
   } = useSelector((state) => state.cart);
   const { couponInfo } = useSelector((state) => state.profileInfo);
+
+  //  get language direction from localstorage
+
+  let language=undefined
+  if(typeof window !=="undefined"){
+    language=localStorage.getItem("language-setting")
+  }
+  
   return (
     <>
       <CalculationGrid container item md={12} xs={12} spacing={1} mt="1rem">
@@ -49,7 +57,7 @@ const OrderCalculation = (props) => {
         </Grid>
         <Grid item md={4} xs={4} align="right">
           <Typography textTransform="capitalize" align="right">
-            {getAmountWithSign(item_price)}
+            {item_price} {configData?.currency_symbol}
           </Typography>
         </Grid>
         {variation_price > 0 ? (
@@ -59,7 +67,7 @@ const OrderCalculation = (props) => {
             </Grid>
             <Grid item md={4} xs={4} align="right">
               <Typography textTransform="capitalize" align="right">
-                {getAmountWithSign(variation_price)}
+                {variation_price} {configData?.currency_symbol}
               </Typography>
             </Grid>
           </>
@@ -80,7 +88,7 @@ const OrderCalculation = (props) => {
               >
                 <Typography>{"(-)"}</Typography>
                 <Typography>
-                  {discount ? getAmountWithSign(discount) : null}
+                  {discount ? `${discount} ${configData?.currency_symbol}` : null}
                 </Typography>
               </Stack>
             </Grid>
@@ -91,7 +99,7 @@ const OrderCalculation = (props) => {
         </Grid>
         <Grid item md={4} xs={4} align="right">
           <Typography textTransform="capitalize" align="right">
-            {getAmountWithSign(sub_total)}
+            {sub_total} {configData?.currency_symbol}
           </Typography>
         </Grid>
         {addon_price > 0 ? (
@@ -101,7 +109,7 @@ const OrderCalculation = (props) => {
             </Grid>
             <Grid item md={4} xs={4} align="right">
               <Typography textTransform="capitalize" align="right">
-                {getAmountWithSign(addon_price)}
+                {addon_price} {configData?.currency_symbol}
               </Typography>
             </Grid>
           </>
@@ -127,7 +135,7 @@ const OrderCalculation = (props) => {
                   <Typography>{"(-)"}</Typography>
                   <Typography>
                     {/* {storeData && cartList && handleCouponDiscount()} */}
-                    {getAmountWithSign(Number(coupon_discount_amount))}
+                    {Number(coupon_discount_amount)} {configData?.currency_symbol}
                   </Typography>
                 </Stack>
               )}
@@ -151,7 +159,7 @@ const OrderCalculation = (props) => {
                   {configData?.tax_included === 0 && (
                     <Typography>{"(+)"}</Typography>
                   )}
-                  <Typography>{getAmountWithSign(tax)}</Typography>
+                  <Typography>{tax} {configData?.currency_symbol}</Typography>
                 </Stack>
               </Grid>
             </>
@@ -171,7 +179,7 @@ const OrderCalculation = (props) => {
                   spacing={0.5}
                 >
                   <Typography>{"(+)"}</Typography>
-                  <Typography>{getAmountWithSign(tips)}</Typography>
+                  <Typography>{tips} {configData?.currency_symbol}</Typography>
                 </Stack>
               </Grid>
             </>
@@ -192,7 +200,7 @@ const OrderCalculation = (props) => {
               >
                 <Typography>{"(+)"}</Typography>
                 <Typography>
-                  {getAmountWithSign(configData?.additional_charge)}
+                  {configData?.additional_charge} {configData?.currency_symbol}
                 </Typography>
               </Stack>
             </Grid>
@@ -203,8 +211,11 @@ const OrderCalculation = (props) => {
             <Grid item md={8} xs={8} sx={{ textTransform: "capitalize" }}>
               {t("Delivery fee")}
             </Grid>
-            <Grid item md={4} xs={4} align="right">
-              {getAmountWithSign(delivery_charge)}
+            <Grid item md={4} xs={4} >
+              <Typography textAlign={language==="ar"?"left":"right"}>
+              {delivery_charge} {configData?.currency_symbol}
+              </Typography>
+              
             </Grid>
           </>
         ) : null}
@@ -217,7 +228,7 @@ const OrderCalculation = (props) => {
           </Grid>
           <Grid item md={4} xs={4} align="right">
             <Typography color={theme.palette.primary.main} align="right">
-              {storeData && cartList && getAmountWithSign(total)}
+              {storeData && cartList && `${total} ${configData?.currency_symbol}`}
             </Typography>
           </Grid>
         </TotalGrid>
@@ -234,7 +245,7 @@ const OrderCalculation = (props) => {
                 spacing={0.5}
               >
                 <Typography>{"(-)"}</Typography>
-                <Typography>{getAmountWithSign(walletBalance)}</Typography>
+                <Typography>{walletBalance} {configData?.currency_symbol}</Typography>
               </Stack>
             </Grid>
           </>
@@ -252,7 +263,7 @@ const OrderCalculation = (props) => {
                 spacing={0.5}
               >
                 <Typography>
-                  {getAmountWithSign(totalAmountAfterPartial)}
+                  {totalAmountAfterPartial} {configData?.currency_symbol}
                 </Typography>
               </Stack>
             </Grid>
