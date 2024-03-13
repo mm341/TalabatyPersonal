@@ -34,7 +34,7 @@ const PricePreviewWithStock = (props) => {
               fontSize: { xs: "15px", sm: "24px" },
             }}
           >
-            {productDetailsData?.price_after_discount}
+            {productDetailsData?.price_after_discount} {currencySymbol}
           </Typography>
           <Typography
             fontWeight="500"

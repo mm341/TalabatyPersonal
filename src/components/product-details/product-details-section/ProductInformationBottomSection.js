@@ -51,12 +51,12 @@ const ProductInformationBottomSection = ({
   t,
   addToCartMutate,
   updateIsLoading,
-  productUpdate
+  productUpdate,
 }) => {
+  //  hooks
   const theme = useTheme();
   const { cartList } = useSelector((state) => state.cart);
   const { wishLists } = useSelector((state) => state.wishList);
-  const isXSmall = useMediaQuery(theme.breakpoints.down("sm"));
 
   const variationErrorToast = () =>
     toast.error(
@@ -67,12 +67,6 @@ const ProductInformationBottomSection = ({
 
   const isInCart = (id) => {
     if (cartList?.length > 0) {
-      // const isInCart = cartList?.find(
-      //   (item) =>
-      //     item?.id === id &&
-      //     JSON.stringify(item?.selectedOption) ===
-      //       JSON.stringify(productDetailsData?.selectedOption)
-      // );
       const isInCart = cartList?.find((item) => item?.item?.id === id);
       if (isInCart) {
         return true;
@@ -92,12 +86,6 @@ const ProductInformationBottomSection = ({
     } else {
       dispatchRedux(setBuyNowItemList(productDetailsData));
 
-      // const isExist = isInCart(productDetailsData?.id);
-      // if (isExist) {
-      //   dispatchRedux(setUpdateItemToCart(productDetailsData));
-      // } else {
-      //   dispatchRedux(setCart(productDetailsData));
-      // }
       router.push(
         {
           pathname: "/checkout",
@@ -195,42 +183,7 @@ const ProductInformationBottomSection = ({
 
   const actionsHandler = () => (
     <BottomStack direction="row" width="100%" gap={2.5}>
-      {/* {productDetailsData?.stock > 0 && isVariationAvailable() ? (
-        <PrimaryButton
-          onClick={() => handleRedirectToCheckoutClick()}
-          sx={{
-            backgroundColor: theme.palette.customColor.buyButton,
-            color: "black",
-            width: {
-              xs: "100%",
-              sm: productDetailsData?.isCampaignItem ? "100%" : 200,
-            },
-            "&:hover": {
-              color: "black",
-              backgroundColor: alpha(theme.palette.customColor.buyButton, 0.8),
-            },
-          }}
-        >
-          {productDetailsData?.isCampaignItem ? t("Order Now") : t("Buy Now")}
-        </PrimaryButton>
-      ) : (
-        <PrimaryButton
-          onClick={() => handleRedirectToCheckoutClick()}
-          sx={{
-            backgroundColor: theme.palette.customColor.buyButton,
-            color: "black",
-            width: "100%",
-          }}
-          disabled={productDetailsData?.stock === 0 || !isVariationAvailable()}
-        >
-          <Typography
-            color={alpha(theme.palette.neutral[100], 0.7)}
-            variant="h6"
-          >
-            {t("Out of Stock")}
-          </Typography>
-        </PrimaryButton>
-      )} */}
+    
       {!productDetailsData?.isCampaignItem && (
         <>
           {!productUpdate &&
@@ -259,7 +212,7 @@ const ProductInformationBottomSection = ({
                 {isLoading ? <Loading /> : t("Out of Stock")}
               </PrimaryButton>
             )}
-          { productUpdate&& (
+          {productUpdate && (
             <PrimaryButton
               onClick={() =>
                 handleVariationAvailability(

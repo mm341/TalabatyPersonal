@@ -66,6 +66,7 @@ const ProductInformation = ({
   imageSrcUrl,
   isSmall,
 }) => {
+  //  hooks
   const theme = useTheme();
   const [wishListCount, setWishListCount] = useState(
     productDetailsData?.whislists_count
