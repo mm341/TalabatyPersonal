@@ -31,6 +31,7 @@ const Menus = (props) => {
 		setAnchorEl(null);
 		setSelectedMenuIndex(index);
 	};
+	
 	const SmallScreen = () => (
 		<Stack>
 			<CustomButtonWrapper onClick={handleClick} variant="outlined">

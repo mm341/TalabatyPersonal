@@ -37,7 +37,7 @@ const OtpForm = ({ data, formSubmitHandler, isLoading }) => {
           <Typography>
             {t("Enter the verification code (OTP) sent to")}
           </Typography>
-          <Typography>{data?.phone}</Typography>
+          <Typography dir="ltr">{data?.phone}</Typography>
         </Stack>
         <form noValidate onSubmit={otpFormik.handleSubmit}>
           <Stack

@@ -31,12 +31,13 @@ const AllStores = (props) => {
     isLoading,
     hasNextPage,
   } = useGetStoresByFiltering(pageParams);
-
+console.log(data)
   useEffect(() => {
     setOffSet(1);
   }, [selectedFilterValue]);
   const handleAPiCallOnSuccess = (item) => {
-    setTotalDataCount(item.total_size);
+  
+    setTotalDataCount(item?.total_size);
     if (selectedFilterValue === prevSelectedFilter?.current) {
       setStoreData((prev) =>
         removeDuplicates([...new Set([...prev, ...item?.stores])], "id")
@@ -50,6 +51,7 @@ const AllStores = (props) => {
 
   const handleStoreData = () => {
     if (data && data?.pages?.length > 0) {
+     
       data?.pages?.forEach((item) => {
         handleAPiCallOnSuccess(item);
       });

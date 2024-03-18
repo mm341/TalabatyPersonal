@@ -190,6 +190,7 @@ const Stores = (props) => {
       );
     }
   }, [selectedMenuIndex, selectedFilterValue]);
+
   return (
     <HomeComponentsWrapper sx={{ paddingTop: "1rem" }}>
       <CustomStackFullWidth
@@ -205,13 +206,15 @@ const Stores = (props) => {
           background: (theme) => theme.palette.neutral[300],
         }}
       >
-        {totalDataCount ? (
-          <H2 text={`${totalDataCount} ${stores}`} />
-        ) : (
-          <Skeleton variant="text" width="80px" />
-        )}
+        {totalDataCount>0 && <H2 text={`${totalDataCount} ${stores}`} />}
 
-        {isSmall ? mobileScreenHandler() : desktopScreenHandler()}
+        {/* //   ) : (
+          
+        //   <Skeleton variant="text" width="80px" />
+        // )} */}
+
+{(totalDataCount>0) &&(
+        isSmall ? mobileScreenHandler() : desktopScreenHandler())}
       </CustomStackFullWidth>
       <CustomBoxFullWidth
         key={selectedFilterValue}

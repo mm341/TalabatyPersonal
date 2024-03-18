@@ -111,6 +111,7 @@ const SpecialFoodOffers = ({ title }) => {
       onMouseLeave={() => setIsHover(false)}
       sx={{ cursor: "pointer" }}
     >
+      {data?.products?.length>0 &&
       <CustomStackFullWidth
         alignItems="center"
         justyfyContent="center"
@@ -185,6 +186,7 @@ const SpecialFoodOffers = ({ title }) => {
           </CustomBoxFullWidth>
         </RTL>
       </CustomStackFullWidth>
+}
     </HomeComponentsWrapper>
   );
 };
