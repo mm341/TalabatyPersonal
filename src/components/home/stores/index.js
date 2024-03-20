@@ -206,15 +206,15 @@ const Stores = (props) => {
           background: (theme) => theme.palette.neutral[300],
         }}
       >
-        {totalDataCount>0 && <H2 text={`${totalDataCount} ${stores}`} />}
+        {totalDataCount > 0 && <H2 text={`${totalDataCount} ${stores}`} />}
 
         {/* //   ) : (
           
         //   <Skeleton variant="text" width="80px" />
         // )} */}
 
-{(totalDataCount>0) &&(
-        isSmall ? mobileScreenHandler() : desktopScreenHandler())}
+        {totalDataCount > 0 &&
+          (isSmall ? mobileScreenHandler() : desktopScreenHandler())}
       </CustomStackFullWidth>
       <CustomBoxFullWidth
         key={selectedFilterValue}

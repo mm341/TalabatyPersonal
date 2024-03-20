@@ -32,7 +32,7 @@ const Grocery = (props) => {
           <FeaturedCategories configData={configData} />
         </CustomContainer>
       </Grid>
-      <Grid item xs={12} mb={3}>
+      {/* <Grid item xs={12} mb={3}>
         {IsSmallScreen() ? (
           <VisitAgain configData={configData} />
         ) : (
@@ -40,7 +40,7 @@ const Grocery = (props) => {
             <VisitAgain configData={configData} />
           </CustomContainer>
         )}
-      </Grid>
+      </Grid> */}
 
       <Grid item xs={12}>
         <CustomContainer>

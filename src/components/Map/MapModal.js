@@ -62,7 +62,10 @@ const MapModal = ({
   const [locationEnabled, setLocationEnabled] = useState(false);
   const [placeId, setPlaceId] = useState("");
   const [placeDescription, setPlaceDescription] = useState(undefined);
-  const [location, setLocation] = useState(configData?.default_location);
+  const [location, setLocation] = useState({
+    lat: Number(configData?.default_location.lat),
+    lng: Number(configData?.default_location.lng),
+  });
   const [zoneId, setZoneId] = useState(undefined);
   const [isLoadingCurrentLocation, setLoadingCurrentLocation] = useState(false);
   const [currentLocation, setCurrentLocation] = useState({});
@@ -74,6 +77,7 @@ const MapModal = ({
   const [currentLocationValue, setCurrentLactionValue] = useState({
     description: null,
   });
+
   const [openModuleSelection, setOpenModuleSelection] = useState(false);
   const { data: places, isLoading: placesIsLoading } = useGetAutocompletePlace(
     searchKey,
