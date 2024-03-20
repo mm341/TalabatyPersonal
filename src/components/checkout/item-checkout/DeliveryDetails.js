@@ -63,6 +63,8 @@ const DeliveryDetails = (props) => {
     }
     setOrderType(value);
   };
+
+  console.log(configData?.takeaway_status)
   return (
     <CustomStackFullWidth spacing={{ xs: 1.5, md: 3 }}>
       <DeliveryCaption const id="demo-row-radio-buttons-group-label">
@@ -107,7 +109,7 @@ const DeliveryDetails = (props) => {
               {t("Home Delivery")}
             </Typography>
           </DeliveryOptionButton>
-          {!forprescription &&
+          {!forprescription && configData?.takeaway_status>0 &&
             <DeliveryOptionButton
               fullwidth="true"
               orderType={orderType === "take_away"}
